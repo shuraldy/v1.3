@@ -1,0 +1,229 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="container mb-2">
+                <!-- <h1 class="lang-elem text-center fs-kl-35 mb-5 love-ya" data-lang="order-title">
+                    Your Order
+                </h1> -->
+            </div>
+
+            <div id="orderSummary" class="container px-0 px-md-2">
+                <div class="row">
+                    
+                    <!-- Columna para la tarjeta de productos, personajes y formulario -->
+                    <div class="col-md-7 mb-4">
+                        <div class="mb-3">
+                            <div class="align-items-center bg-light d-flex p-2 rounded-3">
+                                <div>
+                                    <button class="btn btn-light" onclick="history.back()">
+                                        <i class="fa-solid fa-chevron-left"></i>
+                                    </button>
+                                </div>
+                                <div class="mx-3">
+                                    <p class="card-text m-0"><strong>{{packageName}}</strong></p>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div>
+
+
+                            <div class="bg-light card">
+                                <div class="card-body">
+                                    <h2 class="mb-3 lang-elem" data-lang ="customize">Personalizar tu evento</h2>
+                                    <div class="accordion accordion-event" id="additionalOptionsAccordion">
+                                        <!-- Acordeón para Productos Adicionales -->
+                                        <div class="accordion-item">
+                                            <h2 class="accordion-header" id="productsHeading">
+                                                <button class="accordion-button z-0 lang-elem" type="button" data-bs-toggle="collapse" data-bs-target="#productsCollapse" aria-expanded="true" aria-controls="productsCollapse" data-lang="products-additional">
+                                                    Productos Adicionales
+                                                </button>
+                                            </h2>
+                                            <div id="productsCollapse" class="accordion-collapse collapse show" aria-labelledby="productsHeading" data-bs-parent="#additionalOptionsAccordion">
+                                                <div class="accordion-body" id="productsList">
+                                                    {{productsList}}
+                                                    <!-- Productos se renderizan dinámicamente aquí -->
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- Acordeón para Personajes Adicionales -->
+                                        <div class="accordion-item">
+                                            <h2 class="accordion-header" id="charactersHeading">
+                                                <button class="accordion-button z-0 collapsed lang-elem" type="button" data-bs-toggle="collapse" data-bs-target="#charactersCollapse" aria-expanded="false" aria-controls="charactersCollapse" data-lang="characters-additional">
+                                                    Personajes Adicionales
+                                                </button>
+                                            </h2>
+                                            <div id="charactersCollapse" class="accordion-collapse collapse" aria-labelledby="charactersHeading" data-bs-parent="#additionalOptionsAccordion">
+                                                <div class="accordion-body" id="charactersList">
+                                                    <!-- Personajes se renderizan dinámicamente aquí -->
+                                                    {{charactersList}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- Acordeón para Información del Cliente -->
+                                        <div class="accordion-item">
+                                            <h2 class="accordion-header" id="customerInfoHeading">
+                                                <button class="accordion-button z-0 collapsed lang-elem" type="button" data-bs-toggle="collapse" data-bs-target="#customerInfoCollapse" aria-expanded="false" aria-controls="customerInfoCollapse" data-lang="customer-info">
+                                                    Información del Cliente
+                                                </button>
+                                            </h2>
+                                            <div id="customerInfoCollapse" class="accordion-collapse collapse" aria-labelledby="customerInfoHeading" data-bs-parent="#additionalOptionsAccordion">
+                                                <div class="accordion-body">
+                                                    <form id="customerForm">
+                                                        <div class="container">
+                                                            <div class="row">
+                                                                <div class="mb-3 col-md-6 col-12">
+                                                                    <label for="firstName" class="form-label lang-elem" data-lang="customer-name">Primer nombre</label>
+                                                                    <input type="text" class="form-control customer-control" id="firstName" onkeyup="validationCustomerForm()" maxlength="50" required>
+                                                                </div>
+                                                                <div class="mb-3 col-md-6 col-12">
+                                                                    <label for="lastName" class="form-label lang-elem" data-lang="customer-lastname">Primer apellido</label>
+                                                                    <input type="text" class="form-control customer-control" id="lastName" onkeyup="validationCustomerForm()" maxlength="50" required>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="container">
+                                                            <div class="row">
+                                                                <div class="mb-3 col-md-6 col-12">
+                                                                    <label for="email" class="form-label lang-elem" data-lang="customer-email">Email</label>
+                                                                    <input type="email" class="form-control customer-control" id="email" onkeyup="validationCustomerForm()" maxlength="50" required>
+                                                                </div>
+                                                                <div class="mb-3 col-md-6 col-12">
+                                                                    <label for="phone" class="form-label lang-elem" data-lang="customer-phone">Teléfono</label>
+                                                                    <input type="tel" class="form-control customer-control" id="phone" onkeyup="validationCustomerForm()" maxlength="10" required>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="container">
+                                                            <div class="row">
+                                                                <div class="mb-3 col-md-6 col-12">
+                                                                    <label for="eventAddress" class="form-label lang-elem" data-lang="address-event">Dirección del evento</label>
+                                                                    <input type="text" class="form-control customer-control" id="eventAddress" onkeyup="validationCustomerForm()" maxlength="50" required>
+                                                                </div>
+                                                                <div class="mb-3 col-md-6 col-12">
+                                                                    <label for="paymentMethod" class="form-label lang-elem" data-lang="paymentMethod">Método de pago</label>
+                                                                    <select class="form-select customer-control" id="paymentMethod" onchange="validationCustomerForm()" required>
+                                                                        <option value="" disabled selected class="lang-elem" data-lang="select-payment-method">Seleccione una opción</option>
+                                                                        <option class="lang-elem" value="1" data-lang="card">Tarjeta</option>
+                                                                        <option value="2" class="lang-elem" data-lang="Paypal">Paypal</option>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+
+                    </div>
+
+                    <!-- Columna para la tarjeta de resumen -->
+                    <div class="col-md-5 mb-4">
+                        <div class="card text-bg-light">
+                            <div class="card-body">
+
+                                <div class="bg-white border mb-3 rounded-3 text-center">
+                                    <h3 class="m-2 mx-0 lang-elem" data-lang="resume">Resumen</h3>
+                                </div>
+
+                                <div class="resume-container">
+
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h5 class="lang-elem" data-lang="event">Tu evento</h5>
+                                            <!-- <h5 class="card-title">Fecha y hora del evento</h5> -->
+                                            <p class="card-text fs-kl-14px m-0" id="eventDate"><span class="lang-elem" data-lang="date"> Fecha : </span>{{eventDate}}</p>
+                                            <p class="card-text fs-kl-14px m-0" id="eventTime"><span class="lang-elem" data-lang="hour"> Hora : </span>{{eventTime}}</p>
+                                            <p class="card-text fs-kl-14px" id="eventLocation" data-location-id=""><span class="lang-elem" data-lang="location-event"> Ubicación : </span>{{locationName}}</p>
+                                        </div>
+                                    </div>
+    
+                                    <hr>
+    
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h5 class="lang-elem" data-lang="package">Tu paquete</h5>
+                                            <p class="card-text fs-kl-14px m-0" id="packageName"><span class="lang-elem" data-lang="name">Nombre : </span><strong>{{packageName}}</strong></p>
+                                            <p class="card-text fs-kl-14px m-0" id="packagePrice"><span class="lang-elem" data-lang="price">Precio : </span><strong>${{packagePrice}}</strong></p>
+                                            <p class="card-text fs-kl-14px m-0" id="packageDuration"><span class="lang-elem" data-lang="duration">Duración : </span>{{packageDuration}} <span class="lang-elem" data-lang="min">Min</span></p>
+                                            <p class="card-text fs-kl-14px" id="characterName"><span class="lang-elem" data-lang="character-check-out">Personaje : </span>{{characterName}}
+                                                <span class="badge text-bg-secondary lang-elem" data-lang="character-include">Incluido en el paquete</span>
+                                            </p>
+                                            <div id="packageDescription">
+                                                <div class="accordion" id="accordionDescription">
+                                                    <div class="accordion-item">
+                                                        <h2 class="accordion-header">
+                                                          <button class="accordion-button fw-bold collapsed lang-elem" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo" data-lang="description">
+                                                            Descripción
+                                                          </button>
+                                                        </h2>
+                                                        <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                                                          <div class="accordion-body">
+                                                            {{packageDescription}}
+                                                          </div>
+                                                        </div>
+                                                      </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <hr>                            
+    
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h6 class="card-title d-flex justify-content-between m-0 lang-elem" data-lang="products-additional">Productos adicionales <span id="subProducts">$0.00</span></h6>
+                                            <div id="additionalProductsList" class="mt-2">
+                                                <!-- Productos seleccionados se añadirán aquí dinámicamente -->
+                                            </div>
+                                        </div>
+                                    </div>
+    
+                                    <hr>
+
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h6 class="card-title d-flex justify-content-between m-0 lang-elem" data-lang="characters-additional">Personajes adicionales <span id="subCharacters">$0.00</span></h6>
+                                            <div id="additionalCharactersList" class="mt-2">
+                                                <!-- Personajes seleccionados se añadirán aquí dinámicamente -->
+                                            </div>
+                                        </div>
+                                    </div>
+    
+                                    <h5 class="card-title mt-3 lang-elem" data-lang="customer-info">Información del cliente</h5>
+                                    <div id="customerInfo">
+                                        <!-- Información del formulario se añadirá aquí dinámicamente -->
+                                    </div>
+
+                                </div>
+                                
+
+                                <div class="align-items-baseline d-flex justify-content-between mb-1">
+                                    <h5 class="card-title mt-3 lang-elem" data-lang="total-price">Precio total</h5>
+                                    <p class="card-text fs-2 fw-bold mb-0 me-3" id="totalPrice">
+                                        {{totalPrice}}
+                                    </p>
+                                </div>
+                                <div class="d-flex align-items-center">
+                                    <button type="button" class="btn btn-primary w-100 lang-elem" id="payBtn" disabled data-lang="pay">Pagar</button>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Mensaje de error (inicialmente oculto) -->
+                        <div id="errorMessage" class="alert alert-danger mt-3" role="alert" style="display: none;">
+                            Error: No se encontraron todos los datos necesarios para mostrar el resumen de la orden.
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

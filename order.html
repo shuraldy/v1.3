@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KL Party's | Orders</title>
+    <!-- Bootstrap -->
+    <link 
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" 
+        rel="stylesheet" 
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" 
+        crossorigin="anonymous">
+
+    <!-- Fontawesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+    <!-- ------------ -->
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link 
+        href="https://fonts.googleapis.com/css2?family=Azeret+Mono:ital,wght@0,100..900;1,100..900&family=Love+Ya+Like+A+Sister&display=swap" 
+        rel="stylesheet">
+    <!-- KL Styles -->
+    <link rel="stylesheet" href="assets/css/styles.css">
+
+    <style>
+      .placeholder-glow{
+        height: 70dvh;
+      }
+    </style>
+
+
+</head>
+<body onresize="rezise()">
+  <section class="bg-light h-100 opacity-25 position-fixed w-100" id="loader" style="z-index: 9999;"></section>
+
+    <div class="pt-4 page-container">
+
+      <!-- header -->
+      <div class="kl-header-container position-sticky z-1">
+        <nav class="navbar navbar-expand-lg container">
+          <div class="container-fluid">
+            <a class="col-1 col-md-auto navbar-brand" href="#">
+              <img src="assets/images/icons/main-header-image.gif" alt="" class="main-header-image">
+            </a>
+            <div class="navbar-toggler border-0">
+              <div class="d-flex justify-content-end">
+                <button class="btn btn-kl-mob lang-elem shadow" id="checkAvailabilityMobBtn" disabled data-lang="aviability-button">
+                  Schedule
+                </button>
+                <div class="dropdown-center">
+                  <button class="btn border-0 mx-2 dropdown-toggle align-items-center d-flex px-2" data-bs-toggle="dropdown" aria-expanded="false">
+                    <span class="d-grid">
+                      <img src="/assets/images/icons/flag-en.png" class="lang-flag" alt="">
+                    </span>
+                    <span class="mx-1">
+                      En
+                    </span>
+                  </button>
+                  <ul class="dropdown-menu bg-dark" style="left: -55px;">
+                    <li>
+                      <a class="d-flex dropdown-item justify-content-around lang-option px-4 text-bg-dark" href="#" data-lang="en">
+                        <span>
+                          <img src="/assets/images/icons/flag-en.png" alt="" class="lang-option" data-lang="en">
+                        </span>
+                        <span class="lang-option" data-lang="en">English</span>
+                      </a>
+                    </li>
+                    <li>
+                        <a class="d-flex dropdown-item justify-content-around lang-option px-4 text-bg-dark" href="#" data-lang="es">
+                        <span>
+                          <img src="/assets/images/icons/flag-es.png" alt="" class="lang-option" data-lang="es">
+                        </span>
+                        <span class="lang-option" data-lang="es">Español</span>
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+                <button class="btn btn-kl-menu shadow" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasMenu" aria-controls="offcanvasMenu" id="mobileMenuBtn">
+                  <i class="fa-solid fa-grip-lines"></i>
+                </button>
+              </div>
+            </div>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+              <ul class="d-flex justify-content-center navbar-nav w-100">
+                <li class="nav-item px-2">
+                  <a class="nav-link nav-link-kl lang-elem" aria-current="page" href="/" data-lang="home" data-active="">Home</a>
+                </li>
+                <li class="nav-item px-2">
+                  <a class="nav-link nav-link-kl lang-elem" href="/about" data-lang="about" data-active="about">About us</a>
+                </li>
+                <li class="nav-item px-2">
+                  <a class="nav-link nav-link-kl lang-elem" href="/services" data-lang="services" data-active="services">Services</a>
+                </li>
+                <li class="nav-item px-2">
+                  <a class="nav-link nav-link-kl lang-elem" href="/contact" data-lang="contact" data-active="contact">Contact</a>
+                </li>
+                <li class="nav-item px-2">
+                  <a class="nav-link nav-link-kl lang-elem" href="/terms" data-lang="terms" data-active="terms">Terms</a>
+                </li>
+                <li class="align-items-center d-flex dropdown nav-item px-2">
+                    <span class="d-grid">
+                      <img src="/assets/images/icons/flag-en.png" alt="" class="lang-flag">
+                    </span>
+                    <a class="nav-link nav-link-kl dropdown-toggle" href="#" id="languageDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">En</a>
+                    <ul class="bg-dark dropdown-menu" aria-labelledby="languageDropdown">
+                      <li>
+                        <a class="d-flex dropdown-item justify-content-around lang-option px-4 text-bg-dark" href="#" data-lang="en">
+                          <span>
+                            <img src="/assets/images/icons/flag-en.png" alt="" class="lang-option" data-lang="en">
+                          </span>
+                          <span class="lang-option" data-lang="en">English</span>
+                        </a>
+                      </li>
+                      <li>
+                        <a class="d-flex dropdown-item justify-content-around lang-option px-4 text-bg-dark" href="#" data-lang="es">
+                        <span>
+                          <img src="/assets/images/icons/flag-es.png" alt="" class="lang-option" data-lang="es">
+                        </span>
+                        <span class="lang-option" data-lang="es">Español</span>
+                      </a>
+                    </li>
+                    </ul>
+                </li>
+              </ul>
+              <div>
+                  <button class="btn btn-kl lang-elem shadow" id="checkAvailabilityBtn" disabled data-lang="aviability-button">
+                      Schedule
+                  </button>
+              </div>
+            </div>
+          </div>
+        </nav>
+      </div>
+      <!-- end -->
+
+      <!-- Main Section -->
+      <section class="align-items-center d-flex h-auto pt-3 px-0" id="order-container">
+
+        <div class="container">
+          <div class="row">
+            <div class="col-md-7 col-12">
+              <p class="placeholder-glow">
+                <span class="placeholder col-12 h-100 rounded-3"></span>
+              </p>
+            </div>
+            <div class="col-md-5 col-12">
+              <p class="placeholder-glow">
+                <span class="placeholder col-12 h-100 rounded-3"></span>
+              </p>
+            </div>
+          </div>
+        </div>
+
+      </section>
+
+
+      <!-- footer -->
+      <footer class="bg-kl-footer text-white pt-5 pb-4">
+        <div class="container">
+          <div class="row g-4">
+      
+            <!-- Quiénes somos -->
+            <div class="col-md-4">
+              <h5 class="fw-bold love-ya">Quiénes somos</h5>
+              <p class="fs-kl-14px text-white-50">
+                Somos un equipo apasionado por crear fiestas mágicas e inolvidables. Nos especializamos en decoración temática, globos personalizados y shows infantiles.
+              </p>
+            </div>
+      
+            <!-- Secciones -->
+            <div class="col-md-4">
+              <h5 class="fw-bold love-ya">Secciones</h5>
+              <ul class="list-unstyled fs-kl-14px">
+                <li class="mb-2"><a href="/" class="text-white text-decoration-none">Inicio</a></li>
+                <li class="mb-2"><a href="/about.html" class="text-white text-decoration-none">Quiénes somos</a></li>
+                <li class="mb-2"><a href="/services.html" class="text-white text-decoration-none">Servicios</a></li>
+                <li class="mb-2"><a href="/gallery.html" class="text-white text-decoration-none">Galería</a></li>
+                <li class="mb-2"><a href="/contact.html" class="text-white text-decoration-none">Contáctanos</a></li>
+              </ul>
+            </div>
+      
+            <!-- Contacto -->
+            <div class="col-md-4">
+              <h5 class="fw-bold love-ya">Contáctanos</h5>
+              <ul class="list-unstyled fs-kl-14px">
+                <li class="mb-2"> +57 300 000 0000</li>
+                <li class="mb-2"> contacto@klpartys.com</li>
+                <li class="mb-2"><a href="https://instagram.com/klpartys" class="text-white text-decoration-none">Instagram</a></li>
+              </ul>
+            </div>
+      
+          </div>
+      
+          <hr class="border-white opacity-25 my-4">
+      
+          <!-- Pie final -->
+          <div class="d-md-flex justify-content-between align-items-center text-center text-md-start">
+            <p class="mb-2 mb-md-0 fs-kl-13px">
+              © 2025 KL Partys & Amazing Shows. Todos los derechos reservados.
+            </p>
+            <div>
+              <a href="https://facebook.com" class="text-white me-3"><i class="fa-brands fa-facebook fa-lg"></i></a>
+              <a href="https://instagram.com" class="text-white"><i class="fa-brands fa-instagram fa-lg"></i></a>
+            </div>
+          </div>
+        </div>
+      
+        <!-- Botón WhatsApp flotante -->
+        <!-- <a href="https://wa.me/573000000000" target="_blank" class="btn btn-success position-fixed bottom-0 end-0 m-4 shadow rounded-circle d-flex align-items-center justify-content-center" style="width: 56px; height: 56px; z-index: 999;">
+          <i class="fa-brands fa-whatsapp fa-lg"></i>
+        </a> -->
+      </footer>
+      <!-- end -->
+
+    </div>
+
+    <offcanvas-outlet></offcanvas-outlet>
+
+    <div class="cursor-dot d-lg-block d-none"></div>
+    <div class="cursor-circle d-lg-block d-none"></div>
+
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.min.js" integrity="sha384-VQqxDN0EQCkWoxt/0vsQvZswzTHUVOImccYmSyhJTp7kGtPed0Qcx8rK9h9YEgx+" crossorigin="anonymous"></script>
+
+    <script src="assets/js/config.js"></script>
+    <script src="assets/js/main.js"></script>
+    <script src="assets/js/cursor.js"></script>
+    <script src="assets/js/orders.js"></script>
+    <script src="assets/js/translation.js"></script>
+    
+</body>
+</html>

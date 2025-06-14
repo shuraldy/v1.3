@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KL Party's | Contact</title>
+    <!-- bootstrap -->
+    <link 
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" 
+    rel="stylesheet" 
+    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" 
+    crossorigin="anonymous">
+    <script 
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" 
+    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" 
+    crossorigin="anonymous">
+    </script>
+    <!-- ----- -->
+
+    <!-- Fontawesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+    <!-- ------------ -->
+
+    <!-- fonts -->
+    <link rel="preconnect" 
+    href="https://fonts.googleapis.com">
+    <link 
+    rel="preconnect" 
+    href="https://fonts.gstatic.com" 
+    crossorigin>
+    <link 
+    href="https://fonts.googleapis.com/css2?family=Azeret+Mono:ital,wght@0,100..900;1,100..900&family=Love+Ya+Like+A+Sister&display=swap" 
+    rel="stylesheet">
+    <!-- ----- -->
+
+    <!-- kl styles -->
+    <link rel="stylesheet" href="../assets/css/styles.css">
+    <!-- ----- -->
+
+
+
+</head>
+<body onresize="rezise()">
+
+  <section class="bg-light h-100 opacity-25 position-fixed w-100" id="loader" style="z-index: 9999;"></section>
+
+  <div class="separator"></div>
+
+  <!-- header -->
+  <div class="kl-header-container position-sticky z-1" style="background: #00abba;">
+    <nav class="navbar navbar-expand-lg container">
+      <div class="container-fluid">
+        <a class="col-1 col-md-auto navbar-brand" href="#">
+          <img src="../assets/images/icons/main-header-image.gif" alt="" class="main-header-image">
+        </a>
+        <div class="navbar-toggler border-0">
+          <div class="d-flex justify-content-end">
+            <button class="btn btn-kl-mob lang-elem shadow" id="checkAvailabilityMobBtn" disabled data-lang="aviability-button">
+              Schedule
+            </button>
+            <div class="dropdown-center">
+              <button class="btn border-0 mx-2 dropdown-toggle align-items-center d-flex px-2" data-bs-toggle="dropdown" aria-expanded="false">
+                <span class="d-grid">
+                  <img src="/assets/images/icons/flag-en.png" class="lang-flag" alt="">
+                </span>
+                <span class="mx-1">
+                  En
+                </span>
+              </button>
+              <ul class="dropdown-menu bg-dark" style="left: -55px;">
+                <li>
+                  <a class="d-flex dropdown-item justify-content-around lang-option px-4 text-bg-dark" href="#" data-lang="en">
+                    <span>
+                      <img src="/assets/images/icons/flag-en.png" alt="" class="lang-option" data-lang="en">
+                    </span>
+                    <span class="lang-option" data-lang="en">English</span>
+                  </a>
+                </li>
+                <li>
+                    <a class="d-flex dropdown-item justify-content-around lang-option px-4 text-bg-dark" href="#" data-lang="es">
+                    <span>
+                      <img src="/assets/images/icons/flag-es.png" alt="" class="lang-option" data-lang="es">
+                    </span>
+                    <span class="lang-option" data-lang="es">Español</span>
+                  </a>
+                </li>
+              </ul>
+            </div>
+            <button class="btn btn-kl-menu shadow" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasMenu" aria-controls="offcanvasMenu" id="mobileMenuBtn">
+              <i class="fa-solid fa-grip-lines"></i>
+            </button>
+          </div>
+        </div>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="d-flex justify-content-center navbar-nav w-100">
+            <li class="nav-item px-2">
+              <a class="nav-link nav-link-kl lang-elem" aria-current="page" href="/" data-lang="home" data-active="">Home</a>
+            </li>
+            <li class="nav-item px-2">
+              <a class="nav-link nav-link-kl lang-elem" href="/about/" data-lang="about" data-active="about">About us</a>
+            </li>
+            <!-- dropdown services -->
+              <li class="align-items-center d-flex dropdown nav-item px-2">
+                <a class="nav-link nav-link-kl dropdown-toggle lang-elem" href="#" id="servicesDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" data-lang="services">Services</a>
+                <ul class="bg-dark dropdown-menu" aria-labelledby="servicesDropdown" style="min-width: 200px; padding: 8px 0;">
+                  <li>
+                    <a class="d-flex dropdown-item justify-content-around service-option px-4 text-bg-dark" href="/serviceskl/" data-service="kl-partys" >
+                      <span>
+                        <img src="/assets/images/elements/img_btn_1.png" alt="" class="service-option me-2" data-service="kl-partys" style="width: 24px; height: 24px;">
+                      </span>
+                      <span class="service-option lang-elem" data-service="kl-partys">KL Partys</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a class="d-flex dropdown-item justify-content-around service-option px-4 text-bg-dark mt-2 mb-2" href="/services/" data-service="kl-amazing-shows">
+                      <span>
+                        <img src="/assets/images/elements/img_btn_2.png" alt="" class="service-option me-2" data-service="kl-amazing-shows" style="width: 24px; height: 24px;">
+                      </span>
+                      <span class="service-option lang-elem" data-service="kl-amazing-shows">KL Amazing Shows</span>
+                    </a>
+                  </li>
+                </ul>
+              </li>
+
+              <!--end dropdown services -->
+            <li class="nav-item px-2">
+              <a class="nav-link nav-link-kl lang-elem" href="/contact" data-lang="contact" data-active="contact">Contact</a>
+            </li>
+            <li class="nav-item px-2">
+              <a class="nav-link nav-link-kl lang-elem" href="/terms" data-lang="terms" data-active="terms">Terms</a>
+            </li>
+            <li class="align-items-center d-flex dropdown nav-item px-2">
+                <span class="d-grid">
+                  <img src="/assets/images/icons/flag-en.png" alt="" class="lang-flag">
+                </span>
+                <a class="nav-link nav-link-kl dropdown-toggle" href="#" id="languageDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">En</a>
+                <ul class="bg-dark dropdown-menu" aria-labelledby="languageDropdown">
+                  <li>
+                    <a class="d-flex dropdown-item justify-content-around lang-option px-4 text-bg-dark" href="#" data-lang="en">
+                      <span>
+                        <img src="/assets/images/icons/flag-en.png" alt="" class="lang-option" data-lang="en">
+                      </span>
+                      <span class="lang-option" data-lang="en">English</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a class="d-flex dropdown-item justify-content-around lang-option px-4 text-bg-dark" href="#" data-lang="es">
+                    <span>
+                      <img src="/assets/images/icons/flag-es.png" alt="" class="lang-option" data-lang="es">
+                    </span>
+                    <span class="lang-option" data-lang="es">Español</span>
+                  </a>
+                </li>
+                </ul>
+            </li>
+          </ul>
+          <div>
+              <button class="btn btn-kl lang-elem shadow" id="checkAvailabilityBtn" disabled data-lang="aviability-button">
+                  Schedule
+              </button>
+          </div>
+        </div>
+      </div>
+    </nav>
+  </div>
+  <!-- ---- end  ---- -->
+
+  <!-- contact hero sec 1 - hero -->
+  <div class="align-items-center d-grid page-container page-hero position-relative py-5 text-center">
+    <div class="container-fluid">
+        <div class="row">
+            <div>
+                <div class="mx-auto mb-5">
+                    <h1 class="lang-elem love-ya text-center fs-kl-35 mb-5" data-lang="serviceskl">
+                      Services kl partys
+                    </h1>
+                    <p class="azeret fs-kl-14px lang-elem mx-auto p-main-title text-center main-description">
+                      We’re excited to make your next party unforgettable.
+                    </p>
+
+                </div>
+                <div class="d-lg-block d-none icon-background mx-auto position-relative">
+                    <img class="position-absolute item1" src="../assets/images/background/item1.png" alt="">
+                    <img class="position-absolute item2" src="../assets/images/background/item5.png" alt="">
+                    <img class="position-absolute item3" src="../assets/images/background/ibg_1.png" alt="" width="70">
+                    <img class="position-absolute item4" src="../assets/images/background/item1.png" alt="">
+                    <img class="position-absolute item5" src="../assets/images/background/item1.png" alt="">
+                    <img class="position-absolute item6" src="../assets/images/background/ibg_3.png" alt="" width="70">
+                    <img class="position-absolute item7" src="../assets/images/background/item5.png" alt="">
+                    <img class="position-absolute item8" src="../assets/images/background/item5.png" alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>
+  <!-- end -->
+  <!-- Sección 1: Texto a la izquierda, imágenes a la derecha -->
+  <section class="products-services">
+    <div class="container">
+      <div class="row g-4">
+        <!-- Descripción -->
+        <div class="col-md-5">
+          <div class="service-description">
+            <h3 class="lang-elem" data-lang="kltitle1">Family and Corporate Event Decoration</h3>
+            <p class="lang-elem" data-lang="kldescription1">From intimate gatherings to large corporate celebrations, we transform every space with themed designs, striking setups, and a refined aesthetic that leaves a lasting impression on all attendees.</p>
+          </div>
+        </div>
+        <!-- Imágenes -->
+        <div class="col-md-5">
+          <div class="card package-card shadow-sm wider">
+            <div class="card-body">
+              <div class="service-images">
+                <img src="/assets/images/partys/Alquileres/alquiler1.jpg" alt="Fiestas Infantiles 1" data-bs-toggle="modal" data-bs-target="#carouselModal" onclick="openCarousel(1, 0)">
+                <img src="/assets/images/partys/Alquileres/alquiler2.jpg" alt="Eventos Empresariales 1" data-bs-toggle="modal" data-bs-target="#carouselModal" onclick="openCarousel(1, 1)">
+                <img src="/assets/images/partys/Alquileres/alquiler3.jpg" alt="Fiestas Infantiles 2" data-bs-toggle="modal" data-bs-target="#carouselModal" onclick="openCarousel(1, 2)">
+                <img src="/assets/images/partys/Alquileres/alquiler4.jpg" alt="Eventos Empresariales 2" data-bs-toggle="modal" data-bs-target="#carouselModal" onclick="openCarousel(1, 3)">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Sección 2: Imágenes a la izquierda, texto a la derecha -->
+  <section class="products-services">
+    <div class="container">
+      <div class="row g-4">
+        <!-- Imágenes -->
+        <div class="col-md-5">
+          <div class="card package-card shadow-sm wider">
+            <div class="card-body">
+              <div class="service-images">
+                <img src="/assets/images/partys/decoracion/decoracion1.jpg" alt="Regalo Personalizado 1" data-bs-toggle="modal" data-bs-target="#carouselModal" onclick="openCarousel(2, 0)">
+                <img src="/assets/images/partys/decoracion/decoracion2.jpg" alt="Regalo Personalizado 2" data-bs-toggle="modal" data-bs-target="#carouselModal" onclick="openCarousel(2, 1)">
+                <img src="/assets/images/partys/decoracion/decoracion3.jpg" alt="Regalo Personalizado 3" data-bs-toggle="modal" data-bs-target="#carouselModal" onclick="openCarousel(2, 2)">
+                <img src="/assets/images/partys/decoracion/decoracion4.jpg" alt="Regalo Personalizado 4" data-bs-toggle="modal" data-bs-target="#carouselModal" onclick="openCarousel(2, 3)">
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Descripción -->
+        <div class="col-md-5">
+          <div class="service-description">
+            <h3 class="lang-elem" data-lang="kltitle2">Personalized Gifts</h3>
+            <p   class="lang-elem" data-lang="kldescription2">Unique details that make a difference. We create custom, charming, and thoughtfully crafted gifts that perfectly align with your event’s style and theme.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Sección 3: Texto a la izquierda, imágenes a la derecha -->
+  <section class="products-services">
+    <div class="container">
+      <div class="row g-4">
+        <!-- Descripción -->
+        <div class="col-md-5">
+          <div class="service-description">
+            <h3 class="lang-elem" data-lang="kltitle3">Surprise Breakfasts</h3>
+            <p   class="lang-elem" data-lang="kldescription3">Turn any morning into a unique and delightful experience. We personalize every detail to deliver a complete breakfast full of surprises and special touches.</p>
+          </div>
+        </div>
+        <!-- Imágenes -->
+        <div class="col-md-5">
+          <div class="card package-card shadow-sm wider">
+            <div class="card-body">
+              <div class="service-images">
+                <img src="/assets/images/partys/Desayunos Sorpresa/desayunos1.jpg" alt="Mesa Picnic 1" data-bs-toggle="modal" data-bs-target="#carouselModal" onclick="openCarousel(3, 0)">
+                <img src="/assets/images/partys/Desayunos Sorpresa/desayunos2.jpg" alt="Mesa Picnic 2" data-bs-toggle="modal" data-bs-target="#carouselModal" onclick="openCarousel(3, 1)">
+                <img src="/assets/images/partys/Desayunos Sorpresa/desayunos3.jpg" alt="Mesa Picnic 3" data-bs-toggle="modal" data-bs-target="#carouselModal" onclick="openCarousel(3, 2)">
+                <img src="/assets/images/partys/Desayunos Sorpresa/desayunos4.jpg" alt="Mesa Picnic 4" data-bs-toggle="modal" data-bs-target="#carouselModal" onclick="openCarousel(3, 3)">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Sección 4: Imágenes a la izquierda, texto a la derecha -->
+  <section class="products-services">
+    <div class="container">
+      <div class="row g-4">
+        <!-- Imágenes -->
+        <div class="col-md-5">
+          <div class="card package-card shadow-sm wider">
+            <div class="card-body">
+              <div class="service-images">
+                <img src="/assets/images/partys/Mesas para fiesta picnic/picnic1.jpg" alt="Show Infantil 1" data-bs-toggle="modal" data-bs-target="#carouselModal" onclick="openCarousel(4, 0)">
+                <img src="/assets/images/partys/Mesas para fiesta picnic/picnic2.jpg" alt="Show Infantil 2" data-bs-toggle="modal" data-bs-target="#carouselModal" onclick="openCarousel(4, 1)">
+                <img src="/assets/images/partys/Mesas para fiesta picnic/picnic3.jpg" alt="Show Infantil 3" data-bs-toggle="modal" data-bs-target="#carouselModal" onclick="openCarousel(4, 2)">
+                <img src="/assets/images/partys/Mesas para fiesta picnic/picnic4.jpg" alt="Show Infantil 4" data-bs-toggle="modal" data-bs-target="#carouselModal" onclick="openCarousel(4, 3)">
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Descripción -->
+        <div class="col-md-5">
+          <div class="service-description">
+            <h3 class="lang-elem" data-lang="kltitle4">Picnic Party Tables</h3>
+            <p   class="lang-elem" data-lang="kldescription4">We turn any outdoor celebration into a cozy and sophisticated experience. Perfect for both family and corporate events, our picnic tables add a fresh and charming touch to your party.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Sección 5: Texto a la izquierda, imágenes a la derecha -->
+  <section class="products-services">
+    <div class="container">
+      <div class="row g-4">
+        <!-- Descripción -->
+        <div class="col-md-5">
+          <div class="service-description">
+            <h3 class="lang-elem" data-lang="kltitle5">Rentals</h3>
+            <p   class="lang-elem" data-lang="kldescription5">We offer a wide variety of furniture, structures, and decorative elements that can be tailored to any theme, enhancing the style and functionality of your event.</p>
+          </div>
+        </div>
+        <!-- Imágenes -->
+        <div class="col-md-5">
+          <div class="card package-card shadow-sm wider">
+            <div class="card-body">
+              <div class="service-images">
+                <img src="/assets/images/partys/Regalos personalizados/regalos1.jpg" alt="Decoración Temática 1" data-bs-toggle="modal" data-bs-target="#carouselModal" onclick="openCarousel(5, 0)">
+                <img src="/assets/images/partys/Regalos personalizados/regalos2.jpg" alt="Decoración Temática 2" data-bs-toggle="modal" data-bs-target="#carouselModal" onclick="openCarousel(5, 1)">
+                <img src="/assets/images/partys/Regalos personalizados/regalos3.jpg" alt="Decoración Temática 3" data-bs-toggle="modal" data-bs-target="#carouselModal" onclick="openCarousel(5, 2)">
+                <img src="/assets/images/partys/Regalos personalizados/regalos4.jpg" alt="Decoración Temática 4" data-bs-toggle="modal" data-bs-target="#carouselModal" onclick="openCarousel(5, 3)">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Modal único con carrusel -->
+  <div class="modal fade" id="carouselModal" tabindex="-1" aria-labelledby="carouselModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="carouselModalLabel">Galería de Servicios</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div id="serviceCarousel" class="carousel slide">
+            <div class="carousel-inner" id="carouselInner"></div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#serviceCarousel" data-bs-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Anterior</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#serviceCarousel" data-bs-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Siguiente</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- footer -->
+  <footer class="bg-kl-footer text-white pt-5 pb-4">
+    <div class="container">
+      <div class="row g-4">
+  
+        <!-- Quiénes somos -->
+        <div class="col-md-4">
+          <h5 class="fw-bold love-ya lang-elem" data-lang="how">Who we are?</h5>
+          <p class="fs-kl-14px text-white-50 lang-elem" data-lang="how-description">
+            We are a team passionate about creating magical and unforgettable parties. We specialize in themed decorations, custom balloons, and children's shows.
+          </p>
+        </div>
+  
+        <!-- Secciones -->
+        <div class="col-md-4">
+          <h5 class="fw-bold love-ya lang-elem" data-lang="sections">Sections</h5>
+          <ul class="list-unstyled fs-kl-14px">
+            <li class="mb-2"><a href="/" class="text-white text-decoration-none lang-elem" data-lang="home" >Home</a></li>
+            <li class="mb-2"><a href="/about" class="text-white text-decoration-none lang-elem" data-lang="how">Who we are?</a></li>
+            <li class="mb-2"><a href="/services" class="text-white text-decoration-none lang-elem" data-lang="services_shows">Services Amazing Shows</a></li>
+            <li class="mb-2"><a href="/serviceskl" class="text-white text-decoration-none lang-elem" data-lang="serviceskl">Services Kl partys</a></li>
+            <li class="mb-2"><a href="/contact" class="text-white text-decoration-none lang-elem" data-lang="contact">Contact</a></li>
+          </ul>
+        </div>
+  
+        <!-- Contacto -->
+        <div class="col-md-4">
+          <h5 class="fw-bold love-ya lang-elem" data-lang="contact_us">Contact us</h5>
+          <ul class="list-unstyled fs-kl-14px">
+            <li class="mb-2"> +57 300 000 0000</li>
+            <li class="mb-2"> contacto@klpartys.com</li>
+            <div class="d-flex align-items-center">
+               </li><a href="https://www.instagram.com/klpartys2?igsh=MTk4dDVjY2JrbWZzaA%3D%3D&utm_source=qr" class="text-white"><i class="fa-brands fa-instagram fa-lg"></i></a>
+              <li class="ms-2"><a href="https://www.instagram.com/klpartys2?igsh=MTk4dDVjY2JrbWZzaA%3D%3D&utm_source=qr" class="text-white text-decoration-none">Instagram Kl partys</a>
+            </div>
+            <div class="d-flex align-items-center">
+               </li><a href="https://www.instagram.com/kl_amazing_shows?igsh=cWJpYWh1bjBsOHl3&utm_source=qr" class="text-white"><i class="fa-brands fa-instagram fa-lg"></i></a>
+              <li class="ms-2"><a href="https://www.instagram.com/kl_amazing_shows?igsh=cWJpYWh1bjBsOHl3&utm_source=qr" class="text-white text-decoration-none">Instagram Amazing Shows</a>
+            </div>
+          </ul>
+        </div>
+  
+      </div>
+  
+      <hr class="border-white opacity-25 my-4">
+  
+      <!-- Pie final -->
+      <div class="d-md-flex justify-content-between align-items-center text-center text-md-start">
+        <p class="mb-2 mb-md-0 fs-kl-13px lang-elem" data-lang="copyright">
+          © 2025 KL Parties & Amazing Shows. All rights reserved.
+        <!-- </p>
+        <div>
+          <a href="https://www.instagram.com/klpartys2?igsh=MTk4dDVjY2JrbWZzaA%3D%3D&utm_source=qr" class="text-white"><i class="fa-brands fa-instagram fa-lg"></i></a>
+          <a href="https://www.instagram.com/kl_amazing_shows?igsh=cWJpYWh1bjBsOHl3&utm_source=qr" class="text-white"><i class="fa-brands fa-instagram fa-lg"></i></a>
+        </div> -->
+      </div>
+    </div>
+  
+  </footer>
+  <!-- end -->
+
+  <modal-outlet></modal-outlet>
+  <offcanvas-outlet></offcanvas-outlet>
+
+  <div class="cursor-dot d-lg-block d-none"></div>
+  <div class="cursor-circle d-lg-block d-none"></div>
+
+<script>
+// Objeto con las imágenes de cada sección
+    const sectionsImages = {
+      1: [
+        { src: "/assets/images/partys/Alquileres/alquiler1.jpg", alt: "Fiestas Infantiles 1" },
+        { src: "/assets/images/partys/Alquileres/alquiler2.jpg", alt: "Eventos Empresariales 1" },
+        { src: "/assets/images/partys/Alquileres/alquiler3.jpg", alt: "Fiestas Infantiles 2" },
+        { src: "/assets/images/partys/Alquileres/alquiler4.jpg", alt: "Eventos Empresariales 2" }
+      ],
+      2: [
+        { src: "/assets/images/partys/decoracion/decoracion1.jpg", alt: "Regalo Personalizado 1" },
+        { src: "/assets/images/partys/decoracion/decoracion2.jpg", alt: "Regalo Personalizado 2" },
+        { src: "/assets/images/partys/decoracion/decoracion3.jpg", alt: "Regalo Personalizado 3" },
+        { src: "/assets/images/partys/decoracion/decoracion4.jpg", alt: "Regalo Personalizado 4" }
+      ],
+      3: [
+        { src: "/assets/images/partys/Desayunos Sorpresa/desayunos1.jpg", alt: "Desayuno Sorpresa 1" },
+        { src: "/assets/images/partys/Desayunos Sorpresa/desayunos2.jpg", alt: "Desayuno Sorpresa 2" },
+        { src: "/assets/images/partys/Desayunos Sorpresa/desayunos3.jpg", alt: "Desayuno Sorpresa 3" },
+        { src: "/assets/images/partys/Desayunos Sorpresa/desayunos4.jpg", alt: "Desayuno Sorpresa 4" }
+      ],
+      4: [
+        { src: "/assets/images/partys/Mesas para fiesta picnic/picnic1.jpg", alt: "Mesa para Picnic 1" },
+        { src: "/assets/images/partys/Mesas para fiesta picnic/picnic2.jpg", alt: "Mesa para Picnic 2" },
+        { src: "/assets/images/partys/Mesas para fiesta picnic/picnic3.jpg", alt: "Mesa para Picnic 3" },
+        { src: "/assets/images/partys/Mesas para fiesta picnic/picnic4.jpg", alt: "Mesa para Picnic 4" }
+      ],
+      5: [
+        { src: "/assets/images/partys/Regalos personalizados/regalos1.jpg", alt: "Decoración Temática 1" },
+        { src: "/assets/images/partys/Regalos personalizados/regalos2.jpg", alt: "Decoración Temática 2" },
+        { src: "/assets/images/partys/Regalos personalizados/regalos3.jpg", alt: "Decoración Temática 3" },
+        { src: "/assets/images/partys/Regalos personalizados/regalos4.jpg", alt: "Decoración Temática 4" }
+      ]
+    };
+
+    // Títulos de las secciones para el modal
+    const sectionTitles = {
+      1: "Gallery of Events",
+      2: "Decorations",
+      3: "Surprise Breakfasts",
+      4: "Picnic Party Tables",
+      5: "Rentals"
+    };
+
+    // Función para abrir el carrusel y cargar las imágenes dinámicamente
+    function openCarousel(sectionId, index) {
+      const images = sectionsImages[sectionId];
+      const carouselInner = document.getElementById('carouselInner');
+      const modalTitle = document.getElementById('carouselModalLabel');
+
+      // Actualizar el título del modal
+      modalTitle.textContent = sectionTitles[sectionId];
+
+      // Limpiar el carrusel
+      carouselInner.innerHTML = '';
+
+      // Generar los elementos del carrusel dinámicamente
+      images.forEach((image, i) => {
+        const div = document.createElement('div');
+        div.className = `carousel-item ${i === index ? 'active' : ''}`;
+        const img = document.createElement('img');
+        img.src = image.src;
+        img.className = 'd-block w-100';
+        img.alt = image.alt;
+        div.appendChild(img);
+        carouselInner.appendChild(div);
+      });
+    }
+  </script>
+
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+  <script src="../assets/js/cursor.js"></script>
+  <script src="../assets/js/sliders.js"></script>
+  <script src="../assets/js/config.js"></script>
+  <script src="../assets/js/main.js"></script>
+  <script src="../assets/js/script.js"></script>
+  <script src="../assets/js/modal.js"></script>
+  <script src="../assets/js/translation.js"></script>
+   
+
+    
+    
+</body>
+</html>

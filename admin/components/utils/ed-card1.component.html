@@ -1,0 +1,50 @@
+<div class="card border-0 mb-3 {{cardTheme}} shadow">
+    <div class="card-body">
+        <div class="d-flex justify-content-between">
+            <h3 class="mx-2 text-uppercase">
+                {{nombre_cliente}}
+            </h3>
+        </div>
+        <div class="align-items-center d-grid d-md-flex justify-content-between">
+            <div class="align-items-center d-block d-md-flex mb-1">
+                <div>
+                    <a role="button" class="btn email-customer" href="mailto:{{correo_cliente}}">
+                        <span><i class="fa-solid fa-envelope"></i></span>
+                        <span class="email-customer">{{correo_cliente}}</span>
+                    </a>
+                </div>
+                <span class="d-md-block d-none">
+                    &#8226;
+                </span>
+                <div>
+                    <a role="button" class="btn" href="tel:+{{telefono_cliente}}">
+                        <span><i class="fa-solid fa-phone"></i></span>
+                        <span>Tel +1{{telefono_cliente}}</span>
+                    </a>
+                </div>
+            </div>
+            <div class="mx-2">
+                <button id="state" class="{{button_class}}" data-bs-toggle="modal" data-bs-target="#confirmStatusModal" data-event-id="{{event_id}}" {{button_disabled}}>{{button_text}}</button>
+            </div>
+        </div>
+        <hr class="mb-0">
+    </div>
+
+    <!-- Modal de confirmación -->
+<div class="modal fade" id="confirmStatusModal" tabindex="-1" aria-labelledby="confirmStatusModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="confirmStatusModalLabel">Confirmar cambio de estado</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                ¿Desea cambiar el estado del evento a Finalizado?
+            </div>
+            <div class="modal-footer d-flex justify-content-between">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary" id="confirmStatusButton">Confirmar</button>
+            </div>
+        </div>
+    </div>
+</div>

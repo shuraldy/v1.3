@@ -1,0 +1,888 @@
+html,
+body{
+    scroll-behavior: smooth;
+}
+
+.separator{
+    background: #00abba;
+    height: 30px;
+}
+
+.page-container{
+    background-image: linear-gradient(180deg, #00abba, transparent);
+}
+
+.kl-header-container{
+    transition: .3s;
+}
+
+.kl-active{
+    color: #ff1493 !important;
+    text-shadow: -3px 3px 3px #ffffff54;
+}
+
+.navbar-nav-kl{
+    list-style: none;
+}
+
+input, select{
+    height: 50px;
+}
+
+.main-header-image{
+    width: 120px;
+}
+
+.btn-kl{
+    width: 170px;
+    height: 44px;
+    background-color: #ff1493;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    border: none;
+    color: #161616;
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: 800;
+    text-transform: capitalize;
+    -webkit-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+    -ms-transition: all 0.3s ease;
+    -o-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+}
+
+.btn-kl-mob{
+    width: 130px;
+    height: 40px;
+    background-color: #ff1493;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    border: none;
+    color: #161616;
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: 800;
+    text-transform: capitalize;
+    -webkit-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+    -ms-transition: all 0.3s ease;
+    -o-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+}
+
+
+.btn-kl-menu{
+    width: 40px;
+    height: 40px;
+    border-radius: 50% !important;
+    background-color: #ff1493;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    border: none;
+    color: #161616;
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: 800;
+    text-transform: capitalize;
+    -webkit-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+    -ms-transition: all 0.3s ease;
+    -o-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+}
+
+.btn-kl:hover{
+    background-color: white;
+}
+
+.nav-link-kl{
+    color: rgb(0 0 0);
+}
+
+.nav-link-kl:hover{
+    color: #ff1493;
+    opacity: 1;
+}
+
+.package-bg{
+    background: #d41881;
+    color: black;
+}
+
+section{
+    height: 100%;
+    min-height: 100dvh;
+}
+
+.page-hero{
+    height: 450px;
+}
+
+.bg-kl-footer {
+    background-color: #c91e61; /* fucsia oscuro o adapta a tu paleta */
+}
+
+.love-ya {
+    font-family: "Love Ya Like A Sister", cursive;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.azeret{
+    font-family: "Azeret Mono";
+}
+
+h1.love-ya{
+    color: #d41280;
+    text-shadow: 0 2px 4px #ffffff;
+}
+
+.fs-kl-35{
+    font-size: 3.5rem;
+}
+
+.fs-kl-14px{
+    font-size: 14px;
+}
+
+.p-main-title{
+    color: rgba(82, 82, 82, 0.53);
+    line-height: 22px;
+    max-width: 634px;
+    margin: auto;
+    margin-bottom: 50px;
+}
+
+
+.main-sec-1{
+    padding-top: 4rem;
+}
+
+/* background animations */
+@keyframes flicker {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
+}
+
+@keyframes rotate360 {
+    from {
+        transform: rotate(0deg) scale(1);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes movedown {
+    0% {
+      -webkit-transform: translate(0);
+      transform: translate(0);
+    }
+    50% {
+        -webkit-transform: translateY(15px);
+        transform: translateY(15px);
+    }
+    100% {
+        -webkit-transform: translate(0);
+        transform: translate(0);
+    }
+}
+
+@keyframes moveleft {
+    0% {
+      -webkit-transform: translate(0);
+      transform: translate(0);
+    }
+    50% {
+        -webkit-transform: translate(-15px);
+        transform: translate(-15px);
+    }
+    100% {
+        -webkit-transform: translate(0);
+        transform: translate(0);
+    }
+}
+
+@keyframes scale1 {
+    0% {
+		transform: scale(1);
+	}
+	50% {
+		transform: scale(1.2);
+	}
+	100% {
+		transform: scale(1);
+	}
+}
+
+/* icon-background */
+.icon-background{
+    top: -350px;
+    width: 85%;
+}
+
+.icon-background .item1 {
+    left: 37px;
+    top: 201px;
+    animation: flicker 3s infinite linear alternate;
+    animation-delay: 1.5s;
+}
+
+.icon-background .item2 {
+    left: 140px;
+    top: 72px;
+    animation: rotate360 1.5s infinite linear;
+}
+
+.icon-background .item3 {
+    left: 239px;
+    top: 188px;
+    animation: movedown 3s infinite linear alternate;
+}
+
+.icon-background .item4 {
+    left: 341px;
+    top: 307px;
+    animation: flicker 3s infinite linear alternate;
+}
+
+.icon-background .item5 {
+    right: 357px;
+    top: 271px;
+    animation: flicker 3s infinite linear alternate;
+}
+
+.icon-background .item6 {
+    right: 280px;
+    top: 143px;
+    animation: moveleft 3s infinite linear;
+}
+
+.icon-background .item7 {
+    right: 119px;
+    top: 236px;
+    animation: scale1 3s infinite linear;
+    animation-delay: 1.5s;
+}
+
+.icon-background .item8 {
+    right: 28px;
+    top: 83px;
+    width: 19px;
+    height: 20px;
+    animation: scale1 3s infinite linear;
+}
+
+
+
+/* cursor */
+.cursor-dot,
+.cursor-circle {
+  position: fixed;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+}
+
+/* Punto central */
+.cursor-dot {
+  width: 8px;
+  height: 8px;
+  background: #ff1493;
+  border-radius: 50%;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+/* Círculo alrededor */
+.cursor-circle {
+  width: 40px;
+  height: 40px;
+  border: 2px solid #ff1493;
+  border-radius: 50%;
+  transition: transform 0.2s ease, opacity 0.3s ease;
+  opacity: 1;
+}
+
+/* Estado al pasar por elementos interactivos */
+.hover-effect .cursor-dot {
+  transform: scale(8);
+  opacity: 0.4;
+}
+
+.hover-effect .cursor-circle {
+  opacity: 0;
+}
+
+
+
+
+/* sliders */
+/* Slider wrapper */
+.slider {
+    margin: 0 auto;
+    overflow: hidden;
+    width: 75%;
+    /* width: 100%;  */
+    /* mejor para responsive */
+    padding: 0 10px;
+}
+  
+.slider__item {
+    display: inline-flex;
+    width: 300px;
+    height: auto;
+    margin-left: 20px;
+    color: #fff;
+    align-items: center;
+    justify-content: center;
+    border-radius: 6px;
+}
+
+.slider__item .card{
+    background-color: #d41280;
+    box-shadow: #000000b8 0px 8px 15px 0px;
+    cursor: pointer;
+}
+
+.slider .slick-list {
+    padding: 0 85% 0 0;
+}
+
+.slick-list{
+    margin: 1.5rem 0 2rem 0;
+}
+
+.slider__item .card img{
+    height: 280px;
+    max-height: 300px;
+    object-fit: cover;
+}
+
+.kl-card-body{
+    left: 0px;
+    transition: .3s;
+}
+
+
+
+/* Grow */
+.hvr-grow {
+    display: inline-block;
+    vertical-align: middle;
+    -webkit-transform: perspective(1px) translateZ(0);
+    transform: perspective(1px) translateZ(0);
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+    -webkit-transition-duration: 0.3s;
+    transition-duration: 0.3s;
+    -webkit-transition-property: transform;
+    transition-property: transform;
+  }
+  .hvr-grow:hover, .hvr-grow:focus, .hvr-grow:active {
+    -webkit-transform: scale(1.1);
+    transform: scale(1.1);
+  }
+
+
+  .about-img-style {
+    max-width: 100%;
+    height: auto;
+    border-radius: 15px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    transition: transform 0.4s ease;
+}
+.about-img-style:hover {
+    transform: scale(1.05);
+}
+
+/* admin */
+
+/* Ajustes seleccion de paquete */
+.accordion-body{
+    max-height: calc(100vh - 32rem);
+    overflow-y: auto;
+}
+.resume-container{
+    max-height: calc(100vh - 24rem);
+    overflow-y: auto;
+}
+
+
+.package-card {
+    width: 200px; /* Aumentamos el ancho de 200px a 250px */
+    min-height: 250px; /* Añadimos una altura mínima para que la tarjeta sea más alta */
+    flex-shrink: 0;
+    transition: transform 0.2s;
+}
+
+.package-card:hover {
+    transform: scale(1.05);
+}
+
+.package-card input[type="radio"] {
+    display: none;
+}
+
+.package-card label {
+    cursor: pointer;
+    display: flex;
+    flex-direction: column; /* Aseguramos que los elementos se apilen verticalmente */
+    padding: 15px; /* Aumentamos el padding para más espacio interno */
+    border: 2px solid transparent;
+    border-radius: 15px;
+    background: #fff;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    text-align: center; /* Centrar el texto */
+    height: 100%; /* Aseguramos que el label ocupe toda la altura de la tarjeta */
+}
+
+.package-card input[type="radio"]:checked + label {
+    border-color: #d41280;
+    background: #f8f9fa;
+    border-left-width: thick;
+
+}
+
+.package-card img {
+    height: 120px; /* Aumentamos la altura de la imagen */
+    width: 100%;
+    object-fit: cover;
+    border-radius: 5px;
+}
+
+/* Ajustes para el texto dentro de la tarjeta */
+.package-card h6 {
+    font-size: 1.1rem; /* Ligeramente más grande para el título */
+    margin: 0.5rem 0;
+    white-space: normal; /* Permitimos que el título se divida en varias líneas si es necesario */
+    color: #d41280;
+}
+
+.package-card p {
+    font-size: 0.85rem; /* Tamaño de fuente ajustado para la descripción y precio */
+    margin: 0.25rem 0;
+    line-height: 1.3; /* Mejora la legibilidad */
+    color: #555; /* Color de texto más suave */
+}
+
+/* Ajuste específico para la descripción */
+.package-card p.small {
+    flex-grow: 1; /* Permitimos que la descripción ocupe el espacio disponible */
+    white-space: normal; /* Permitimos que el texto se divida en varias líneas */
+    overflow: visible; /* Aseguramos que el texto no se oculte */
+    text-overflow: clip; /* Evitamos elipsis */
+}
+
+/* Ajuste para el precio y duración */
+.package-card p.fw-bold {
+    font-size: 0.9rem; /* Tamaño de fuente para el precio */
+    white-space: normal; /* Permitimos que el precio se divida en varias líneas si es necesario */
+    margin-top: auto; /* Empujamos el precio hacia abajo */
+}
+
+.modal-custom-width {
+    max-width: 700px; /* Ajusta este valor según el ancho que desees */
+    width: 100%; /* Asegura que el modal use todo el ancho disponible hasta el max-width */
+    /* margin: 0 auto; */
+}
+
+/* Ajustes de personajes */
+
+.character-options {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* Dos columnas de igual ancho */
+    gap: 10px; /* Espacio entre los elementos */
+    height: auto; /* Altura máxima para permitir scroll si hay muchos personajes */
+    overflow-y: auto; /* Scroll vertical si hay muchos personajes */
+    padding: 10px;
+}
+
+/* .character-options .form-check {
+    padding: 5px;
+    background: #f8f9fa;
+    border-radius: 5px;
+} */
+
+.character-options .form-check-input:disabled + .form-check-label {
+    color: #6c757d; /* Color gris para los personajes no disponibles */
+    cursor: not-allowed;
+}
+
+/* productos adicionales */
+
+.product-options {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* Dos columnas de igual ancho */
+    gap: 10px; /* Espacio entre los elementos */
+    max-height: 800px; /* Altura máxima para permitir scroll si hay muchos productos */
+    overflow-y: auto; /* Scroll vertical si hay muchos productos */
+    padding: 10px;
+
+}
+
+.product-options .form-check {
+    padding-right: 10px;
+    /* background: #f8f9fa; */
+    /* border-radius: 5px; */
+    color: #ffffff;
+}
+
+.product-options .form-check-input:disabled + .form-check-label {
+    color: #7d6c6c; /* Color gris para los productos no disponibles */
+    cursor: not-allowed;
+}
+
+.product-options .form-check-label small {
+    display: block; /* Aseguramos que la descripción ocupe una nueva línea */
+    line-height: 1.2; /* Mejora la legibilidad */
+    margin-top: 2px; /* Espacio entre el nombre/precio y la descripción */
+}
+
+/* tarjeta de la orden */
+/* Estilos para la tarjeta de resumen de la orden */
+
+
+/* Estilos para el botón "Agregar personajes" */
+.add-characters-btn {
+    margin-left: 5px; /* Ajusta este valor según tus necesidades */
+}
+
+/* Estilos para el checklist de personajes adicionales (dentro del modal) */
+.characters-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* Dos columnas de igual ancho */
+    gap: 0.5rem; /* Espacio entre los elementos */
+    max-height: 400px; /* Altura máxima con scroll */
+    overflow-y: auto; /* Scroll vertical si es necesario */
+}
+
+.additional-character-item {
+    padding: 0.5rem 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2); /* Separador sutil */
+}
+
+.additional-character-item:last-child {
+    border-bottom: none;
+}
+
+.additional-character-item .form-check-input {
+    margin-right: 0.5rem;
+}
+
+.additional-character-item .form-check-input:disabled {
+    opacity: 0.5; /* Reducir opacidad para indicar que está deshabilitado */
+    cursor: not-allowed; /* Cursor que indica que no se puede interactuar */
+}
+
+.additional-character-item .form-check-label {
+    font-size: 0.95rem;
+    color: #333;
+}
+
+.additional-character-item .form-check-label strong {
+    color: #203, 46, 79; /* Color del nombre del personaje */
+}
+
+.additional-character-item .form-check-label.text-muted {
+    color: #999; /* Color más tenue para los personajes deshabilitados */
+}
+
+.additional-character-item .form-check-label small {
+    display: block; /* Mostrar el texto adicional en una nueva línea */
+    font-size: 0.85rem;
+    color: #666;
+}
+
+/* Estilos para el modal */
+
+
+
+/* Estilos para la lista de personajes adicionales en el resumen */
+#additionalCharactersList p {
+    font-size: 0.95rem;
+    color: #333;
+}
+
+#additionalCharactersList .text-muted {
+    font-style: italic;
+}
+
+/* Ajustes para pantallas pequeñas */
+@media (max-width: 767px) {
+    /* En pantallas pequeñas, la lista de personajes vuelve a una sola columna */
+    .characters-grid {
+        grid-template-columns: 1fr; /* Una sola columna */
+    }
+
+    /* Ajustar el botón en pantallas pequeñas */
+    .add-characters-btn {
+        width: 100%; /* Hacer el botón de ancho completo */
+        margin-left: 0; /* Quitar el margin-left en pantallas pequeñas */
+        margin-top: 1rem; /* Añadir un margen superior para separarlo de la tarjeta */
+    }
+}
+
+/* Aseguramos que las fuentes se apliquen correctamente */
+.love-ya {
+    font-family: "Love Ya Like A Sister", cursive;
+}
+
+.azeret {
+    font-family: "Azeret Mono", monospace;
+}
+
+
+
+/* Ajustes para la tarjeta de productos adicionales */
+
+.product-item, .character-item {
+    display: flex;
+    align-items: center;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.product-item:last-child, .character-item:last-child {
+    border-bottom: none;
+}
+
+.product-item img {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 5px;
+    margin-right: 1rem;
+}
+
+.product-item .form-check, .character-item .form-check {
+    flex-grow: 1;
+    margin-bottom: 0;
+}
+
+.product-item .form-check-label, .character-item .form-check-label {
+    font-size: 0.95rem;
+    color: #333;
+}
+
+.product-item .form-check-label strong, .character-item .form-check-label strong {
+    color: #d41280;
+}
+
+.product-item .form-check-label small, .character-item .form-check-label small {
+    display: block;
+    font-size: 0.85rem;
+    color: #666;
+}
+
+.form-control:focus, .form-select:focus {
+    border-color: #ff1493;
+    box-shadow: 0 0 5px rgba(255, 20, 147, 0.5);
+    background: #fff;
+}
+
+.add-options-btn {
+    background-color: #ff1493;
+    color: #161616;
+    border: none;
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: 800;
+    text-transform: capitalize;
+    transition: all 0.3s ease;
+    width: 48%;
+}
+
+.add-options-btn:hover:not(:disabled) {
+    background-color: white;
+}
+
+.add-options-btn:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+.add-options-btn.continue-btn {
+    background-color: #00c4b4;
+}
+
+.add-options-btn.continue-btn:hover:not(:disabled) {
+    background-color: #00a69a;
+}
+
+.cancel-options-btn {
+    background-color: #6c757d;
+    color: #fff;
+    border: none;
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: 800;
+    text-transform: capitalize;
+    transition: all 0.3s ease;
+    width: 48%;
+}
+
+.pay-btn {
+    background-color: #ff1493;
+    color: #161616;
+    border: none;
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: 800;
+    text-transform: capitalize;
+    transition: all 0.3s ease;
+}
+
+.cancel-options-btn:hover {
+    background-color: #5a6268;
+}
+
+.service-option {
+  width: 24px !important;
+  height: 24px !important;
+}
+
+/* estilo de los servicios */
+
+.service-description {
+      font-size: 1.1rem;
+      color: #333;
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+
+    .service-images {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+    }
+
+    .service-images img {
+      width: 100%;
+      height: 150px;
+      object-fit: cover;
+      border-radius: 10px;
+      cursor: pointer;
+      border: 3px solid #ff1493; /* Borde turquesa */
+      transition: transform 0.3s ease;
+    }
+
+    .service-images img:hover {
+      transform: scale(1.05);
+    }
+
+    /* Estilos para el carrusel dentro del modal */
+    .carousel-item img {
+      border-radius: 10px;
+      max-height: 500px;
+      object-fit: contain;
+      margin: 0 auto;
+    }
+
+    .carousel-control-prev-icon,
+    .carousel-control-next-icon {
+      background-color: rgba(0, 0, 0, 0.5);
+      border-radius: 50%;
+    }
+
+ /* Ajustes para centrar el texto y la tarjeta */
+        /* Ajustes para centrar el texto y la tarjeta */
+    .products-services .row {
+      justify-content: center;
+      align-items: center; /* Centra verticalmente */
+    }
+
+    .service-description {
+      text-align: center; /* Centrar el texto */
+    }
+
+    .package-card.wider {
+      width: 100%;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    /* Reducir el espacio entre secciones */
+    .products-services {
+      min-height: auto !important; /* Anula el min-height: 100dvh */
+      height: auto !important; /* Ajusta la altura al contenido */
+      margin-bottom: 30px; /* Espacio entre secciones */
+    }
+
+    @media (max-width: 767px) {
+      .package-card.wider {
+        max-width: 100%;
+      }
+      .products-services {
+        margin-bottom: 20px; /* Menor espacio en pantallas pequeñas */
+      }
+      /* Asegurar que el texto aparezca primero y las imágenes después en todas las secciones */
+      .products-services .row .col-md-5:has(.service-description) {
+        order: -1; /* Texto primero */
+      }
+      .products-services .row .col-md-5:has(.package-card) {
+        order: 1; /* Imágenes después */
+      }
+    }
+
+
+/* media queryes */
+@media only screen and (max-width: 1440px) {
+    .icon-background {
+        width: inherit;
+    }
+}
+
+@media only screen and (max-width: 1024px) {
+    .slider .slick-list {
+        padding: 0 67% 0 0;
+    }
+    .about-main-image{
+        height: 300px;
+        /* object-fit: contain; */
+        object-position: inherit;
+    }
+}
+
+@media only screen and (max-width: 992px) {
+    .page-hero{
+        height: 300px;
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    .main-header-image{
+        width: 90px;
+    }
+    .slider{
+        width: initial;
+    }
+    .character-options {
+        grid-template-columns: repeat(1, 1fr);
+    }
+    .accordion-body{
+        padding: .25rem !important;
+        max-height: calc(100vh - 15rem);
+    }
+    .resume-container {
+        max-height: max-content;
+    }
+    .fs-kl-35 {
+        font-size: 2rem;
+    }
+}
+
+@media only screen and (max-width: 425px) {
+    .slider .slick-list {
+        padding: 0 50% 0 0;
+    }
+}

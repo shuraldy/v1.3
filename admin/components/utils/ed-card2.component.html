@@ -1,0 +1,189 @@
+<div class="card border-0 {{cardTheme}} shadow">
+    <div class="card-body">
+
+        <div class="card mb-3 {{cardTheme}} border-0">
+            <div class="bg-body-secondary card-body border-0 rounded">
+                <div class="mb-2 px-2">
+                    <div class="align-items-center d-flex justify-content-between">
+                        <div class="col-9">
+                            <h2 class="m-0">Datos del agendamiento</h2>
+                        </div>
+                        <div class="align-items-center border d-flex justify-content-center text-bg-secondary col-2 a-ico">
+                            <i class="fa-solid fa-calendar-days"></i>
+                        </div>
+                    </div>
+                    <small class="text-secondary">Resumen de la solicitud: ubicación del evento y hora de inicio.</small>
+                </div>
+                <ul class="list-group">
+                    <li class="list-group-item border-0 {{cardTheme}}">
+                        <div class="align-items-center d-flex">
+                            <span class="a-ico align-items-center d-flex justify-content-center">
+                                <i class="fa-solid fa-map-location-dot"></i>
+                            </span>
+                            <div>
+                                <h6 class="m-0">Ciudad</h6>
+                                <small class="text-secondary city-name">{{nombre_ciudad}}</small>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="list-group-item border-0 {{cardTheme}}">
+                        <div class="align-items-center d-flex">
+                            <span class="a-ico align-items-center d-flex justify-content-center">
+                                <i class="fa-solid fa-street-view"></i>
+                            </span>
+                            <div>
+                                <h6 class="m-0">Dirección</h6>
+                                <small class="text-secondary address-event">{{direccion_evento}}</small>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="list-group-item border-0 {{cardTheme}}">
+                        <div class="align-items-center d-flex">
+                            <span class="a-ico align-items-center d-flex justify-content-center">
+                                <i class="fa-solid fa-calendar-check"></i>
+                            </span>
+                            <div>
+                                <h6 class="m-0">Fecha del evento</h6>
+                                <small class="text-secondary event-date">{{fecha_evento}}</small>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="list-group-item border-0 {{cardTheme}}">
+                        <div class="align-items-center d-flex">
+                            <span class="a-ico align-items-center d-flex justify-content-center">
+                                <i class="fa-solid fa-clock"></i>
+                            </span>
+                            <div>
+                                <h6 class="m-0">Hora de inicio</h6>
+                                <small class="text-secondary start-event">{{hora_inicio}}</small>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="list-group-item border-0 {{cardTheme}}">
+                        <div class="align-items-center d-flex">
+                            <span class="a-ico align-items-center d-flex justify-content-center">
+                                <i class="fa-solid fa-stopwatch"></i>
+                            </span>
+                            <div>
+                                <h6 class="m-0">Hora final</h6>
+                                <small class="text-secondary end-event">{{hora_fin}}</small>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="list-group-item border-0 {{cardTheme}}">
+                        <div class="align-items-center d-flex">
+                            <span class="a-ico align-items-center d-flex justify-content-center">
+                                <i class="fa-solid fa-hourglass-start"></i>
+                            </span>
+                            <div>
+                                <h6 class="m-0">Duración en minutos</h6>
+                                <small class="text-secondary time-out">{{duracion_hora}}</small>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="list-group-item border-0 {{cardTheme}}">
+                        <div class="align-items-center d-flex">
+                            <span class="a-ico align-items-center d-flex justify-content-center">
+                                <i class="fa-solid fa-mask"></i>
+                            </span>
+                            <div>
+                                <h6 class="m-0">Personaje principal</h6>
+                                <small class="text-secondary time-out">{{nombre_personaje_principal}}</small>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="list-group-item border-0 {{cardTheme}}">
+                        <div class="align-items-center d-flex">
+                            <span class="a-ico align-items-center d-flex justify-content-center">
+                                <i class="fa-solid fa-money-bill-1"></i>
+                            </span>
+                            <div>
+                                <h6 class="m-0">Precio total del evento</h6>
+                                <small class="text-secondary total-price">$ {{precio_evento}}</small>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="card mb-3 {{cardTheme}} border-0">
+            <div class="bg-body-secondary card-body border-0 rounded">
+                
+                <div class="mb-2 px-2">
+                    <div class="align-items-center d-flex justify-content-between">
+                        <div class="col-9">
+                            <h2 class="m-0">Paquete seleccionado</h2>
+                        </div>
+                        <div class="align-items-center border d-flex justify-content-center text-bg-secondary col-2 a-ico">
+                            <i class="fa-solid fa-cube"></i>
+                        </div>
+                    </div>
+                    <small class="text-secondary package-name">{{nombre_paquete}}</small>
+                    <small class="text-secondary">$</small><small class="text-secondary package-price">{{valor_paquete}}</small>
+                </div>
+
+                <div class="accordion" id="accordionExample">
+                    <div class="accordion-item">
+                      <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                          Descripción del paquete
+                        </button>
+                      </h2>
+                      <div id="collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                        <div class="accordion-body">
+                            <ol class="list-group list-group-numbered">
+                                {{descripcion_paquete}}
+                            </ol>
+                        </div>
+                      </div>
+                    </div>
+                  </div>                
+            </div>
+        </div>
+
+        <div class="card mb-3 {{cardTheme}} border-0">
+            <div class="bg-body-secondary card-body border-0 rounded">
+                
+                <div class="mb-2 px-2">
+                    <div class="align-items-center d-flex justify-content-between">
+                        <div class="col-9">
+                            <h2 class="m-0">Productos adicionales</h2>
+                        </div>
+                        <div class="align-items-center border d-flex justify-content-center text-bg-secondary col-2 a-ico">
+                            <i class="fa-solid fa-star"></i>
+                        </div>
+                    </div>
+                    <small id="productos-subtotal" class="text-secondary">Subtotal ${{subtotal_productos}}</small>
+                </div>
+        
+                <ol id="productos-lista" class="list-group list-group-numbered">
+                    {{productos_adicionales_html}}
+                </ol>
+        
+            </div>
+        </div>
+
+        <div class="card mb-3 {{cardTheme}} border-0">
+            <div class="bg-body-secondary card-body border-0 rounded">
+                
+                <div class="mb-2 px-2">
+                    <div class="align-items-center d-flex justify-content-between">
+                        <div class="col-9">
+                            <h2 class="m-0">Personajes adicionales</h2>
+                        </div>
+                        <div class="align-items-center border d-flex justify-content-center text-bg-secondary col-2 a-ico">
+                            <i class="fa-solid fa-mask"></i>
+                        </div>
+                    </div>
+                    <small id="personajes-subtotal" class="text-secondary">Subtotal ${{subtotal_personajes}}</small>
+                </div>
+                <ol id="personajes-lista" class="list-group list-group-numbered">
+                    {{personajes_adicionales_html}}
+                </ol>
+                
+            </div>
+        </div>
+
+    </div>
+</div>

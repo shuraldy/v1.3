@@ -1,0 +1,68 @@
+<div class="container-fluid px-0 h-100">
+    <div class="row h-100 g-0">
+      <!-- Sidebar -->
+      <div class="sidebar col-2 d-none d-md-block text-bg-dark">
+        <div class="text-center">
+          <img src="../../../assets/images/icons/main-header-image.gif"
+               alt=""
+               draggable="false"
+               class="p-2"
+               style="height: 54px; object-fit: contain;">
+        </div>
+        <hr class="m-0">
+        <div class="d-grid p-5 px-3"> 
+            <!-- align-items-center -->
+          <nav class="nav flex-column">
+            <a class="btn text-start btn-dark mb-2 kl-menu-item"
+               role="button"
+               href="#"
+               data-path="">
+              <div class="h-35 d-flex align-items-center">
+                <span class="mx-3"><i class="fa-solid fa-house"></i></span>
+                <span>Inicio</span>
+              </div>
+            </a>
+            <a class="btn text-start btn-dark mb-2 kl-menu-item"
+               role="button"
+               href="#dashboard"
+               data-path="dashboard">
+              <div class="h-35 d-flex align-items-center">
+                <span class="mx-3"><i class="fa-solid fa-chart-line"></i></span>
+                <span>Dashboard</span>
+              </div>
+            </a>
+            <a class="btn text-start btn-dark mb-2 kl-menu-item"
+               role="button"
+               href="#config"
+               data-path="config">
+              <div class="h-35 d-flex align-items-center">
+                <span class="mx-3"><i class="fa-solid fa-gear"></i></span>
+                <span>Configuración</span>
+              </div>
+            </a>
+          </nav>
+        </div>
+      </div>
+  
+      <!-- Main Content -->
+      <div class="col bg-light admin-component">
+        <nav class="bg-white navbar position-sticky top-0 main-navbar">
+          <div class="container-fluid d-flex justify-content-end">
+            <button class="btn btn-light nav-main-btn d-none d-md-block" id="logOutWebBtn">
+              <i class="fa-solid fa-right-from-bracket"></i>
+            </button>
+            <button class="btn btn-light nav-main-btn d-md-none d-block" id="menuMobBtn">
+              <i class="fa-solid fa-ellipsis-vertical"></i>
+            </button>
+          </div>
+        </nav>
+  
+        <div class="container mt-3 content-wrapper">
+          <content-outlet class="d-block overflow-auto"></content-outlet>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <modal-outlet></modal-outlet>
+  <offcanvas-outlet></offcanvas-outlet>

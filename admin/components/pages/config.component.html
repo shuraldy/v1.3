@@ -1,0 +1,66 @@
+<div class="{{themeClass}} container fade-in p-2 p-md-4 rounded-3 screen-container">
+    <div class="mb-3">
+        <div class="d-flex">
+          <button class="btn" style="width: 50px;" onclick="history.back()">
+              <i class="fa-solid fa-chevron-left"></i>
+          </button>
+          <h1 class="fw-semibold m-1">Configuración</h1>
+      </div>
+    </div>
+    <div class="mb-3">
+        <div>
+            <div class="accordion" id="accordionExample">
+                <div class="accordion-item">
+                  <h2 class="accordion-header">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                      <span class="mx-2">
+                        <i class="fa-solid fa-moon"></i>
+                      </span>
+                      <span>
+                        Modo oscuro
+                      </span>
+                    </button>
+                  </h2>
+                  <div id="collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                    <div class="accordion-body d-flex">
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" role="switch" id="switchDarkModeChecked">
+                            <label class="form-check-label" for="switchDarkModeChecked">Activado</label>
+                        </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- crud_locations -->
+                <div class="accordion-item">
+                  <h2 class="accordion-header">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                      Ubicaciones
+                    </button>
+                  </h2>
+                  <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+                      <button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#createLocationModal">
+                        Crear Nueva Ubicación
+                      </button>
+                      <div id="locations-table-outlet"></div>
+                    </div>
+                  </div>
+                </div>
+                <!-- crud_characters -->
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                            Personajes
+                        </button>
+                    </h2>
+                    <div id="collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                        <div class="accordion-body">
+                            <div id="characters-table-outlet"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

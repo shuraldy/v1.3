@@ -1,0 +1,57 @@
+<!-- Modal -->
+<div class="modal fade" id="scheduleModal" tabindex="-1" aria-labelledby="scheduleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" style="max-width: 700px">
+      <div class="modal-content modal-content text-bg-dark">
+        <div class="modal-header border-0">
+          <h1 class="modal-title fs-5 lang-elem" id="scheduleModalLabel" data-lang="aviability-modal">Ver disponibilidad</h1>
+          <button type="button" class="border btn-close btn-close-white rounded-5" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div>
+              <div>
+              <div class="row">
+                <!-- Selector de ubicación -->
+                <div class="mb-3 col-md-6 col-12">
+                  <label for="locationSelect" class="form-label fs-3 fw-bold lang-elem" data-lang="location">Ubicación</label>
+                  <select class="form-select" id="locationSelect" onchange="checkAvailabilityAction()"></select>
+                </div>
+
+                <!-- Fecha y hora -->
+                <div class="mb-3 col-md-6 col-12">
+                    <label for="dt" class="form-label fs-3 fw-bold lang-elem" data-lang="date-hour">Fecha y hora</label>
+                    <input type="datetime-local" class="form-control" id="dt" aria-describedby="emailHelp" autocomplete="off">
+                </div>
+              </div>
+              </div>
+              <!-- Selector de paquetes -->
+              <div class="mb-5">
+                  <label class="form-label fs-3 fw-bold lang-elem" data-lang="select-package">Seleccione un paquete</label>
+                  <div class="package-container">
+                      <div class="card text-bg-dark">
+                        <div class="card-body p-0 p-md-3">
+                          <div id="packageOptions"></div>
+                        </div>
+                      </div>
+                  </div>
+              </div>
+              <!-- Selector de personajes (inicialmente oculto) -->
+              <div class="mb-5" id="characterSelector" style="display: none;">
+                <label class="form-label fs-3 fw-bold lang-elem" data-lang="character">Seleccione un personaje para el paquete</label>
+                <div class="border border-3 border-secondary character-options m-2 p-3 rounded-3" id="characterOptions"></div>
+              </div>
+          </div>
+        </div>
+        <div class="modal-footer border-0">
+          <div class="w-100">
+            <!-- Mensaje de disponibilidad -->
+            <div id="availabilityMessage" class="mb-3"></div>
+            <div class="text-end">
+              <!-- <button type="button" class="btn btn-primary" id="checkBtn">Revisar</button> -->
+              <button type="button" class="btn btn-success lang-elem" id="continueBtn" style="display: none;" data-lang="continueBtn">Continuar</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>

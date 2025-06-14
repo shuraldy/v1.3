@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KL Party's | Contact</title>
+    <!-- bootstrap -->
+    <link 
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" 
+    rel="stylesheet" 
+    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" 
+    crossorigin="anonymous">
+    <script 
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" 
+    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" 
+    crossorigin="anonymous">
+    </script>
+    <!-- ----- -->
+
+    <!-- Fontawesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+    <!-- ------------ -->
+
+    <!-- fonts -->
+    <link rel="preconnect" 
+    href="https://fonts.googleapis.com">
+    <link 
+    rel="preconnect" 
+    href="https://fonts.gstatic.com" 
+    crossorigin>
+    <link 
+    href="https://fonts.googleapis.com/css2?family=Azeret+Mono:ital,wght@0,100..900;1,100..900&family=Love+Ya+Like+A+Sister&display=swap" 
+    rel="stylesheet">
+    <!-- ----- -->
+
+    <!-- kl styles -->
+    <link rel="stylesheet" href="../assets/css/styles.css">
+    <!-- ----- -->
+
+
+
+</head>
+<body onresize="rezise()">
+
+  <section class="bg-light h-100 opacity-25 position-fixed w-100" id="loader" style="z-index: 9999;"></section>
+
+  <div class="separator"></div>
+
+  <!-- header -->
+  <div class="kl-header-container position-sticky z-1" style="background: #00abba;">
+    <nav class="navbar navbar-expand-lg container">
+      <div class="container-fluid">
+        <a class="col-1 col-md-auto navbar-brand" href="#">
+          <img src="../assets/images/icons/main-header-image.gif" alt="" class="main-header-image">
+        </a>
+        <div class="navbar-toggler border-0">
+          <div class="d-flex justify-content-end">
+            <button class="btn btn-kl-mob lang-elem shadow" id="checkAvailabilityMobBtn" disabled data-lang="aviability-button">
+              Schedule
+            </button>
+            <div class="dropdown-center">
+              <button class="btn border-0 mx-2 dropdown-toggle align-items-center d-flex px-2" data-bs-toggle="dropdown" aria-expanded="false">
+                <span class="d-grid">
+                  <img src="/assets/images/icons/flag-en.png" class="lang-flag" alt="">
+                </span>
+                <span class="mx-1">
+                  En
+                </span>
+              </button>
+              <ul class="dropdown-menu bg-dark" style="left: -55px;">
+                <li>
+                  <a class="d-flex dropdown-item justify-content-around lang-option px-4 text-bg-dark" href="#" data-lang="en">
+                    <span>
+                      <img src="/assets/images/icons/flag-en.png" alt="" class="lang-option" data-lang="en">
+                    </span>
+                    <span class="lang-option" data-lang="en">English</span>
+                  </a>
+                </li>
+                <li>
+                    <a class="d-flex dropdown-item justify-content-around lang-option px-4 text-bg-dark" href="#" data-lang="es">
+                    <span>
+                      <img src="/assets/images/icons/flag-es.png" alt="" class="lang-option" data-lang="es">
+                    </span>
+                    <span class="lang-option" data-lang="es">Español</span>
+                  </a>
+                </li>
+              </ul>
+            </div>
+            <button class="btn btn-kl-menu shadow" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasMenu" aria-controls="offcanvasMenu" id="mobileMenuBtn">
+              <i class="fa-solid fa-grip-lines"></i>
+            </button>
+          </div>
+        </div>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="d-flex justify-content-center navbar-nav w-100">
+            <li class="nav-item px-2">
+              <a class="nav-link nav-link-kl lang-elem" aria-current="page" href="/" data-lang="home" data-active="">Home</a>
+            </li>
+            <li class="nav-item px-2">
+              <a class="nav-link nav-link-kl lang-elem" href="/about/" data-lang="about" data-active="about">About us</a>
+            </li>
+            <!-- dropdown services -->
+              <li class="align-items-center d-flex dropdown nav-item px-2">
+                <a class="nav-link nav-link-kl dropdown-toggle lang-elem" href="#" id="servicesDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" data-lang="services">Services</a>
+                <ul class="bg-dark dropdown-menu" aria-labelledby="servicesDropdown" style="min-width: 200px; padding: 8px 0;">
+                  <li>
+                    <a class="d-flex dropdown-item justify-content-around service-option px-4 text-bg-dark" href="/serviceskl/" data-service="kl-partys" >
+                      <span>
+                        <img src="/assets/images/elements/img_btn_1.png" alt="" class="service-option me-2" data-service="kl-partys" style="width: 24px; height: 24px;">
+                      </span>
+                      <span class="service-option lang-elem" data-service="kl-partys">KL Partys</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a class="d-flex dropdown-item justify-content-around service-option px-4 text-bg-dark mt-2 mb-2" href="/services/" data-service="kl-amazing-shows">
+                      <span>
+                        <img src="/assets/images/elements/img_btn_2.png" alt="" class="service-option me-2" data-service="kl-amazing-shows" style="width: 24px; height: 24px;">
+                      </span>
+                      <span class="service-option lang-elem" data-service="kl-amazing-shows">KL Amazing Shows</span>
+                    </a>
+                  </li>
+                </ul>
+              </li>
+
+              <!--end dropdown services -->
+            <li class="nav-item px-2">
+              <a class="nav-link nav-link-kl lang-elem" href="/contact" data-lang="contact" data-active="contact">Contact</a>
+            </li>
+            <li class="nav-item px-2">
+              <a class="nav-link nav-link-kl lang-elem" href="/terms" data-lang="terms" data-active="terms">Terms</a>
+            </li>
+            <li class="align-items-center d-flex dropdown nav-item px-2">
+                <span class="d-grid">
+                  <img src="/assets/images/icons/flag-en.png" alt="" class="lang-flag">
+                </span>
+                <a class="nav-link nav-link-kl dropdown-toggle" href="#" id="languageDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">En</a>
+                <ul class="bg-dark dropdown-menu" aria-labelledby="languageDropdown">
+                  <li>
+                    <a class="d-flex dropdown-item justify-content-around lang-option px-4 text-bg-dark" href="#" data-lang="en">
+                      <span>
+                        <img src="/assets/images/icons/flag-en.png" alt="" class="lang-option" data-lang="en">
+                      </span>
+                      <span class="lang-option" data-lang="en">English</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a class="d-flex dropdown-item justify-content-around lang-option px-4 text-bg-dark" href="#" data-lang="es">
+                    <span>
+                      <img src="/assets/images/icons/flag-es.png" alt="" class="lang-option" data-lang="es">
+                    </span>
+                    <span class="lang-option" data-lang="es">Español</span>
+                  </a>
+                </li>
+                </ul>
+            </li>
+          </ul>
+          <div>
+              <button class="btn btn-kl lang-elem shadow" id="checkAvailabilityBtn" disabled data-lang="aviability-button">
+                  Schedule
+              </button>
+          </div>
+        </div>
+      </div>
+    </nav>
+  </div>
+  <!-- ---- end  ---- -->
+
+  <!-- contact hero sec 1 - hero -->
+  <div class="align-items-center d-grid page-container page-hero position-relative py-5 text-center">
+    <div class="container-fluid">
+        <div class="row">
+            <div>
+                <div class="mx-auto mb-5">
+                    <h1 class="lang-elem love-ya text-center fs-kl-35 mb-5" data-lang="contact">
+                      Contact
+                    </h1>
+                    <p class="azeret fs-kl-14px lang-elem mx-auto p-main-title text-center main-description">
+                      We’re excited to make your next party unforgettable.
+                    </p>
+                    <!-- <div class="d-flex justify-content-center">
+                        <a href="#" class="mx-2">
+                            <img src="assets/images/elements/img_btn_1.png" alt="" width="120">
+                        </a>
+                        <a href="#" class="mx-2">
+                            <img src="assets/images/elements/img_btn_2.png" alt="" width="120">
+                        </a>
+                    </div> -->
+                </div>
+                <div class="d-lg-block d-none icon-background mx-auto position-relative">
+                    <img class="position-absolute item1" src="../assets/images/background/item1.png" alt="">
+                    <img class="position-absolute item2" src="../assets/images/background/item5.png" alt="">
+                    <img class="position-absolute item3" src="../assets/images/background/ibg_1.png" alt="" width="70">
+                    <img class="position-absolute item4" src="../assets/images/background/item1.png" alt="">
+                    <img class="position-absolute item5" src="../assets/images/background/item1.png" alt="">
+                    <img class="position-absolute item6" src="../assets/images/background/ibg_3.png" alt="" width="70">
+                    <img class="position-absolute item7" src="../assets/images/background/item5.png" alt="">
+                    <img class="position-absolute item8" src="../assets/images/background/item5.png" alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>
+  <!-- end -->
+
+
+  <section class="contact-details py-5">
+    <div class="container">
+      <div class="text-center mb-5">
+        <h2 class="love-ya text-uppercase lang-elem" data-lang="contact-details-title">Get in touch</h2>
+        <p class="azeret fs-kl-14px lang-elem text-muted" data-lang="contact-details-subtitle">
+          Choose your favorite way to reach us
+        </p>
+      </div>
+  
+      <div class="row text-center g-4">
+        <!-- Teléfono -->
+        <div class="col-md-3 col-6">
+          <div class="card border-0 h-100 shadow-sm rounded-4 p-4 bg-white">
+            <i class="fa-solid fa-phone fa-2x text-primary mb-3"></i>
+            <h6 class="fw-bold">Call Us</h6>
+            <p class="fs-kl-14px text-muted mb-2">+57 300 000 0000</p>
+            <a href="tel:+573000000000" class="btn btn-outline-primary btn-sm">Call now</a>
+          </div>
+        </div>
+  
+        <!-- WhatsApp -->
+        <div class="col-md-3 col-6">
+          <div class="card border-0 h-100 shadow-sm rounded-4 p-4 bg-white">
+            <i class="fa-brands fa-whatsapp fa-2x text-success mb-3"></i>
+            <h6 class="fw-bold">WhatsApp</h6>
+            <p class="fs-kl-14px text-muted mb-2">Chat with us</p>
+            <a href="https://wa.me/573000000000" target="_blank" class="btn btn-outline-success btn-sm">Open chat</a>
+          </div>
+        </div>
+  
+        <!-- Email -->
+        <div class="col-md-3 col-6">
+          <div class="card border-0 h-100 shadow-sm rounded-4 p-4 bg-white">
+            <i class="fa-solid fa-envelope fa-2x text-danger mb-3"></i>
+            <h6 class="fw-bold">Email</h6>
+            <p class="fs-kl-14px text-muted mb-2">contacto@klpartys.com</p>
+            <a href="mailto:contacto@klpartys.com" class="btn btn-outline-danger btn-sm">Send Email</a>
+          </div>
+        </div>
+  
+        <!-- Dirección -->
+        <div class="col-md-3 col-6">
+          <div class="card border-0 h-100 shadow-sm rounded-4 p-4 bg-white">
+            <i class="fa-solid fa-location-dot fa-2x text-warning mb-3"></i>
+            <h6 class="fw-bold">Location</h6>
+            <p class="fs-kl-14px text-muted mb-2">Bogotá, Colombia</p>
+            <a href="https://goo.gl/maps/XXXXXXXX" target="_blank" class="btn btn-outline-warning btn-sm">View map</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+
+  <!-- footer -->
+  <footer class="bg-kl-footer text-white pt-5 pb-4">
+    <div class="container">
+      <div class="row g-4">
+  
+        <!-- Quiénes somos -->
+        <div class="col-md-4">
+          <h5 class="fw-bold love-ya lang-elem" data-lang="how">Who we are?</h5>
+          <p class="fs-kl-14px text-white-50 lang-elem" data-lang="how-description">
+            We are a team passionate about creating magical and unforgettable parties. We specialize in themed decorations, custom balloons, and children's shows.
+          </p>
+        </div>
+  
+        <!-- Secciones -->
+        <div class="col-md-4">
+          <h5 class="fw-bold love-ya lang-elem" data-lang="sections">Sections</h5>
+          <ul class="list-unstyled fs-kl-14px">
+            <li class="mb-2"><a href="/" class="text-white text-decoration-none lang-elem" data-lang="home" >Home</a></li>
+            <li class="mb-2"><a href="/about" class="text-white text-decoration-none lang-elem" data-lang="how">Who we are?</a></li>
+            <li class="mb-2"><a href="/services" class="text-white text-decoration-none lang-elem" data-lang="services_shows">Services Amazing Shows</a></li>
+            <li class="mb-2"><a href="/serviceskl" class="text-white text-decoration-none lang-elem" data-lang="serviceskl">Services Kl partys</a></li>
+            <li class="mb-2"><a href="/contact" class="text-white text-decoration-none lang-elem" data-lang="contact">Contact</a></li>
+          </ul>
+        </div>
+  
+        <!-- Contacto -->
+        <div class="col-md-4">
+          <h5 class="fw-bold love-ya lang-elem" data-lang="contact_us">Contact us</h5>
+          <ul class="list-unstyled fs-kl-14px">
+            <li class="mb-2"> +57 300 000 0000</li>
+            <li class="mb-2"> contacto@klpartys.com</li>
+            <div class="d-flex align-items-center">
+               </li><a href="https://www.instagram.com/klpartys2?igsh=MTk4dDVjY2JrbWZzaA%3D%3D&utm_source=qr" class="text-white"><i class="fa-brands fa-instagram fa-lg"></i></a>
+              <li class="ms-2"><a href="https://www.instagram.com/klpartys2?igsh=MTk4dDVjY2JrbWZzaA%3D%3D&utm_source=qr" class="text-white text-decoration-none">Instagram Kl partys</a>
+            </div>
+            <div class="d-flex align-items-center">
+               </li><a href="https://www.instagram.com/kl_amazing_shows?igsh=cWJpYWh1bjBsOHl3&utm_source=qr" class="text-white"><i class="fa-brands fa-instagram fa-lg"></i></a>
+              <li class="ms-2"><a href="https://www.instagram.com/kl_amazing_shows?igsh=cWJpYWh1bjBsOHl3&utm_source=qr" class="text-white text-decoration-none">Instagram Amazing Shows</a>
+            </div>
+          </ul>
+        </div>
+  
+      </div>
+  
+      <hr class="border-white opacity-25 my-4">
+  
+      <!-- Pie final -->
+      <div class="d-md-flex justify-content-between align-items-center text-center text-md-start">
+        <p class="mb-2 mb-md-0 fs-kl-13px lang-elem" data-lang="copyright">
+          © 2025 KL Parties & Amazing Shows. All rights reserved.
+        <!-- </p>
+        <div>
+          <a href="https://www.instagram.com/klpartys2?igsh=MTk4dDVjY2JrbWZzaA%3D%3D&utm_source=qr" class="text-white"><i class="fa-brands fa-instagram fa-lg"></i></a>
+          <a href="https://www.instagram.com/kl_amazing_shows?igsh=cWJpYWh1bjBsOHl3&utm_source=qr" class="text-white"><i class="fa-brands fa-instagram fa-lg"></i></a>
+        </div> -->
+      </div>
+    </div>
+  
+  </footer>
+  <!-- end -->
+
+  <modal-outlet></modal-outlet>
+  <offcanvas-outlet></offcanvas-outlet>
+
+  <div class="cursor-dot d-lg-block d-none"></div>
+  <div class="cursor-circle d-lg-block d-none"></div>
+
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+  <script src="../assets/js/cursor.js"></script>
+  <script src="../assets/js/sliders.js"></script>
+  <script src="../assets/js/config.js"></script>
+  <script src="../assets/js/main.js"></script>
+  <script src="../assets/js/script.js"></script>
+  <script src="../assets/js/modal.js"></script>
+  <script src="../assets/js/translation.js"></script>
+   
+
+    
+    
+</body>
+</html>

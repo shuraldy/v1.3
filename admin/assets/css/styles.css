@@ -1,0 +1,60 @@
+html, body{
+    height: 100vh;
+}
+
+.kl-bg{
+    background-image: linear-gradient(180deg, #00abba, transparent);
+}
+
+.sidebar{
+    height: 100vh;
+    width: 215px !important;
+}
+
+content-outlet{
+  height: calc(100vh - 90px);
+}
+
+.h-35{
+    height: 35px;
+}
+
+.a-ico{
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+}
+
+.fade-in {
+  animation: fadeIn 0.4s ease-in-out;
+}
+
+.theme-el{
+  transition: .3s;
+}
+
+.print-friendly {
+  background-color: white !important;
+  color: #000 !important;
+}
+
+.print-friendly .card,
+.print-friendly .list-group-item,
+.print-friendly .text-bg-dark,
+.print-friendly .bg-black,
+.print-friendly .text-bg-secondary {
+  background-color: white !important;
+  color: #000 !important;
+  border-color: #ddd !important;
+}
+  
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
