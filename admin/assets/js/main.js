@@ -199,278 +199,230 @@ const Controller = () => {
 
 
 configController: async () => {
-    const isDarkMode = getTheme();
+  const isDarkMode = getTheme();
 
-    // Configuración del interruptor de modo oscuro
-    const switchDarkModeChecked = document.querySelector("#switchDarkModeChecked");
-    switchDarkModeChecked.checked = isDarkMode;
-    switchDarkModeChecked.addEventListener("change", function(e) {
-        localStorage.setItem("dark-mode", e.target.checked ? "true" : "false");
-        themeConfig(e.target.checked);
-    });
+  // Configurar tema oscuro
+  const switchDarkModeChecked = document.querySelector("#switchDarkModeChecked");
+  switchDarkModeChecked.checked = isDarkMode;
+  switchDarkModeChecked.addEventListener("change", function(e) {
+    localStorage.setItem("dark-mode", e.target.checked ? "true" : "false");
+    themeConfig(e.target.checked);
+  });
 
-    // Cargar el modal (solo la estructura inicial)
-    await DOM_CONSTRUCTOR("modal-outlet", "components/utils/createLocationModal.component.html", []);
+  // Cargar ambos modales
+  const [locationModalHTML, characterModalHTML] = await Promise.all([
+    fetch("components/utils/createLocationModal.component.html").then(r => r.text()),
+    fetch("components/utils/charactersModal.component.html").then(r => r.text())
+  ]);
+  document.getElementById("modal-outlet").innerHTML = locationModalHTML + characterModalHTML;
 
-    // Construir la tabla de ubicaciones
-    try {
-        const data = [
-            {
-                theadTheme: isDarkMode ? "table-dark" : "table-light"
-            }
-        ];
+  // Funciones reutilizables
+  const getTableConfig = (tableId) => ({
+    responsive: true,
+    order: [],
+    lengthMenu: [[10, 25, 50, -1], [10, 25, 50, 'Todos']],
+    layout: {
+      topStart: {
+        buttons: [
+          { extend: 'csv', className: 'btn btn-outline-secondary btn-sm me-2', text: '<i class="fa-solid fa-file-csv"></i> CSV' },
+          { extend: 'excel', className: 'btn btn-outline-success btn-sm me-2', text: '<i class="fa-solid fa-file-excel"></i> Excel' },
+          { extend: 'pdf', className: 'btn btn-outline-danger btn-sm me-2', text: '<i class="fa-solid fa-file-pdf"></i> PDF' },
+          { extend: 'print', className: 'btn btn-outline-primary btn-sm', text: '<i class="fa-solid fa-print"></i> Imprimir' }
+        ]
+      },
+      bottomStart: 'pageLength',
+      bottomEnd: ['info', 'paging']
+    },
+    language: {
+      decimal: ",",
+      thousands: ".",
+      processing: "Procesando...",
+      search: "Buscar:",
+      lengthMenu: "Mostrar _MENU_ registros",
+      info: "_START_ al _END_ de _TOTAL_ registros",
+      infoEmpty: "Mostrando 0 registros",
+      infoFiltered: "(filtrado de _MAX_ registros totales)",
+      loadingRecords: "Cargando...",
+      zeroRecords: "No se encontraron resultados",
+      emptyTable: "No hay datos disponibles",
+      paginate: {
+        first: `<i class="fa-solid fa-angles-left"></i>`,
+        previous: `<i class="fa-solid fa-angle-left"></i>`,
+        next: `<i class="fa-solid fa-angle-right"></i>`,
+        last: `<i class="fa-solid fa-angles-right"></i>`
+      },
+      aria: {
+        sortAscending: ": activar para ordenar ascendente",
+        sortDescending: ": activar para ordenar descendente"
+      }
+    }
+  });
 
-        // Cargar la tabla con placeholders
-        await DOM_CONSTRUCTOR("#locations-table-outlet", "components/utils/locationsTable.component.html", data);
+  // CRUD Ubicaciones
+  try {
+    await DOM_CONSTRUCTOR("#locations-table-outlet", "components/utils/locationsTable.component.html", [{ theadTheme: isDarkMode ? "table-dark" : "table-light" }]);
+    const locations = await getLocationsData(token);
+    const tbody = $('#locations-table tbody');
+    tbody.empty();
 
-        // Obtener los datos de ubicaciones
-        const dataResponse = await getLocationsData(token);
-
-        // Limpiar el tbody (eliminar placeholders)
-        $('#locations-table tbody').empty();
-
-        // En caso de que no lleguen datos
-        if (!dataResponse || dataResponse.length === 0) {
-            console.warn("No hay ubicaciones para mostrar");
-            $('#locations-table tbody').append(
-                `<tr><td colspan="3" class="text-center">No hay datos disponibles</td></tr>`
-            );
-            return;
-        }
-
-        // Construir filas de la tabla con numeración ascendente alineada a la izquierda y acciones
-        let trElems = "";
-        dataResponse.forEach((el, index) => {
-            trElems += `
-                <tr>
-                    <td class="text-start">${index + 1}</td>
-                    <td>${el.name}</td>
-                    <td>
-                        <button class="btn btn-warning btn-sm me-2 edit-btn" data-id="${el.location_id}" data-name="${el.name}">
-                            <i class="fa-solid fa-edit"></i>
-                        </button>
-                        <button class="btn btn-danger btn-sm delete-btn" data-id="${el.location_id}">
-                            <i class="fa-solid fa-trash"></i>
-                        </button>
-                    </td>
-                </tr>`;
-        });
-
-        $('#locations-table tbody').append(trElems);
-
-        // Inicializar DataTable
-        new DataTable('#locations-table', {
-            responsive: true,
-            order: [],
-            lengthMenu: [[10, 25, 50, -1], [10, 25, 50, 'Todos']],
-            layout: {
-                topStart: {
-                    buttons: [
-                        { extend: 'csv', className: 'btn btn-outline-secondary btn-sm me-2', text: '<i class="fa-solid fa-file-csv"></i> CSV' },
-                        { extend: 'excel', className: 'btn btn-outline-success btn-sm me-2', text: '<i class="fa-solid fa-file-excel"></i> Excel' },
-                        { extend: 'pdf', className: 'btn btn-outline-danger btn-sm me-2', text: '<i class="fa-solid fa-file-pdf"></i> PDF' },
-                        { extend: 'print', className: 'btn btn-outline-primary btn-sm', text: '<i class="fa-solid fa-print"></i> Imprimir' }
-                    ]
-                },
-                bottomStart: 'pageLength',
-                bottomEnd: ['info', 'paging']
-            },
-            language: {
-                decimal: ",",
-                thousands: ".",
-                processing: "Procesando...",
-                search: "Buscar:",
-                lengthMenu: "Mostrar _MENU_ registros",
-                info: "_START_ al _END_ de _TOTAL_ registros",
-                infoEmpty: "Mostrando 0 registros",
-                infoFiltered: "(filtrado de _MAX_ registros totales)",
-                loadingRecords: "Cargando...",
-                zeroRecords: "No se encontraron resultados",
-                emptyTable: "No hay datos disponibles",
-                paginate: {
-                    first: `<i class="fa-solid fa-angles-left"></i>`,
-                    previous: `<i class="fa-solid fa-angle-left"></i>`,
-                    next: `<i class="fa-solid fa-angle-right"></i>`,
-                    last: `<i class="fa-solid fa-angles-right"></i>`
-                },
-                aria: {
-                    sortAscending: ": activar para ordenar ascendente",
-                    sortDescending: ": activar para ordenar descendente"
-                }
-            }
-        });
-
-        // Manejar el botón de "Crear Nueva Ubicación"
-        const createLocationBtn = document.querySelector('[data-bs-target="#createLocationModal"]');
-        if (createLocationBtn) {
-            createLocationBtn.addEventListener('click', () => {
-                const locationIdInput = document.getElementById('locationId');
-                const locationNameInput = document.getElementById('locationName');
-                const saveBtn = document.getElementById('saveLocationBtn');
-                const modalTitle = document.getElementById('createLocationModalLabel');
-                if (locationIdInput && locationNameInput && saveBtn && modalTitle) {
-                    locationIdInput.value = '';
-                    locationNameInput.value = '';
-                    modalTitle.textContent = 'Nueva Ubicación';
-                    saveBtn.textContent = 'Crear';
-                    new bootstrap.Modal(document.getElementById('createLocationModal')).show();
-                } else {
-                    console.error('Uno o más elementos del modal no se encontraron');
-                }
-            });
-        }
-
-        // Manejar el botón de editar
-        $(document).on('click', '.edit-btn', function() {
-            const locationId = $(this).data('id');
-            const locationName = $(this).data('name');
-            const locationIdInput = document.getElementById('locationId');
-            const locationNameInput = document.getElementById('locationName');
-            const saveBtn = document.getElementById('saveLocationBtn');
-            const modalTitle = document.getElementById('createLocationModalLabel');
-            if (locationIdInput && locationNameInput && saveBtn && modalTitle) {
-                locationIdInput.value = locationId;
-                locationNameInput.value = locationName;
-                modalTitle.textContent = 'Editar Ubicación';
-                saveBtn.textContent = 'Guardar';
-                new bootstrap.Modal(document.getElementById('createLocationModal')).show();
-            } else {
-                console.error('Uno o más elementos del modal no se encontraron');
-            }
-        });
-
-        // Manejar el botón de eliminar
-        $(document).on('click', '.delete-btn', function() {
-            if (confirm('¿Estás seguro de que deseas eliminar esta ubicación?')) {
-                const locationId = $(this).data('id');
-                deleteLocation(locationId)
-                    .then(() => window.location.reload())
-                    .catch(error => {
-                        console.error('Error al eliminar ubicación:', error);
-                        alert('Error al eliminar la ubicación. Por favor, intenta de nuevo.');
-                    });
-            }
-        });
-
-        // Manejar el botón de guardar (crear/editar)
-        const saveLocationBtn = document.getElementById('saveLocationBtn');
-        if (saveLocationBtn) {
-            saveLocationBtn.addEventListener('click', async (e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                const locationId = document.getElementById('locationId')?.value || '';
-                const locationName = document.getElementById('locationName').value.trim();
-                if (locationName) {
-                    try {
-                        if (locationId) {
-                            await updateLocation(locationId, locationName);
-                            document.getElementById('createLocationModalLabel').textContent = 'Nueva Ubicación';
-                            document.getElementById('saveLocationBtn').textContent = 'Crear';
-                            document.getElementById('locationId').value = '';
-                        } else {
-                            await createLocation(locationName);
-                        }
-                        bootstrap.Modal.getInstance(document.getElementById('createLocationModal')).hide();
-                        window.location.reload();
-                    } catch (error) {
-                        console.error('Error al guardar ubicación:', error);
-                        alert('Error al guardar la ubicación. Por favor, intenta de nuevo.');
-                    }
-                } else {
-                    alert('Por favor, ingresa un nombre de ubicación.');
-                }
-            });
-        }
-    } catch (error) {
-        console.error("Error al cargar ubicaciones:", error);
-        $('#locations-table tbody').empty().append(
-            `<tr><td colspan="3" class="text-center">Error al cargar los datos</td></tr>`
-        );
+    if (!locations.length) {
+      tbody.append(`<tr><td colspan="3" class="text-center">No hay datos disponibles</td></tr>`);
+    } else {
+      locations.forEach((el, index) => {
+        tbody.append(`
+          <tr>
+            <td class="text-start">${index + 1}</td>
+            <td>${el.name}</td>
+            <td>
+              <button class="btn btn-warning btn-sm me-2 edit-location-btn" data-id="${el.location_id}" data-name="${el.name}"><i class="fa-solid fa-edit"></i></button>
+              <button class="btn btn-danger btn-sm delete-location-btn" data-id="${el.location_id}"><i class="fa-solid fa-trash"></i></button>
+            </td>
+          </tr>`);
+      });
     }
 
+    new DataTable('#locations-table', getTableConfig('locations-table'));
 
-// Construir la tabla de personajes
-try {
-    const characterData = [
-        {
-            theadTheme: isDarkMode ? "table-dark" : "table-light"
-        }
-    ];
+    // Botones de modal ubicación
+    document.querySelector('[data-bs-target="#createLocationModal"]')?.addEventListener('click', () => {
+      const modal = document.getElementById('createLocationModal');
+      if (!modal) return console.error('Modal de ubicación no encontrado');
+      document.getElementById('locationId').value = '';
+      document.getElementById('locationName').value = '';
+      document.getElementById('createLocationModalLabel').textContent = 'Nueva Ubicación';
+      document.getElementById('saveLocationBtn').textContent = 'Crear';
+      new bootstrap.Modal(modal).show();
+    });
 
-    await DOM_CONSTRUCTOR("#characters-table-outlet", "components/utils/charactersTable.component.html", characterData);
+    $(document).on('click', '.edit-location-btn', function() {
+      const modal = document.getElementById('createLocationModal');
+      if (!modal) return console.error('Modal de ubicación no encontrado');
+      document.getElementById('locationId').value = $(this).data('id');
+      document.getElementById('locationName').value = $(this).data('name');
+      document.getElementById('createLocationModalLabel').textContent = 'Editar Ubicación';
+      document.getElementById('saveLocationBtn').textContent = 'Guardar';
+      new bootstrap.Modal(modal).show();
+    });
 
-    const charactersResponse = await getCharactersData();
+    $(document).on('click', '.delete-location-btn', function() {
+      const id = $(this).data('id');
+      if (confirm('¿Estás seguro de que deseas eliminar esta ubicación?')) {
+        deleteLocation(id)
+          .then(() => window.location.reload())
+          .catch(err => {
+            console.error(err);
+            alert('Error al eliminar la ubicación.');
+          });
+      }
+    });
 
-    $('#characters-table tbody').empty();
+    document.getElementById('saveLocationBtn')?.addEventListener('click', async (e) => {
+      e.preventDefault();
+      const id = document.getElementById('locationId').value;
+      const name = document.getElementById('locationName').value.trim();
+      if (!name) return alert('Por favor, ingresa un nombre.');
+      try {
+        id ? await updateLocation(id, name) : await createLocation(name);
+        bootstrap.Modal.getInstance(document.getElementById('createLocationModal')).hide();
+        window.location.reload();
+      } catch (err) {
+        console.error(err);
+        alert('Error al guardar la ubicación.');
+      }
+    });
+  } catch (err) {
+    console.error("Error al cargar ubicaciones:", err);
+  }
 
-    if (!charactersResponse || charactersResponse.length === 0) {
-        $('#characters-table tbody').append(
-            `<tr><td colspan="5" class="text-center">No hay personajes disponibles</td></tr>`
-        );
-        return;
+  // CRUD Personajes
+  try {
+    await DOM_CONSTRUCTOR("#characters-table-outlet", "components/utils/charactersTable.component.html", [{ theadTheme: isDarkMode ? "table-dark" : "table-light" }]);
+    const characters = await getCharactersData();
+    const tbody = $('#characters-table tbody');
+    tbody.empty();
+
+    if (!characters.length) {
+      tbody.append(`<tr><td colspan="6" class="text-center">No hay personajes disponibles</td></tr>`);
+    } else {
+      characters.forEach((el, index) => {
+        tbody.append(`
+          <tr>
+            <td class="text-start">${index + 1}</td>
+            <td>${el.es_name}</td>
+            <td>${el.en_name}</td>
+            <td>$${parseFloat(el.price_hours).toFixed(2)}</td>
+            <td>${el.is_active == 1 ? "Sí" : "No"}</td>
+            <td>
+              <button class="btn btn-warning btn-sm me-2 edit-character-btn" data-id="${el.character_id}" data-es-name="${el.es_name}" data-en-name="${el.en_name}" data-price-hours="${el.price_hours}" data-is-active="${el.is_active}"><i class="fa-solid fa-edit"></i></button>
+              <button class="btn btn-danger btn-sm delete-character-btn" data-id="${el.character_id}"><i class="fa-solid fa-trash"></i></button>
+            </td>
+          </tr>`);
+      });
     }
 
-    let trElems = "";
-    charactersResponse.forEach((el, index) => {
-        trElems += `
-            <tr>
-                <td class="text-start">${index + 1}</td>
-                <td>${el.es_name}</td>
-                <td>${el.en_name}</td>
-                <td>$${parseFloat(el.price_hours).toFixed(2)}</td>
-                <td>${el.is_active === "1" ? "Sí" : "No"}</td>
-            </tr>`;
+    new DataTable('#characters-table', getTableConfig('characters-table'));
+
+    // Crear personaje
+    document.getElementById('createCharacterBtn')?.addEventListener('click', () => {
+      const modal = document.getElementById('charactersModal');
+      if (!modal) return console.error('Modal de personajes no encontrado');
+      ['characterIdInput','esNameInput','enNameInput','priceHoursInput','isActiveInput'].forEach(id => document.getElementById(id).value = '');
+      document.getElementById('charactersModalTitle').textContent = 'Nuevo Personaje';
+      document.getElementById('saveCharacterButton').textContent = 'Crear';
+      new bootstrap.Modal(modal).show();
     });
 
-    $('#characters-table tbody').append(trElems);
-
-    new DataTable('#characters-table', {
-        responsive: true,
-        order: [],
-        lengthMenu: [[10, 25, 50, -1], [10, 25, 50, 'Todos']],
-        layout: {
-            topStart: {
-                buttons: [
-                    { extend: 'csv', className: 'btn btn-outline-secondary btn-sm me-2', text: '<i class="fa-solid fa-file-csv"></i> CSV' },
-                    { extend: 'excel', className: 'btn btn-outline-success btn-sm me-2', text: '<i class="fa-solid fa-file-excel"></i> Excel' },
-                    { extend: 'pdf', className: 'btn btn-outline-danger btn-sm me-2', text: '<i class="fa-solid fa-file-pdf"></i> PDF' },
-                    { extend: 'print', className: 'btn btn-outline-primary btn-sm', text: '<i class="fa-solid fa-print"></i> Imprimir' }
-                ]
-            },
-            bottomStart: 'pageLength',
-            bottomEnd: ['info', 'paging']
-        },
-        language: {
-            decimal: ",",
-            thousands: ".",
-            processing: "Procesando...",
-            search: "Buscar:",
-            lengthMenu: "Mostrar _MENU_ registros",
-            info: "_START_ al _END_ de _TOTAL_ registros",
-            infoEmpty: "Mostrando 0 registros",
-            infoFiltered: "(filtrado de _MAX_ registros totales)",
-            loadingRecords: "Cargando...",
-            zeroRecords: "No se encontraron resultados",
-            emptyTable: "No hay datos disponibles",
-            paginate: {
-                first: `<i class="fa-solid fa-angles-left"></i>`,
-                previous: `<i class="fa-solid fa-angle-left"></i>`,
-                next: `<i class="fa-solid fa-angle-right"></i>`,
-                last: `<i class="fa-solid fa-angles-right"></i>`
-            },
-            aria: {
-                sortAscending: ": activar para ordenar ascendente",
-                sortDescending: ": activar para ordenar descendente"
-            }
-        }
+    $(document).on('click', '.edit-character-btn', function () {
+      const modal = document.getElementById('charactersModal');
+      if (!modal) return console.error('Modal de personajes no encontrado');
+      document.getElementById('characterIdInput').value = $(this).data('id');
+      document.getElementById('esNameInput').value = $(this).data('es-name');
+      document.getElementById('enNameInput').value = $(this).data('en-name');
+      document.getElementById('priceHoursInput').value = $(this).data('price-hours');
+      document.getElementById('isActiveInput').value = $(this).data('is-active');
+      document.getElementById('charactersModalTitle').textContent = 'Editar Personaje';
+      document.getElementById('saveCharacterButton').textContent = 'Guardar';
+      new bootstrap.Modal(modal).show();
     });
-} catch (error) {
-    console.error("Error al cargar personajes:", error);
-    $('#characters-table tbody').empty().append(
-        `<tr><td colspan="5" class="text-center">Error al cargar los datos</td></tr>`
-    );
-}
+
+    $(document).on('click', '.delete-character-btn', function () {
+      const id = $(this).data('id');
+      if (confirm('¿Eliminar personaje?')) {
+        deleteCharacter(id)
+          .then(() => window.location.reload())
+          .catch(err => {
+            console.error(err);
+            alert('Error al eliminar personaje.');
+          });
+      }
+    });
+
+    document.getElementById('saveCharacterButton')?.addEventListener('click', async (e) => {
+      e.preventDefault();
+      const id = document.getElementById('characterIdInput').value;
+      const es = document.getElementById('esNameInput').value.trim();
+      const en = document.getElementById('enNameInput').value.trim();
+      const price = parseFloat(document.getElementById('priceHoursInput').value.trim());
+      const active = parseInt(document.getElementById('isActiveInput').value);
+
+      if (!es || !en || isNaN(price)) return alert('Completa los campos correctamente.');
+
+      try {
+        id ? await updateCharacter(parseInt(id), es, en, price.toFixed(2), active)
+           : await createCharacter(es, en, price.toFixed(2), active);
+        bootstrap.Modal.getInstance(document.getElementById('charactersModal')).hide();
+        window.location.reload();
+      } catch (err) {
+        console.error(err);
+        alert('Error al guardar personaje.');
+      }
+    });
+
+  } catch (err) {
+    console.error("Error al cargar personajes:", err);
+  }
 },
+
 
         
 

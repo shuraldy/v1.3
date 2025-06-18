@@ -1,36 +1,38 @@
-<div class="modal fade" id="charactersModal" tabindex="-1" aria-labelledby="charactersModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="charactersModalLabel">Nuevo Personaje</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <input type="hidden" id="characterId">
-                <div class="mb-3">
-                    <label for="esName" class="form-label">Nombre (ES)</label>
-                    <input type="text" class="form-control" id="esName" maxlength="50" placeholder="Ingresa el nombre en español" required>
-                </div>
-                <div class="mb-3">
-                    <label for="enName" class="form-label">Nombre (EN)</label>
-                    <input type="text" class="form-control" id="enName" maxlength="50" placeholder="Ingresa el nombre en inglés" required>
-                </div>
-                <div class="mb-3">
-                    <label for="priceHours" class="form-label">Precio por Hora</label>
-                    <input type="number" step="0.01" class="form-control" id="priceHours" placeholder="Ingresa el precio" required>
-                </div>
-                <div class="mb-3">
-                    <label for="isActive" class="form-label">Activo</label>
-                    <select class="form-select" id="isActive">
-                        <option value="1">Sí</option>
-                        <option value="0">No</option>
-                    </select>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                <button type="button" class="btn btn-primary" id="saveCharacterBtn">Crear</button>
-            </div>
-        </div>
+<div class="modal fade" id="charactersModal" tabindex="-1" aria-labelledby="charactersModalTitle" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="charactersModalTitle">Nuevo Personaje</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <input type="hidden" id="characterIdInput">
+          <div class="mb-3">
+            <label for="esNameInput" class="form-label">Nombre en Español</label>
+            <input type="text" class="form-control" id="esNameInput" required>
+          </div>
+          <div class="mb-3">
+            <label for="enNameInput" class="form-label">Nombre en Inglés</label>
+            <input type="text" class="form-control" id="enNameInput" required>
+          </div>
+          <div class="mb-3">
+            <label for="priceHoursInput" class="form-label">Precio por Hora</label>
+            <input type="number" class="form-control" id="priceHoursInput" step="0.01" min="0" required>
+          </div>
+          <div class="mb-3">
+            <label for="isActiveInput" class="form-label">Activo</label>
+            <select class="form-select" id="isActiveInput">
+              <option value="1">Sí</option>
+              <option value="0">No</option>
+            </select>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-primary" id="saveCharacterButton">Crear</button>
+      </div>
     </div>
+  </div>
 </div>
