@@ -388,213 +388,88 @@ configController: async () => {
         );
     }
 
-    // Construir la tabla de personajes (código existente sigue igual)
-    // ...
-// },
 
 // Construir la tabla de personajes
-    // try {
-    //     const characterData = [
-    //         {
-    //             theadTheme: isDarkMode ? "table-dark" : "table-light"
-    //         }
-    //     ];
+try {
+    const characterData = [
+        {
+            theadTheme: isDarkMode ? "table-dark" : "table-light"
+        }
+    ];
 
-    //     // Cargar el modal para personajes
-    //     await DOM_CONSTRUCTOR("modal-outlet", "components/utils/charactersModal.component.html", []);
+    await DOM_CONSTRUCTOR("#characters-table-outlet", "components/utils/charactersTable.component.html", characterData);
 
-    //     // Cargar la tabla con placeholders
-    //     await DOM_CONSTRUCTOR("#characters-table-outlet", "components/utils/charactersTable.component.html", characterData);
+    const charactersResponse = await getCharactersData();
 
-    //     // Obtener los datos de personajes
-    //     const charactersResponse = await getCharactersData();
+    $('#characters-table tbody').empty();
 
-    //     // Limpiar el tbody (eliminar placeholders)
-    //     $('#characters-table tbody').empty();
+    if (!charactersResponse || charactersResponse.length === 0) {
+        $('#characters-table tbody').append(
+            `<tr><td colspan="5" class="text-center">No hay personajes disponibles</td></tr>`
+        );
+        return;
+    }
 
-    //     // En caso de que no lleguen datos
-    //     if (!charactersResponse || charactersResponse.length === 0) {
-    //         console.warn("No hay personajes para mostrar");
-    //         $('#characters-table tbody').append(
-    //             `<tr><td colspan="6" class="text-center">No hay datos disponibles</td></tr>`
-    //         );
-    //         return;
-    //     }
+    let trElems = "";
+    charactersResponse.forEach((el, index) => {
+        trElems += `
+            <tr>
+                <td class="text-start">${index + 1}</td>
+                <td>${el.es_name}</td>
+                <td>${el.en_name}</td>
+                <td>$${parseFloat(el.price_hours).toFixed(2)}</td>
+                <td>${el.is_active === "1" ? "Sí" : "No"}</td>
+            </tr>`;
+    });
 
-    //     // Construir filas de la tabla con numeración ascendente alineada a la izquierda y acciones
-    //     let trElems = "";
-    //     charactersResponse.forEach((el, index) => {
-    //         trElems += `
-    //             <tr>
-    //                 <td class="text-start">${index + 1}</td>
-    //                 <td>${el.es_name}</td>
-    //                 <td>${el.en_name}</td>
-    //                 <td>${el.price_hours}</td>
-    //                 <td>${el.is_active === "1" ? "Sí" : "No"}</td>
-    //                 <td>
-    //                     <button class="btn btn-warning btn-sm me-2 edit-btn" data-id="${el.character_id}" data-es-name="${el.es_name}" data-en-name="${el.en_name}" data-price-hours="${el.price_hours}" data-is-active="${el.is_active}">
-    //                         <i class="fa-solid fa-edit"></i>
-    //                     </button>
-    //                     <button class="btn btn-danger btn-sm delete-btn" data-id="${el.character_id}">
-    //                         <i class="fa-solid fa-trash"></i>
-    //                     </button>
-    //                 </td>
-    //             </tr>`;
-    //     });
+    $('#characters-table tbody').append(trElems);
 
-    //     $('#characters-table tbody').append(trElems);
-
-    //     // Inicializar DataTable
-    //     new DataTable('#characters-table', {
-    //         responsive: true,
-    //         order: [],
-    //         lengthMenu: [
-    //             [10, 25, 50, -1],
-    //             [10, 25, 50, 'Todos']
-    //         ],
-    //         layout: {
-    //             topStart: {
-    //                 buttons: [
-    //                     {
-    //                         extend: 'csv',
-    //                         className: 'btn btn-outline-secondary btn-sm me-2',
-    //                         text: '<i class="fa-solid fa-file-csv"></i> CSV'
-    //                     },
-    //                     {
-    //                         extend: 'excel',
-    //                         className: 'btn btn-outline-success btn-sm me-2',
-    //                         text: '<i class="fa-solid fa-file-excel"></i> Excel'
-    //                     },
-    //                     {
-    //                         extend: 'pdf',
-    //                         className: 'btn btn-outline-danger btn-sm me-2',
-    //                         text: '<i class="fa-solid fa-file-pdf"></i> PDF'
-    //                     },
-    //                     {
-    //                         extend: 'print',
-    //                         className: 'btn btn-outline-primary btn-sm',
-    //                         text: '<i class="fa-solid fa-print"></i> Imprimir'
-    //                     }
-    //                 ]
-    //             },
-    //             bottomStart: 'pageLength',
-    //             bottomEnd: ['info', 'paging']
-    //         },
-    //         language: {
-    //             decimal: ",",
-    //             thousands: ".",
-    //             processing: "Procesando...",
-    //             search: "Buscar:",
-    //             lengthMenu: "Mostrar _MENU_ registros",
-    //             info: "_START_ al _END_ de _TOTAL_ registros",
-    //             infoEmpty: "Mostrando 0 registros",
-    //             infoFiltered: "(filtrado de _MAX_ registros totales)",
-    //             loadingRecords: "Cargando...",
-    //             zeroRecords: "No se encontraron resultados",
-    //             emptyTable: "No hay datos disponibles",
-    //             paginate: {
-    //                 first: `<i class="fa-solid fa-angles-left"></i>`,
-    //                 previous: `<i class="fa-solid fa-angle-left"></i>`,
-    //                 next: `<i class="fa-solid fa-angle-right"></i>`,
-    //                 last: `<i class="fa-solid fa-angles-right"></i>`
-    //             },
-    //             aria: {
-    //                 sortAscending: ": activar para ordenar ascendente",
-    //                 sortDescending: ": activar para ordenar descendente"
-    //             }
-    //         }
-    //     });
-
-    //     // Manejar el botón de crear personaje
-    //     const createCharacterBtn = document.getElementById('createCharacterBtn');
-    //     if (createCharacterBtn) {
-    //         createCharacterBtn.addEventListener('click', () => {
-    //             document.getElementById('characterId').value = '';
-    //             document.getElementById('esName').value = '';
-    //             document.getElementById('enName').value = '';
-    //             document.getElementById('priceHours').value = '';
-    //             document.getElementById('isActive').value = '1';
-    //             document.getElementById('charactersModalLabel').textContent = 'Nuevo Personaje';
-    //             document.getElementById('saveCharacterBtn').textContent = 'Crear';
-    //             const modal = new bootstrap.Modal(document.getElementById('charactersModal'));
-    //             modal.show();
-    //         });
-    //     }
-
-    //     // Manejar el botón de crear/editar en el modal para personajes
-    //     const saveCharacterBtn = document.getElementById('saveCharacterBtn');
-    //     if (saveCharacterBtn) {
-    //         saveCharacterBtn.addEventListener('click', async (e) => {
-    //             e.preventDefault();
-    //             e.stopPropagation();
-    //             const characterId = document.getElementById('characterId').value;
-    //             const esName = document.getElementById('esName').value.trim();
-    //             const enName = document.getElementById('enName').value.trim();
-    //             const priceHours = document.getElementById('priceHours').value.trim();
-    //             const isActive = document.getElementById('isActive').value;
-    //             if (esName && enName && priceHours) {
-    //                 try {
-    //                     if (characterId) {
-    //                         // Modo edición
-    //                         await updateCharacter(characterId, esName, enName, priceHours, isActive);
-    //                         document.getElementById('charactersModalLabel').textContent = 'Nuevo Personaje';
-    //                         document.getElementById('saveCharacterBtn').textContent = 'Crear';
-    //                         document.getElementById('characterId').value = '';
-    //                     } else {
-    //                         // Modo creación
-    //                         await createCharacter(esName, enName, priceHours, isActive);
-    //                     }
-    //                     // Recargar la página tras el éxito
-    //                     window.location.reload();
-    //                 } catch (error) {
-    //                     console.error('Error al guardar personaje:', error);
-    //                     alert('Error al guardar el personaje. Por favor, intenta de nuevo.');
-    //                 }
-    //             } else {
-    //                 alert('Por favor, completa todos los campos requeridos.');
-    //             }
-    //         });
-    //     }
-
-    //     // Manejar el botón de editar para personajes
-    //     $(document).on('click', '.edit-btn', function() {
-    //         const characterId = $(this).data('id');
-    //         const esName = $(this).data('es-name');
-    //         const enName = $(this).data('en-name');
-    //         const priceHours = $(this).data('price-hours');
-    //         const isActive = $(this).data('is-active');
-    //         document.getElementById('characterId').value = characterId;
-    //         document.getElementById('esName').value = esName;
-    //         document.getElementById('enName').value = enName;
-    //         document.getElementById('priceHours').value = priceHours;
-    //         document.getElementById('isActive').value = isActive;
-    //         document.getElementById('charactersModalLabel').textContent = 'Editar Personaje';
-    //         document.getElementById('saveCharacterBtn').textContent = 'Guardar';
-    //         const modal = new bootstrap.Modal(document.getElementById('charactersModal'));
-    //         modal.show();
-    //     });
-
-    //     // Manejar el botón de eliminar para personajes
-    //     $(document).on('click', '.delete-btn', function() {
-    //         if (confirm('¿Estás seguro de que deseas eliminar este personaje?')) {
-    //             const characterId = $(this).data('id');
-    //             deleteCharacter(characterId)
-    //                 .then(() => {
-    //                     // Recargar la página tras el éxito
-    //                     window.location.reload();
-    //                 })
-    //                 .catch(error => {
-    //                     console.error('Error al eliminar personaje:', error);
-    //                     alert('Error al eliminar el personaje. Por favor, intenta de nuevo.');
-    //                 });
-    //         }
-    //     });
-    // } catch (error) {
-    //     console.error("Error al cargar personajes:", error);
-    //     $('#characters-table tbody').empty().append(
-    //         `<tr><td colspan="6" class="text-center">Error al cargar los datos</td></tr>`
-    //     );
-    // }
+    new DataTable('#characters-table', {
+        responsive: true,
+        order: [],
+        lengthMenu: [[10, 25, 50, -1], [10, 25, 50, 'Todos']],
+        layout: {
+            topStart: {
+                buttons: [
+                    { extend: 'csv', className: 'btn btn-outline-secondary btn-sm me-2', text: '<i class="fa-solid fa-file-csv"></i> CSV' },
+                    { extend: 'excel', className: 'btn btn-outline-success btn-sm me-2', text: '<i class="fa-solid fa-file-excel"></i> Excel' },
+                    { extend: 'pdf', className: 'btn btn-outline-danger btn-sm me-2', text: '<i class="fa-solid fa-file-pdf"></i> PDF' },
+                    { extend: 'print', className: 'btn btn-outline-primary btn-sm', text: '<i class="fa-solid fa-print"></i> Imprimir' }
+                ]
+            },
+            bottomStart: 'pageLength',
+            bottomEnd: ['info', 'paging']
+        },
+        language: {
+            decimal: ",",
+            thousands: ".",
+            processing: "Procesando...",
+            search: "Buscar:",
+            lengthMenu: "Mostrar _MENU_ registros",
+            info: "_START_ al _END_ de _TOTAL_ registros",
+            infoEmpty: "Mostrando 0 registros",
+            infoFiltered: "(filtrado de _MAX_ registros totales)",
+            loadingRecords: "Cargando...",
+            zeroRecords: "No se encontraron resultados",
+            emptyTable: "No hay datos disponibles",
+            paginate: {
+                first: `<i class="fa-solid fa-angles-left"></i>`,
+                previous: `<i class="fa-solid fa-angle-left"></i>`,
+                next: `<i class="fa-solid fa-angle-right"></i>`,
+                last: `<i class="fa-solid fa-angles-right"></i>`
+            },
+            aria: {
+                sortAscending: ": activar para ordenar ascendente",
+                sortDescending: ": activar para ordenar descendente"
+            }
+        }
+    });
+} catch (error) {
+    console.error("Error al cargar personajes:", error);
+    $('#characters-table tbody').empty().append(
+        `<tr><td colspan="5" class="text-center">Error al cargar los datos</td></tr>`
+    );
+}
 },
 
         
@@ -854,7 +729,7 @@ const getMainData = token => {
 
 const getLocationsData = token => {
     return new Promise((resolve, reject) => {
-        fetch(`https://facturaldy.site/get_locations.php`, {
+        fetch(`${API}/get_locations.php`, {
             method: "GET",
             headers: {
                 "Authorization": `Bearer ${token}`
@@ -881,7 +756,7 @@ const getLocationsData = token => {
 // Función para crear una nueva ubicación
 const createLocation = (name) => {
     return new Promise((resolve, reject) => {
-        fetch(`https://facturaldy.site/create_locations.php`, {
+        fetch(`${API}/create_locations.php`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -907,7 +782,7 @@ const createLocation = (name) => {
 // Función para actualizar una ubicación
 const updateLocation = (locationId, name) => {
     return new Promise((resolve, reject) => {
-        fetch(`https://facturaldy.site/update_locations.php`, {
+        fetch(`${API}/update_locations.php`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
@@ -933,7 +808,7 @@ const updateLocation = (locationId, name) => {
 // Función para eliminar una ubicación
 const deleteLocation = (locationId) => {
     return new Promise((resolve, reject) => {
-        fetch(`https://facturaldy.site/delete_locations.php`, {
+        fetch(`${API}/delete_locations.php`, {
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json",
@@ -959,7 +834,7 @@ const deleteLocation = (locationId) => {
 // Función para obtener personajes
 const getCharactersData = () => {
     return new Promise((resolve, reject) => {
-        fetch(`https://facturaldy.site/get_characters2.php`, {
+        fetch(`${API}/get_characters2.php`, {
             method: "GET",
             headers: {
                 "Authorization": `Bearer ${token}`
@@ -983,7 +858,7 @@ const getCharactersData = () => {
 // Función para crear un personaje
 const createCharacter = (esName, enName, priceHours, isActive) => {
     return new Promise((resolve, reject) => {
-        fetch(`https://facturaldy.site/create_characters.php`, {
+        fetch(`${API}/create_characters.php`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -1009,7 +884,7 @@ const createCharacter = (esName, enName, priceHours, isActive) => {
 // Función para actualizar un personaje
 const updateCharacter = (characterId, esName, enName, priceHours, isActive) => {
     return new Promise((resolve, reject) => {
-        fetch(`https://facturaldy.site/update_characters.php`, {
+        fetch(`${API}/update_characters.php`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
@@ -1035,7 +910,7 @@ const updateCharacter = (characterId, esName, enName, priceHours, isActive) => {
 // Función para eliminar un personaje
 const deleteCharacter = (characterId) => {
     return new Promise((resolve, reject) => {
-        fetch(`https://facturaldy.site/delete_characters.php`, {
+        fetch(`${API}/delete_characters.php`, {
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json",
