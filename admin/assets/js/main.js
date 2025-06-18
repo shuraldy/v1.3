@@ -421,6 +421,83 @@ configController: async () => {
   } catch (err) {
     console.error("Error al cargar personajes:", err);
   }
+
+  // ------------------- CRUD DE PRODUCTOS (solo lectura) -------------------
+try {
+  const productData = [{ theadTheme: isDarkMode ? "table-dark" : "table-light" }];
+  await DOM_CONSTRUCTOR("#products-table-outlet", "components/utils/productsTable.component.html", productData);
+
+  const products = await getProductsData();
+  const tbody = $('#products-table tbody');
+  tbody.empty();
+
+  if (!products.length) {
+    tbody.append(`<tr><td colspan="9" class="text-center">No hay productos disponibles</td></tr>`);
+  } else {
+    products.forEach((el, index) => {
+      tbody.append(`
+        <tr>
+          <td class="text-start">${index + 1}</td>
+          <td>${el.es_name}</td>
+          <td>${el.en_name}</td>
+          <td>${el.es_description}</td>
+          <td>${el.en_description}</td>
+          <td>$${parseFloat(el.price).toFixed(2)}</td>
+          <td>${el.duration_hours}</td>
+          <td>${el.is_active == "1" ? "Sí" : "No"}</td>
+          <td><!-- Acciones futuras: editar/eliminar --></td>
+        </tr>`);
+    });
+  }
+
+  new DataTable('#products-table', {
+    responsive: true,
+    order: [],
+    lengthMenu: [[10, 25, 50, -1], [10, 25, 50, 'Todos']],
+    layout: {
+      topStart: {
+        buttons: [
+          { extend: 'csv', className: 'btn btn-outline-secondary btn-sm me-2', text: '<i class="fa-solid fa-file-csv"></i> CSV' },
+          { extend: 'excel', className: 'btn btn-outline-success btn-sm me-2', text: '<i class="fa-solid fa-file-excel"></i> Excel' },
+          { extend: 'pdf', className: 'btn btn-outline-danger btn-sm me-2', text: '<i class="fa-solid fa-file-pdf"></i> PDF' },
+          { extend: 'print', className: 'btn btn-outline-primary btn-sm', text: '<i class="fa-solid fa-print"></i> Imprimir' }
+        ]
+      },
+      bottomStart: 'pageLength',
+      bottomEnd: ['info', 'paging']
+    },
+    language: {
+      decimal: ",",
+      thousands: ".",
+      processing: "Procesando...",
+      search: "Buscar:",
+      lengthMenu: "Mostrar _MENU_ registros",
+      info: "_START_ al _END_ de _TOTAL_ registros",
+      infoEmpty: "Mostrando 0 registros",
+      infoFiltered: "(filtrado de _MAX_ registros totales)",
+      loadingRecords: "Cargando...",
+      zeroRecords: "No se encontraron resultados",
+      emptyTable: "No hay datos disponibles",
+      paginate: {
+        first: `<i class="fa-solid fa-angles-left"></i>`,
+        previous: `<i class="fa-solid fa-angle-left"></i>`,
+        next: `<i class="fa-solid fa-angle-right"></i>`,
+        last: `<i class="fa-solid fa-angles-right"></i>`
+      },
+      aria: {
+        sortAscending: ": activar para ordenar ascendente",
+        sortDescending: ": activar para ordenar descendente"
+      }
+    }
+  });
+
+} catch (error) {
+  console.error("Error al cargar productos:", error);
+  $('#products-table tbody').empty().append(
+    `<tr><td colspan="9" class="text-center">Error al cargar los productos</td></tr>`
+  );
+}
+
 },
 
 
@@ -883,6 +960,31 @@ const deleteCharacter = (characterId) => {
             reject(err);
         });
     });
+};
+
+//obtener productos
+
+const getProductsData = () => {
+  return new Promise((resolve, reject) => {
+    fetch(`${API}/get_products.php`, {
+      method: "GET",
+      headers: {
+        "Authorization": `Bearer ${token}`
+      }
+    })
+      .then(res => res.json())
+      .then(response => {
+        if (!response || response.length === 0) {
+          reject(new Error('No se encontraron productos'));
+          return;
+        }
+        resolve(response);
+      })
+      .catch(err => {
+        console.error("Error al obtener productos:", err);
+        reject(err);
+      });
+  });
 };
 
 const getEventData = id => {
