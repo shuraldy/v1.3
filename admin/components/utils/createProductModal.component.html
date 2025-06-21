@@ -1,0 +1,50 @@
+<div class="modal fade" id="createProductModal" tabindex="-1" aria-labelledby="createProductModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="createProductModalLabel">Nuevo Producto</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <input type="hidden" id="productId" />
+                    <div class="mb-3">
+                        <label for="esProductName" class="form-label">Nombre en Español</label>
+                        <input type="text" class="form-control" id="esProductName" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="enProductName" class="form-label">Nombre en Inglés</label>
+                        <input type="text" class="form-control" id="enProductName" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="esProductDesc" class="form-label">Descripción en Español</label>
+                        <textarea class="form-control" id="esProductDesc" rows="3" required></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="enProductDesc" class="form-label">Descripción en Inglés</label>
+                        <textarea class="form-control" id="enProductDesc" rows="3" required></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="productPrice" class="form-label">Precio</label>
+                        <input type="number" step="0.01" class="form-control" id="productPrice" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="productDuration" class="form-label">Duración (Horas)</label>
+                        <input type="number" class="form-control" id="productDuration" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="productActive" class="form-label">Activo</label>
+                        <select class="form-select" id="productActive" required>
+                            <option value="1">Sí</option>
+                            <option value="0">No</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary" id="saveProductButton">Crear</button>
+            </div>
+        </div>
+    </div>
+</div>
