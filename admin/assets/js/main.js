@@ -423,125 +423,140 @@ configController: async () => {
     console.error("Error al cargar personajes:", err);
   }
 
-  // CRUD Productos
-            try {
-                await DOM_CONSTRUCTOR("#products-table-outlet", "components/utils/productsTable.component.html", [{ theadTheme: isDarkMode ? "table-dark" : "table-light" }]);
-                const products = await getProductsData();
-                const tbody = $('#products-table tbody');
-                tbody.empty();
+// CRUD Productos
+try {
+    await DOM_CONSTRUCTOR("#products-table-outlet", "components/utils/productsTable.component.html", [{ theadTheme: isDarkMode ? "table-dark" : "table-light" }]);
+    const products = await getProductsData();
+    const tbody = $('#products-table tbody');
+    tbody.empty();
 
-                if (!products.length) {
-                    tbody.append(`<tr><td colspan="9" class="text-center">No hay productos disponibles</td></tr>`);
-                } else {
-                    products.forEach((el, index) => {
-                        tbody.append(`
-                            <tr>
-                                <td class="text-start">${index + 1}</td>
-                                <td>${el.es_name}</td>
-                                <td>${el.en_name}</td>
-                                <td>${el.es_description}</td>
-                                <td>${el.en_description}</td>
-                                <td>$${parseFloat(el.price).toFixed(2)}</td>
-                                <td>${el.duration_hours}</td>
-                                <td>${el.is_active == "1" ? "Sí" : "No"}</td>
-                                <td>
-                                    <button class="btn btn-warning btn-sm me-2 edit-product-btn" 
-                                        data-id="${el.product_id}" 
-                                        data-es-name="${el.es_name}" 
-                                        data-en-name="${el.en_name}" 
-                                        data-es-desc="${el.es_description}" 
-                                        data-en-desc="${el.en_description}" 
-                                        data-price="${el.price}" 
-                                        data-duration="${el.duration_hours}" 
-                                        data-is-active="${el.is_active}">
-                                        <i class="fa-solid fa-edit"></i>
-                                    </button>
-                                    <button class="btn btn-danger btn-sm delete-product-btn" data-id="${el.product_id}">
-                                        <i class="fa-solid fa-trash"></i>
-                                    </button>
-                                </td>
-                            </tr>`);
-                    });
-                }
+    if (!products.length) {
+        tbody.append(`<tr><td colspan="9" class="text-center">No hay productos disponibles</td></tr>`);
+    } else {
+        products.forEach((el, index) => {
+            tbody.append(`
+                <tr>
+                    <td class="text-start">${index + 1}</td>
+                    <td>${el.es_name}</td>
+                    <td>${el.en_name}</td>
+                    <td>${el.es_description}</td>
+                    <td>${el.en_description}</td>
+                    <td>$${parseFloat(el.price).toFixed(2)}</td>
+                    <td>${el.duration_hours}</td>
+                    <td>${el.is_active == "1" ? "Sí" : "No"}</td>
+                    <td>
+                        <button class="btn btn-warning btn-sm me-2 edit-product-btn" 
+                            data-id="${el.product_id}" 
+                            data-es-name="${el.es_name}" 
+                            data-en-name="${el.en_name}" 
+                            data-es-desc="${el.es_description}" 
+                            data-en-desc="${el.en_description}" 
+                            data-price="${el.price}" 
+                            data-duration="${el.duration_hours}" 
+                            data-is-active="${el.is_active}">
+                            <i class="fa-solid fa-edit"></i>
+                        </button>
+                        <button class="btn btn-danger btn-sm delete-product-btn" data-id="${el.product_id}">
+                            <i class="fa-solid fa-trash"></i>
+                        </button>
+                    </td>
+                </tr>`);
+        });
+    }
 
-                new DataTable('#products-table', getTableConfig('products-table'));
+    new DataTable('#products-table', getTableConfig('products-table'));
 
-                // Crear producto
-                document.getElementById('createProductBtn')?.addEventListener('click', () => {
-                    const modal = document.getElementById('createProductModal');
-                    if (!modal) return console.error('Modal de productos no encontrado');
-                    ['productId', 'esProductName', 'enProductName', 'esProductDesc', 'enProductDesc', 'productPrice', 'productDuration', 'productActive'].forEach(id => document.getElementById(id).value = '');
-                    document.getElementById('createProductModalLabel').textContent = 'Nuevo Producto';
-                    document.getElementById('saveProductButton').textContent = 'Crear';
-                    new bootstrap.Modal(modal).show();
-                });
+    // Crear producto
+    document.getElementById('createProductBtn')?.addEventListener('click', () => {
+        const modal = document.getElementById('createProductModal');
+        if (!modal) return console.error('Modal de productos no encontrado');
+        ['productId', 'esProductName', 'enProductName', 'esProductDesc', 'enProductDesc', 'productPrice', 'productDuration', 'productActive'].forEach(id => document.getElementById(id).value = '');
+        document.getElementById('createProductModalLabel').textContent = 'Nuevo Producto';
+        document.getElementById('saveProductButton').textContent = 'Crear';
+        new bootstrap.Modal(modal).show();
+    });
 
-                // Editar producto
-                $(document).on('click', '.edit-product-btn', function () {
-                    const modal = document.getElementById('createProductModal');
-                    if (!modal) return console.error('Modal de productos no encontrado');
-                    document.getElementById('productId').value = $(this).data('id');
-                    document.getElementById('esProductName').value = $(this).data('es-name');
-                    document.getElementById('enProductName').value = $(this).data('en-name');
-                    document.getElementById('esProductDesc').value = $(this).data('es-desc');
-                    document.getElementById('enProductDesc').value = $(this).data('en-desc');
-                    document.getElementById('productPrice').value = $(this).data('price');
-                    document.getElementById('productDuration').value = $(this).data('duration');
-                    document.getElementById('productActive').value = $(this).data('is-active');
-                    document.getElementById('createProductModalLabel').textContent = 'Editar Producto';
-                    document.getElementById('saveProductButton').textContent = 'Guardar';
-                    new bootstrap.Modal(modal).show();
-                });
-
-                // Eliminar producto
-                $(document).on('click', '.delete-product-btn', function () {
-                    const id = $(this).data('id');
-                    if (confirm('¿Eliminar producto?')) {
-                        deleteProduct(id)
-                            .then(() => window.location.reload())
-                            .catch(err => {
-                                console.error(err);
-                                alert('Error al eliminar producto.');
-                            });
-                    }
-                });
-
-                // Guardar producto
-                document.getElementById('saveProductButton')?.addEventListener('click', async (e) => {
-                    e.preventDefault();
-                    const id = document.getElementById('productId').value;
-                    const esName = document.getElementById('esProductName').value.trim();
-                    const enName = document.getElementById('enProductName').value.trim();
-                    const esDesc = document.getElementById('esProductDesc').value.trim();
-                    const enDesc = document.getElementById('enProductDesc').value.trim();
-                    const price = parseFloat(document.getElementById('productPrice').value.trim());
-                    const duration = parseInt(document.getElementById('productDuration').value.trim());
-                    const isActive = parseInt(document.getElementById('productActive').value);
-
-                    if (!esName || !enName || !esDesc || !enDesc || isNaN(price) || isNaN(duration)) {
-                        return alert('Completa los campos correctamente.');
-                    }
-
-                    try {
-                        if (id) {
-                            await updateProduct(id, esName, enName, esDesc, enDesc, price.toFixed(2), duration, isActive);
-                        } else {
-                            await createProduct(esName, enName, esDesc, enDesc, price.toFixed(2), duration, "imagen", isActive);
-                        }
-                        bootstrap.Modal.getInstance(document.getElementById('createProductModal')).hide();
+   // Editar producto
+    $(document).on('click', '.edit-product-btn', function () {
+        const modal = document.getElementById('createProductModal');
+        if (!modal) return console.error('Modal de productos no encontrado');
+        document.getElementById('productId').value = $(this).data('id');
+        document.getElementById('esProductName').value = $(this).data('es-name');
+        document.getElementById('enProductName').value = $(this).data('en-name');
+        document.getElementById('esProductDesc').value = $(this).data('es-desc');
+        document.getElementById('enProductDesc').value = $(this).data('en-desc');
+        document.getElementById('productPrice').value = $(this).data('price');
+        document.getElementById('productDuration').value = $(this).data('duration');
+        document.getElementById('productActive').value = $(this).data('is-active');
+        document.getElementById('createProductModalLabel').textContent = 'Editar Producto';
+        document.getElementById('saveProductButton').textContent = 'Guardar';
+        new bootstrap.Modal(modal).show();
+    });
+    
+    // Eliminar producto
+    $(document).on('click', '.delete-product-btn', function () {
+        const id = $(this).data('id');
+        if (confirm('¿Eliminar producto?')) {
+            deleteProduct(id)
+                .then(response => {
+                    if (response.code === 200) {
+                        alert('Producto eliminado exitosamente.');
                         window.location.reload();
-                    } catch (err) {
-                        console.error(err);
-                        alert('Error al guardar producto.');
+                    } else {
+                        alert(response.message || 'Error al eliminar el producto');
+                        window.location.reload();
                     }
+                })
+                .catch(err => {
+                    console.error(err);
+                    alert('Error al eliminar producto');
+                    window.location.reload();
                 });
+        }
+    });
 
-            } catch (err) {
-                console.error("Error al cargar productos:", err);
-                $('#products-table tbody').empty().append(
-                    `<tr><td colspan="9" class="text-center">Error al cargar los productos</td></tr>`
-                );
+    // Guardar producto
+    document.getElementById('saveProductButton')?.addEventListener('click', async (e) => {
+        e.preventDefault();
+        const id = document.getElementById('productId').value;
+        const esName = document.getElementById('esProductName').value.trim();
+        const enName = document.getElementById('enProductName').value.trim();
+        const esDesc = document.getElementById('esProductDesc').value.trim();
+        const enDesc = document.getElementById('enProductDesc').value.trim();
+        const price = parseFloat(document.getElementById('productPrice').value.trim());
+        const duration = parseInt(document.getElementById('productDuration').value.trim());
+        const isActive = parseInt(document.getElementById('productActive').value);
+
+        if (!esName || !enName || !esDesc || !enDesc || isNaN(price) || isNaN(duration)) {
+            return alert('Completa los campos correctamente.');
+        }
+
+        try {
+            let response;
+            if (id) {
+                response = await updateProduct(id, esName, enName, esDesc, enDesc, price.toFixed(2), duration, isActive);
+            } else {
+                response = await createProduct(esName, enName, esDesc, enDesc, price.toFixed(2), duration, "imagen", isActive);
             }
+            if (response.code === 200) {
+                alert('Producto guardado exitosamente.');
+                window.location.reload();
+            } else {
+                throw new Error(response.message || 'Error al guardar el producto.');
+            }
+        } catch (err) {
+            console.error(err);
+            alert(err.message || 'Error al guardar producto.');
+            window.location.reload();
+        }
+    });
+
+} catch (err) {
+    console.error("Error al cargar productos:", err);
+    $('#products-table tbody').empty().append(
+        `<tr><td colspan="9" class="text-center">Error al cargar los productos</td></tr>`
+    );
+}
 
 },
 
@@ -1053,11 +1068,11 @@ const createProduct = (esName, enName, esDescription, enDescription, price, dura
         })
         .then(res => res.json())
         .then(response => {
-            if (!response.ok) {
+            if (response.code !== 200) {
                 reject(new Error(response.message || 'Error al crear el producto'));
                 return;
             }
-            resolve(response.data);
+            resolve(response);
         })
         .catch(err => {
             console.error("Error al crear producto:", err);
@@ -1088,11 +1103,11 @@ const updateProduct = (productId, esName, enName, esDescription, enDescription, 
         })
         .then(res => res.json())
         .then(response => {
-            if (!response.ok) {
+            if (response.code !== 200) {
                 reject(new Error(response.message || 'Error al actualizar el producto'));
                 return;
             }
-            resolve(response.data);
+            resolve(response);
         })
         .catch(err => {
             console.error("Error al actualizar producto:", err);
@@ -1114,11 +1129,11 @@ const deleteProduct = (productId) => {
         })
         .then(res => res.json())
         .then(response => {
-            if (!response.ok) {
+            if (response.code !== 200) {
                 reject(new Error(response.message || 'Error al eliminar el producto'));
                 return;
             }
-            resolve(response.data);
+            resolve(response);
         })
         .catch(err => {
             console.error("Error al eliminar producto:", err);
