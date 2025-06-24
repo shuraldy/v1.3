@@ -260,7 +260,7 @@ configController: async () => {
     }
   });
 
-  // CRUD Ubicaciones
+ // CRUD Ubicaciones
   try {
     await DOM_CONSTRUCTOR("#locations-table-outlet", "components/utils/locationsTable.component.html", [{ theadTheme: isDarkMode ? "table-dark" : "table-light" }]);
     const locations = await getLocationsData(token);
@@ -324,12 +324,30 @@ configController: async () => {
       const name = document.getElementById('locationName').value.trim();
       if (!name) return alert('Por favor, ingresa un nombre.');
       try {
+        const modal = bootstrap.Modal.getInstance(document.getElementById('createLocationModal'));
         id ? await updateLocation(id, name) : await createLocation(name);
-        bootstrap.Modal.getInstance(document.getElementById('createLocationModal')).hide();
+        if (modal) modal.hide(); // Cerrar el modal solo si está instanciado
         window.location.reload();
       } catch (err) {
         console.error(err);
         alert('Error al guardar la ubicación.');
+      }
+    });
+
+    // Manejar el cierre del modal para evitar bloqueos
+    const locationModal = document.getElementById('createLocationModal');
+    locationModal.addEventListener('hidden.bs.modal', () => {
+      try {
+        // Limpiar el formulario
+        const form = document.getElementById('createLocationForm');
+        if (form) form.reset();
+        document.getElementById('locationId').value = '';
+        document.getElementById('locationName').value = '';
+        // Forzar la eliminación de la máscara si persiste
+        const backdrop = document.querySelector('.modal-backdrop');
+        if (backdrop) backdrop.remove();
+      } catch (err) {
+        console.error('Error al limpiar modal de ubicación:', err);
       }
     });
   } catch (err) {
