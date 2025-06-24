@@ -209,13 +209,14 @@ configController: async () => {
     themeConfig(e.target.checked);
   });
 
-  // Cargar ambos modales
-  const [locationModalHTML, characterModalHTML, productModalHTML] = await Promise.all([
+  // Cargar ambos modales createPackageModal.component.html
+  const [locationModalHTML, characterModalHTML, productModalHTML , packageModalHTML] = await Promise.all([
     fetch("components/utils/createLocationModal.component.html").then(r => r.text()),
     fetch("components/utils/charactersModal.component.html").then(r => r.text()),
-    fetch("components/utils/createProductModal.component.html").then(r => r.text())
+    fetch("components/utils/createProductModal.component.html").then(r => r.text()),
+    fetch("components/utils/createPackageModal.component.html").then(r => r.text())
   ]);
-  document.getElementById("modal-outlet").innerHTML = locationModalHTML + characterModalHTML + productModalHTML;
+  document.getElementById("modal-outlet").innerHTML = locationModalHTML + characterModalHTML + productModalHTML +packageModalHTML;
 
   // Funciones reutilizables
   const getTableConfig = (tableId) => ({
@@ -492,7 +493,7 @@ try {
         document.getElementById('saveProductButton').textContent = 'Guardar';
         new bootstrap.Modal(modal).show();
     });
-    
+
     // Eliminar producto
     $(document).on('click', '.delete-product-btn', function () {
         const id = $(this).data('id');
@@ -558,6 +559,238 @@ try {
     );
 }
 
+            // CRUD Paquetes
+            try {
+                await DOM_CONSTRUCTOR("#packages-table-outlet", "components/utils/packageTable.component.html", [{ theadTheme: isDarkMode ? "table-dark" : "table-light" }]);
+                const packages = await getPackagesData();
+                const tbody = $('#packages-table tbody');
+                tbody.empty();
+
+                if (!packages.length) {
+                    tbody.append(`<tr><td colspan="10" class="text-center">No hay paquetes disponibles</td></tr>`);
+                } else {
+                    packages.forEach((el, index) => {
+                        const productNames = el.products.map((product, idx) => `${idx + 1}. ${product.es_name}`).join(', ');
+                        tbody.append(`
+                            <tr>
+                                <td class="text-start">${index + 1}</td>
+                                <td>${el.es_package_name}</td>
+                                <td>${el.en_package_name}</td>
+                                <td>$${parseFloat(el.total_price).toFixed(2)}</td>
+                                <td>${el.duration_hours}</td>
+                                <td>${el.es_description.replace(/\n/g, ' ').replace(/,\s+/g, ', ')}</td>
+                                <td>${el.en_description.replace(/\n/g, ' ').replace(/,\s+/g, ', ')}</td>
+                                <td>${productNames}</td>
+                                <td>${el.is_active == "1" ? "Sí" : "No"}</td>
+                                <td>
+                                    <button class="btn btn-warning btn-sm me-2 edit-package-btn" 
+                                        data-package-id="${el.package_id}" 
+                                        data-es-package-name="${el.es_package_name}" 
+                                        data-en-package-name="${el.en_package_name}" 
+                                        data-total-price="${el.total_price}" 
+                                        data-duration-hours="${el.duration_hours}" 
+                                        data-es-description="${el.es_description}" 
+                                        data-en-description="${el.en_description}" 
+                                        data-is-active="${el.is_active}">
+                                        <i class="fa-solid fa-edit"></i>
+                                    </button>
+                                    <button class="btn btn-danger btn-sm delete-package-btn" data-package-id="${el.package_id}">
+                                        <i class="fa-solid fa-trash"></i>
+                                    </button>
+                                </td>
+                            </tr>`);
+                    });
+                }
+
+                new DataTable('#packages-table', getTableConfig('packages-table'));
+
+                // Cargar productos disponibles en el select
+                const products = await getProductsData();
+                const productSelect = document.getElementById('productSelect');
+                productSelect.innerHTML = '<option value="">Seleccione un producto</option>';
+                products.forEach(product => {
+                    const option = document.createElement('option');
+                    option.value = product.product_id;
+                    option.textContent = product.es_name;
+                    productSelect.appendChild(option);
+                });
+
+                // Manejar agregar productos al paquete
+                const selectedProductsList = document.getElementById('selectedProducts');
+                const addProductBtn = document.getElementById('addProductBtn');
+
+                addProductBtn.addEventListener('click', () => {
+                    const productId = productSelect.value;
+
+                    if (productId) {
+                        const product = products.find(p => p.product_id == productId);
+                        if (product) {
+                            const listItem = document.createElement('li');
+                            listItem.className = 'list-group-item d-flex justify-content-between align-items-center';
+                            listItem.dataset.productId = productId;
+                            listItem.dataset.quantity = 1; // Cantidad por defecto
+                            listItem.innerHTML = `
+                                ${product.es_name} (Cantidad: 1)
+                                <button type="button" class="btn btn-danger btn-sm remove-product-btn">
+                                    <i class="fa-solid fa-trash"></i>
+                                </button>
+                            `;
+                            selectedProductsList.appendChild(listItem);
+
+                            // Limpiar selección
+                            productSelect.value = '';
+                        }
+                    }
+                });
+
+                // Manejar eliminación de productos seleccionados
+                selectedProductsList.addEventListener('click', (e) => {
+                    if (e.target.classList.contains('remove-product-btn') || e.target.classList.contains('fa-trash')) {
+                        e.target.closest('li').remove();
+                    }
+                });
+
+                // Manejar guardar paquete (crear o actualizar)
+                let isEditing = false;
+                let editingPackageId = null;
+
+                document.getElementById('savePackageButton').addEventListener('click', async () => {
+                    const form = document.getElementById('createPackageForm');
+                    if (form.checkValidity()) {
+                        const selectedProducts = Array.from(selectedProductsList.children).map(item => ({
+                            product_id: item.dataset.productId,
+                            quantity: parseInt(item.dataset.quantity)
+                        }));
+
+                        // Validar que haya al menos un producto
+                        if (selectedProducts.length === 0) {
+                            alert('Debe agregar al menos un producto al paquete.');
+                            return;
+                        }
+
+                        const packageData = {
+                            package_id: isEditing ? editingPackageId : undefined,
+                            es_package_name: document.getElementById('esPackageName').value.trim(),
+                            en_package_name: document.getElementById('enPackageName').value.trim(),
+                            total_price: parseFloat(document.getElementById('totalPrice').value.trim()),
+                            duration_hours: parseInt(document.getElementById('durationHours').value.trim()),
+                            es_description: document.getElementById('esDescription').value.trim(),
+                            en_description: document.getElementById('enDescription').value.trim(),
+                            image_url: "imagen",
+                            allows_character_selection: 1,
+                            is_active: parseInt(document.getElementById('isActive').value),
+                            products: selectedProducts
+                        };
+
+                        try {
+                            let response;
+                            if (isEditing) {
+                                response = await updatePackage(packageData);
+                            } else {
+                                response = await createPackage(packageData);
+                            }
+                            if (response.code === 200) {
+                                alert(`${isEditing ? 'Paquete actualizado' : 'Paquete creado'} exitosamente.`);
+                                window.location.reload();
+                            } else {
+                                throw new Error(response.message || `Error al ${isEditing ? 'actualizar' : 'crear'} el paquete`);
+                            }
+                        } catch (err) {
+                            console.error(err);
+                            alert(err.message || `Error al ${isEditing ? 'actualizar' : 'crear'} paquete.`);
+                            window.location.reload();
+                        }
+                    } else {
+                        form.reportValidity();
+                    }
+                });
+
+                // Manejar edición de paquete
+                document.querySelectorAll('.edit-package-btn').forEach(button => {
+                    button.addEventListener('click', async () => {
+                        isEditing = true;
+                        editingPackageId = parseInt(button.getAttribute('data-package-id'));
+                        document.getElementById('createPackageForm').reset();
+                        selectedProductsList.innerHTML = '';
+
+                        // Llenar el formulario con los datos del paquete
+                        document.getElementById('esPackageName').value = button.getAttribute('data-es-package-name');
+                        document.getElementById('enPackageName').value = button.getAttribute('data-en-package-name');
+                        document.getElementById('totalPrice').value = button.getAttribute('data-total-price');
+                        document.getElementById('durationHours').value = button.getAttribute('data-duration-hours');
+                        document.getElementById('esDescription').value = button.getAttribute('data-es-description');
+                        document.getElementById('enDescription').value = button.getAttribute('data-en-description');
+                        document.getElementById('isActive').value = button.getAttribute('data-is-active');
+
+                        // Obtener productos del paquete
+                        try {
+                            const packageProducts = await getPackageProducts();
+                            const packageProductData = packageProducts.filter(p => parseInt(p.package_id) === editingPackageId);
+                            if (!packageProductData || packageProductData.length === 0) {
+                                throw new Error('No se encontraron productos para este paquete');
+                            }
+
+                            // Agregar los productos del paquete al modal
+                            packageProductData.forEach(product => {
+                                const listItem = document.createElement('li');
+                                listItem.className = 'list-group-item d-flex justify-content-between align-items-center';
+                                listItem.dataset.productId = product.product_id;
+                                listItem.dataset.quantity = parseInt(product.quantity); // Usar la cantidad del JSON
+                                listItem.innerHTML = `
+                                    ${product.product_name_es} (Cantidad: ${product.quantity})
+                                    <button type="button" class="btn btn-danger btn-sm remove-product-btn">
+                                        <i class="fa-solid fa-trash"></i>
+                                    </button>
+                                `;
+                                selectedProductsList.appendChild(listItem);
+                            });
+                        } catch (err) {
+                            console.error("Error al cargar productos del paquete:", err);
+                            alert('Error al cargar los productos del paquete.');
+                        }
+
+                        // Abrir el modal
+                        new bootstrap.Modal(document.getElementById('createPackageModal')).show();
+                    });
+                });
+
+                // Manejar eliminación de paquete
+                document.querySelectorAll('.delete-package-btn').forEach(button => {
+                    button.addEventListener('click', async () => {
+                        const packageId = parseInt(button.getAttribute('data-package-id'));
+                        if (confirm(`¿Estás seguro de eliminar el paquete con ID: ${packageId}?`)) {
+                            try {
+                                const response = await deletePackage({ package_id: packageId });
+                                if (response.code === 200) {
+                                    alert('Paquete eliminado exitosamente.');
+                                    window.location.reload();
+                                } else {
+                                    throw new Error(response.message || 'Error al eliminar el paquete');
+                                }
+                            } catch (err) {
+                                console.error(err);
+                                alert(err.message || 'Error al eliminar paquete.');
+                                window.location.reload();
+                            }
+                        }
+                    });
+                });
+
+                // Abrir modal al hacer clic en el botón
+                document.getElementById('createPackageBtn').addEventListener('click', () => {
+                    isEditing = false;
+                    editingPackageId = null;
+                    document.getElementById('createPackageForm').reset();
+                    selectedProductsList.innerHTML = '';
+                    new bootstrap.Modal(document.getElementById('createPackageModal')).show();
+                });
+
+            } catch (err) {
+                console.error("Error al cargar paquetes:", err);
+                $('#packages-table tbody').empty().append(
+                    `<tr><td colspan="10" class="text-center">Error al cargar los paquetes</td></tr>`
+                );
+            }
 },
 
 
@@ -1137,6 +1370,128 @@ const deleteProduct = (productId) => {
         })
         .catch(err => {
             console.error("Error al eliminar producto:", err);
+            reject(err);
+        });
+    });
+};
+
+// Nueva función para obtener los datos de los paquetes
+const getPackagesData = () => {
+    return new Promise((resolve, reject) => {
+        fetch(`${API}/get_packages.php`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`
+            }
+        })
+        .then(res => res.json())
+        .then(response => {
+            if (!response || response.length === 0) {
+                reject(new Error('No se encontraron paquetes'));
+                return;
+            }
+            resolve(response);
+        })
+        .catch(err => {
+            console.error("Error al obtener paquetes:", err);
+            reject(err);
+        });
+    });
+};
+
+const getPackageProducts = () => {
+    return new Promise((resolve, reject) => {
+        fetch(`${API}/get_package_products.php`, {
+            method: "GET",
+            headers: {
+                "Authorization": `Bearer ${token}`
+            }
+        })
+        .then(res => res.json())
+        .then(response => {
+            if (!response || response.length === 0) {
+                reject(new Error('No se encontraron productos de paquetes'));
+                return;
+            }
+            resolve(response);
+        })
+        .catch(err => {
+            console.error("Error al obtener productos de paquetes:", err);
+            reject(err);
+        });
+    });
+};
+
+const createPackage = (packageData) => {
+    return new Promise((resolve, reject) => {
+        fetch(`${API}/create_packages.php`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`
+            },
+            body: JSON.stringify(packageData)
+        })
+        .then(res => res.json())
+        .then(response => {
+            if (response.code !== 200) {
+                reject(new Error(response.message || 'Error al crear el paquete'));
+                return;
+            }
+            resolve(response);
+        })
+        .catch(err => {
+            console.error("Error al crear paquete:", err);
+            reject(err);
+        });
+    });
+};
+const updatePackage = (packageData) => {
+    return new Promise((resolve, reject) => {
+        fetch(`${API}/update_packages.php`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`
+            },
+            body: JSON.stringify(packageData)
+        })
+        .then(res => res.json())
+        .then(response => {
+            if (response.code !== 200) {
+                reject(new Error(response.message || 'Error al actualizar el paquete'));
+                return;
+            }
+            resolve(response);
+        })
+        .catch(err => {
+            console.error("Error al actualizar paquete:", err);
+            reject(err);
+        });
+    });
+};
+
+const deletePackage = (packageData) => {
+    return new Promise((resolve, reject) => {
+        fetch(`${API}/delete_packages.php`, {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`
+            },
+            body: JSON.stringify(packageData)
+        })
+        .then(res => res.json())
+        .then(response => {
+            if (response.code !== 200) {
+                reject(new Error(response.message || 'Error al eliminar el paquete'));
+                return;
+            }
+            resolve(response);
+        })
+        .catch(err => {
+            console.error("Error al eliminar paquete:", err);
             reject(err);
         });
     });

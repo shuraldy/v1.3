@@ -1,0 +1,70 @@
+<div class="modal fade" id="createPackageModal" tabindex="-1" aria-labelledby="createPackageModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="createPackageModalLabel">Nuevo Paquete</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="createPackageForm">
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="esPackageName" class="form-label">Nombre (ES)</label>
+                                <input type="text" class="form-control" id="esPackageName" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="enPackageName" class="form-label">Nombre (EN)</label>
+                                <input type="text" class="form-control" id="enPackageName" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="totalPrice" class="form-label">Precio Total</label>
+                                <input type="number" step="0.01" class="form-control" id="totalPrice" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="durationHours" class="form-label">Duración (Minutos)</label>
+                                <input type="number" class="form-control" id="durationHours" required>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="esDescription" class="form-label">Descripción (ES)</label>
+                                <textarea class="form-control" id="esDescription" rows="3" required></textarea>
+                            </div>
+                            <div class="mb-3">
+                                <label for="enDescription" class="form-label">Descripción (EN)</label>
+                                <textarea class="form-control" id="enDescription" rows="3" required></textarea>
+                            </div>
+                            <div class="mb-3">
+                                <label for="productSelect" class="form-label">Agregar Productos</label>
+                                <div class="input-group">
+                                    <select class="form-select" id="productSelect">
+                                        <!-- Se llenará dinámicamente con getProductsData -->
+                                    </select>
+                                    <button type="button" class="btn btn-primary" id="addProductBtn">Agregar</button>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Productos Seleccionados</label>
+                                <ul id="selectedProducts" class="list-group">
+                                    <!-- Se llenará dinámicamente al agregar productos -->
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="isActive" class="form-label">Activo</label>
+                        <select class="form-select" id="isActive" required style="width: 25%;">
+                            <option value="1">Sí</option>
+                            <option value="0">No</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary" id="savePackageButton">Guardar</button>
+            </div>
+        </div>
+    </div>
+</div>
