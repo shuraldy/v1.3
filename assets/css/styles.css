@@ -12,6 +12,10 @@ body{
     background-image: linear-gradient(180deg, #00abba, transparent);
 }
 
+/* .what-we-do{
+    background-color: #00abba;
+} */
+
 .kl-header-container{
     transition: .3s;
 }
@@ -327,8 +331,7 @@ h1.love-ya{
 
 
 
-/* sliders */
-/* Slider wrapper */
+
 .slider {
     margin: 0 auto;
     overflow: hidden;
@@ -886,3 +889,4 @@ h1.love-ya{
         padding: 0 50% 0 0;
     }
 }
+
