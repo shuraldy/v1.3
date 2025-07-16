@@ -122,8 +122,71 @@ const Controller = () => {
                     }
                 });
 
+                const canvasHeight = isMobile() ? 400 : 200;
+                const salesChartContainer = document.querySelector("#salesChartContainer");
+                $(salesChartContainer).empty().append(`<canvas id="salesChart" width="400" height="${canvasHeight}"></canvas>`);
 
+                const yearSelect = document.getElementById('yearSelect');
+                if (yearSelect) {
+                    const startYear = 2025;
+                    const currentYear = new Date().getFullYear();
 
+                    // Generar opciones de año dinámicamente
+                    for (let year = startYear; year <= currentYear; year++) {
+                        const option = document.createElement('option');
+                        option.value = year;
+                        option.textContent = year;
+                        yearSelect.appendChild(option);
+                    }
+
+                    // Establecer el año actual como seleccionado por defecto
+                    yearSelect.value = currentYear.toString();
+
+                    // Función para obtener el reporte del año, actualizar el gráfico y las cards
+                    const fetchReport = async (year) => {
+                        const id = year ? parseInt(year) : 0; // Convertir a entero o usar 0
+                        try {
+                            const dataResponse = await getReportYear(id);
+                            console.log(dataResponse); // Imprimir los datos obtenidos
+
+                            // Actualizar las cards con los datos del elemento en la posición 12 (Total Año)
+                            if (dataResponse && dataResponse.length > 12) {
+                                const totalData = dataResponse[12]; // Elemento "Total Año"
+                                const totalSales = parseFloat(totalData.total_mensual).toLocaleString('es-CO', { style: 'currency', currency: 'COP', minimumFractionDigits: 0 });
+                                const totalEvents = totalData.cantidad_eventos;
+                                $('#totalSales').text(totalSales); // Actualizar Total ventas
+                                $('#totalEvents').text(totalEvents); // Actualizar Total eventos
+                            } else {
+                                $('#totalSales').text('$0'); // Valor por defecto si no hay datos
+                                $('#totalEvents').text('0');
+                            }
+
+                            // Actualizar el gráfico
+                            drawChart(dataResponse);
+                        } catch (error) {
+                            console.error('Error al obtener el reporte:', error);
+                            // Mostrar valores por defecto en caso de error
+                            $('#totalSales').text('$0');
+                            $('#totalEvents').text('0');
+                            drawChart([]); // Dibujar gráfico vacío
+                        }
+                    };
+
+                    // Ejecutar la llamada inicial con el valor del selector
+                    fetchReport(yearSelect.value);
+
+                    // Escuchar cambios en el selector
+                    yearSelect.addEventListener('change', function() {
+                        const selectedYear = this.value ? parseInt(this.value) : 0; // Convertir a entero o usar 0
+                        console.log(selectedYear); // Imprimir el año seleccionado
+                        fetchReport(this.value); // Llamar a la API con el nuevo valor
+                    });
+                } else {
+                    console.error('Elemento con ID "yearSelect" no encontrado');
+                    $('#totalSales').text('$0'); // Valor por defecto
+                    $('#totalEvents').text('0');
+                    drawChart([]); // Dibujar gráfico vacío
+                }
             } catch (error) {
                 console.error("Error:", error);
             }
@@ -131,134 +194,67 @@ const Controller = () => {
         },
 
 
-        dashboardController: async () => {
-            const canvasHeight = isMobile() ? 400 : 200;
-            const salesChartContainer = document.querySelector("#salesChartContainer");
-            $(salesChartContainer).empty().append(`<canvas id="salesChart" width="400" height="${canvasHeight}"></canvas>`);
+        configController: async () => {
+          const isDarkMode = getTheme();
 
-            const yearSelect = document.getElementById('yearSelect');
-            if (yearSelect) {
-                // Obtener el año actual
-                const currentYear = new Date().getFullYear().toString();
-                
-                const options = yearSelect.options;
-                for (let i = 0; i < options.length; i++) {
-                    if (options[i].value === currentYear) {
-                        options[i].selected = true;
-                        console.log(currentYear); 
-                        break;
-                    }
-                }
+          // Configurar tema oscuro
+          const switchDarkModeChecked = document.querySelector("#switchDarkModeChecked");
+          switchDarkModeChecked.checked = isDarkMode;
+          switchDarkModeChecked.addEventListener("change", function(e) {
+            localStorage.setItem("dark-mode", e.target.checked ? "true" : "false");
+            themeConfig(e.target.checked);
+          });
 
-                // Función para obtener el reporte del año, actualizar el gráfico y las cards
-                const fetchReport = async (year) => {
-                    const id = year ? parseInt(year) : 0; // Convertir a entero o usar 0
-                    try {
-                        const dataResponse = await getReportYear(id);
-                        console.log(dataResponse); // Imprimir los datos obtenidos
+          // Cargar ambos modales createPackageModal.component.html
+          const [locationModalHTML, characterModalHTML, productModalHTML , packageModalHTML] = await Promise.all([
+            fetch("components/utils/createLocationModal.component.html").then(r => r.text()),
+            fetch("components/utils/charactersModal.component.html").then(r => r.text()),
+            fetch("components/utils/createProductModal.component.html").then(r => r.text()),
+            fetch("components/utils/createPackageModal.component.html").then(r => r.text())
+          ]);
+          document.getElementById("modal-outlet").innerHTML = locationModalHTML + characterModalHTML + productModalHTML +packageModalHTML;
 
-                        // Actualizar las cards con los datos del elemento en la posición 12 (Total Año)
-                        if (dataResponse && dataResponse.length > 12) {
-                            const totalData = dataResponse[12]; // Elemento "Total Año"
-                            const totalSales = parseFloat(totalData.total_mensual).toLocaleString('es-CO', { style: 'currency', currency: 'COP', minimumFractionDigits: 0 });
-                            const totalEvents = totalData.cantidad_eventos;
-                            $('#totalSales').text(totalSales); // Actualizar Total ventas
-                            $('#totalEvents').text(totalEvents); // Actualizar Total eventos
-                        } else {
-                            $('#totalSales').text('$0'); // Valor por defecto si no hay datos
-                            $('#totalEvents').text('0');
-                        }
-
-                        // Actualizar el gráfico
-                        drawChart(dataResponse);
-                    } catch (error) {
-                        console.error('Error al obtener el reporte:', error);
-                        // Mostrar valores por defecto en caso de error
-                        $('#totalSales').text('$0');
-                        $('#totalEvents').text('0');
-                        drawChart([]); // Dibujar gráfico vacío
-                    }
-                };
-
-        // Ejecutar la llamada inicial con el valor del selector
-        fetchReport(yearSelect.value);
-
-        // Escuchar cambios en el selector
-        yearSelect.addEventListener('change', function() {
-            const selectedYear = this.value ? parseInt(this.value) : 0; // Convertir a entero o usar 0
-            console.log(selectedYear); // Imprimir el año seleccionado
-            fetchReport(this.value); // Llamar a la API con el nuevo valor
-        });
-    } else {
-        console.error('Elemento con ID "yearSelect" no encontrado');
-        $('#totalSales').text('$0'); // Valor por defecto
-        $('#totalEvents').text('0');
-        drawChart([]); // Dibujar gráfico vacío
-    }
-},
-
-
-configController: async () => {
-  const isDarkMode = getTheme();
-
-  // Configurar tema oscuro
-  const switchDarkModeChecked = document.querySelector("#switchDarkModeChecked");
-  switchDarkModeChecked.checked = isDarkMode;
-  switchDarkModeChecked.addEventListener("change", function(e) {
-    localStorage.setItem("dark-mode", e.target.checked ? "true" : "false");
-    themeConfig(e.target.checked);
-  });
-
-  // Cargar ambos modales createPackageModal.component.html
-  const [locationModalHTML, characterModalHTML, productModalHTML , packageModalHTML] = await Promise.all([
-    fetch("components/utils/createLocationModal.component.html").then(r => r.text()),
-    fetch("components/utils/charactersModal.component.html").then(r => r.text()),
-    fetch("components/utils/createProductModal.component.html").then(r => r.text()),
-    fetch("components/utils/createPackageModal.component.html").then(r => r.text())
-  ]);
-  document.getElementById("modal-outlet").innerHTML = locationModalHTML + characterModalHTML + productModalHTML +packageModalHTML;
-
-  // Funciones reutilizables
-  const getTableConfig = (tableId) => ({
-    responsive: true,
-    order: [],
-    lengthMenu: [[10, 25, 50, -1], [10, 25, 50, 'Todos']],
-    layout: {
-      topStart: {
-        buttons: [
-          { extend: 'csv', className: 'btn btn-outline-secondary btn-sm me-2', text: '<i class="fa-solid fa-file-csv"></i> CSV' },
-          { extend: 'excel', className: 'btn btn-outline-success btn-sm me-2', text: '<i class="fa-solid fa-file-excel"></i> Excel' },
-          { extend: 'pdf', className: 'btn btn-outline-danger btn-sm me-2', text: '<i class="fa-solid fa-file-pdf"></i> PDF' },
-          { extend: 'print', className: 'btn btn-outline-primary btn-sm', text: '<i class="fa-solid fa-print"></i> Imprimir' }
-        ]
-      },
-      bottomStart: 'pageLength',
-      bottomEnd: ['info', 'paging']
-    },
-    language: {
-      decimal: ",",
-      thousands: ".",
-      processing: "Procesando...",
-      search: "Buscar:",
-      lengthMenu: "Mostrar _MENU_ registros",
-      info: "_START_ al _END_ de _TOTAL_ registros",
-      infoEmpty: "Mostrando 0 registros",
-      infoFiltered: "(filtrado de _MAX_ registros totales)",
-      loadingRecords: "Cargando...",
-      zeroRecords: "No se encontraron resultados",
-      emptyTable: "No hay datos disponibles",
-      paginate: {
-        first: `<i class="fa-solid fa-angles-left"></i>`,
-        previous: `<i class="fa-solid fa-angle-left"></i>`,
-        next: `<i class="fa-solid fa-angle-right"></i>`,
-        last: `<i class="fa-solid fa-angles-right"></i>`
-      },
-      aria: {
-        sortAscending: ": activar para ordenar ascendente",
-        sortDescending: ": activar para ordenar descendente"
-      }
-    }
-  });
+          // Funciones reutilizables
+          const getTableConfig = (tableId) => ({
+            responsive: true,
+            order: [],
+            lengthMenu: [[10, 25, 50, -1], [10, 25, 50, 'Todos']],
+            layout: {
+              topStart: {
+                buttons: [
+                  { extend: 'csv', className: 'btn btn-outline-secondary btn-sm me-2', text: '<i class="fa-solid fa-file-csv"></i> CSV' },
+                  { extend: 'excel', className: 'btn btn-outline-success btn-sm me-2', text: '<i class="fa-solid fa-file-excel"></i> Excel' },
+                  { extend: 'pdf', className: 'btn btn-outline-danger btn-sm me-2', text: '<i class="fa-solid fa-file-pdf"></i> PDF' },
+                  { extend: 'print', className: 'btn btn-outline-primary btn-sm', text: '<i class="fa-solid fa-print"></i> Imprimir' }
+                ]
+              },
+              bottomStart: 'pageLength',
+              bottomEnd: ['info', 'paging']
+            },
+            language: {
+              decimal: ",",
+              thousands: ".",
+              processing: "Procesando...",
+              search: "Buscar:",
+              lengthMenu: "Mostrar _MENU_ registros",
+              info: "_START_ al _END_ de _TOTAL_ registros",
+              infoEmpty: "Mostrando 0 registros",
+              infoFiltered: "(filtrado de _MAX_ registros totales)",
+              loadingRecords: "Cargando...",
+              zeroRecords: "No se encontraron resultados",
+              emptyTable: "No hay datos disponibles",
+              paginate: {
+                first: `<i class="fa-solid fa-angles-left"></i>`,
+                previous: `<i class="fa-solid fa-angle-left"></i>`,
+                next: `<i class="fa-solid fa-angle-right"></i>`,
+                last: `<i class="fa-solid fa-angles-right"></i>`
+              },
+              aria: {
+                sortAscending: ": activar para ordenar ascendente",
+                sortDescending: ": activar para ordenar descendente"
+              }
+            }
+          });
 
  // CRUD Ubicaciones
   try {
@@ -988,12 +984,6 @@ const routes = [
         component : "components/pages/home.component.html",
         outlet : "content-outlet",
         controller : "homeController"
-    },
-    {
-        path : "dashboard",
-        component : "components/pages/dashboard.component.html",
-        outlet : "content-outlet",
-        controller : "dashboardController"
     },
     {
         path : "config",
@@ -1761,12 +1751,14 @@ const setAdminComponent = async () => {
     themeConfig(isDarkMode);
 
     const logOutWebBtn = document.getElementById("logOutWebBtn");
-    const menuMobBtn = document.getElementById("menuMobBtn");
-    logOutWebBtn.addEventListener("click", modalHandleLogOut);
+    if (logOutWebBtn) {
+        logOutWebBtn.addEventListener("click", modalHandleLogOut);
+    }
 
-    menuMobBtn.addEventListener("click", function(){
-        console.log("menuMobB");
-    });
+    const mobLogoutBtn = document.getElementById("mobLogoutBtn");
+    if (mobLogoutBtn) {
+        mobLogoutBtn.addEventListener("click", modalHandleLogOut);
+    }
 
     router();
     window.addEventListener("hashchange", router);
