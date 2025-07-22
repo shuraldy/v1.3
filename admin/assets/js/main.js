@@ -206,13 +206,14 @@ const Controller = () => {
           });
 
           // Cargar ambos modales createPackageModal.component.html
-          const [locationModalHTML, characterModalHTML, productModalHTML , packageModalHTML] = await Promise.all([
+          const [locationModalHTML, characterModalHTML, productModalHTML , packageModalHTML, categoryModalHTML] = await Promise.all([
             fetch("components/utils/createLocationModal.component.html").then(r => r.text()),
             fetch("components/utils/charactersModal.component.html").then(r => r.text()),
             fetch("components/utils/createProductModal.component.html").then(r => r.text()),
-            fetch("components/utils/createPackageModal.component.html").then(r => r.text())
+            fetch("components/utils/createPackageModal.component.html").then(r => r.text()),
+            fetch("components/utils/createCategoryModal.component.html").then(r => r.text())
           ]);
-          document.getElementById("modal-outlet").innerHTML = locationModalHTML + characterModalHTML + productModalHTML +packageModalHTML;
+          document.getElementById("modal-outlet").innerHTML = locationModalHTML + characterModalHTML + productModalHTML +packageModalHTML + categoryModalHTML;
 
           // Funciones reutilizables
           const getTableConfig = (tableId) => ({
@@ -805,6 +806,137 @@ try {
                     `<tr><td colspan="10" class="text-center">Error al cargar los paquetes</td></tr>`
                 );
             }
+
+// CRUD Categorías
+try {
+    await DOM_CONSTRUCTOR("#categories-table-outlet", "components/utils/categoryTable.component.html", [{ theadTheme: isDarkMode ? "table-dark" : "table-light" }]);
+    const categories = await getCategoriesData();
+    const tbody = $('#categories-table tbody');
+    tbody.empty();
+
+    if (!categories.length) {
+        tbody.append(`<tr><td colspan="5" class="text-center">No hay categorías disponibles</td></tr>`);
+    } else {
+        categories.forEach((el, index) => {
+            tbody.append(`
+                <tr>
+                    <td class="text-start">${index + 1}</td>
+                    <td>${el.name_category_es}</td>
+                    <td>${el.name_category_en}</td>
+                    <td>${el.is_active == "1" ? "Sí" : "No"}</td>
+                    <td>
+                        <button class="btn btn-warning btn-sm me-2 edit-category-btn" 
+                            data-id="${el.id}" 
+                            data-es-name="${el.name_category_es}" 
+                            data-en-name="${el.name_category_en}" 
+                            data-is-active="${el.is_active}">
+                            <i class="fa-solid fa-edit"></i>
+                        </button>
+                        <button class="btn btn-danger btn-sm delete-category-btn" data-id="${el.id}">
+                            <i class="fa-solid fa-trash"></i>
+                        </button>
+                    </td>
+                </tr>`);
+        });
+    }
+
+    new DataTable('#categories-table', getTableConfig('categories-table'));
+
+    // Crear categoría
+    document.getElementById('createCategoryBtn')?.addEventListener('click', () => {
+        const modal = document.getElementById('createCategoryModal');
+        if (!modal) return console.error('Modal de categorías no encontrado');
+        ['categoryId', 'esCategoryName', 'enCategoryName', 'categoryActive'].forEach(id => document.getElementById(id).value = '');
+        document.getElementById('createCategoryModalLabel').textContent = 'Nueva Categoría';
+        document.getElementById('saveCategoryButton').textContent = 'Crear';
+        new bootstrap.Modal(modal).show();
+    });
+
+    // Editar categoría
+    $(document).on('click', '.edit-category-btn', function () {
+        const modal = document.getElementById('createCategoryModal');
+        if (!modal) return console.error('Modal de categorías no encontrado');
+        document.getElementById('categoryId').value = $(this).data('id');
+        document.getElementById('esCategoryName').value = $(this).data('es-name');
+        document.getElementById('enCategoryName').value = $(this).data('en-name');
+        document.getElementById('categoryActive').value = $(this).data('is-active');
+        document.getElementById('createCategoryModalLabel').textContent = 'Editar Categoría';
+        document.getElementById('saveCategoryButton').textContent = 'Guardar';
+        new bootstrap.Modal(modal).show();
+    });
+
+
+$(document).on('click', '.delete-category-btn', function () {
+    const id = $(this).data('id');
+    if (confirm('¿Eliminar categoría?')) {
+        deleteCategory(id)
+            .then(response => {
+                alert(response.message || 'Categoría eliminada exitosamente.');
+                window.location.reload();
+            })
+            .catch(err => {
+                console.error('Error al procesar eliminación:', err);
+                alert('Error al eliminar categoría: ' + (err.message || 'Intenta de nuevo'));
+                window.location.reload();
+            });
+    }
+});
+
+    // Guardar categoría
+    document.getElementById('saveCategoryButton')?.addEventListener('click', async (e) => {
+        e.preventDefault();
+        const id = document.getElementById('categoryId').value;
+        const esName = document.getElementById('esCategoryName').value.trim();
+        const enName = document.getElementById('enCategoryName').value.trim();
+        const isActive = parseInt(document.getElementById('categoryActive').value);
+
+        if (!esName || !enName) {
+            return alert('Completa los campos correctamente.');
+        }
+
+        try {
+            let response;
+            if (id) {
+                response = await updateCategory(id, esName, enName, isActive);
+            } else {
+                response = await createCategory(esName, enName, isActive);
+            }
+            if (response.code === 200) {
+                alert('Categoría guardada exitosamente.');
+                window.location.reload();
+            } else {
+                throw new Error(response.message || 'Error al guardar la categoría.');
+            }
+        } catch (err) {
+            console.error(err);
+            alert(err.message || 'Error al guardar categoría.');
+            window.location.reload();
+        }
+    });
+
+    // Manejar el cierre del modal
+    const categoryModal = document.getElementById('createCategoryModal');
+    categoryModal.addEventListener('hidden.bs.modal', () => {
+        try {
+            const form = document.getElementById('createCategoryForm');
+            if (form) form.reset();
+            document.getElementById('categoryId').value = '';
+            document.getElementById('esCategoryName').value = '';
+            document.getElementById('enCategoryName').value = '';
+            const backdrop = document.querySelector('.modal-backdrop');
+            if (backdrop) backdrop.remove();
+        } catch (err) {
+            console.error('Error al limpiar modal de categoría:', err);
+        }
+    });
+} catch (err) {
+    console.error("Error al cargar categorías:", err);
+    $('#categories-table tbody').empty().append(
+        `<tr><td colspan="5" class="text-center">Error al cargar las categorías</td></tr>`
+    );
+}
+
+
 },
 
 
@@ -1500,6 +1632,118 @@ const deletePackage = (packageData) => {
         })
         .catch(err => {
             console.error("Error al eliminar paquete:", err);
+            reject(err);
+        });
+    });
+};
+
+const getCategoriesData = () => {
+    return new Promise((resolve, reject) => {
+        fetch(`${API}/get_category.php`, {
+            method: "GET",
+            headers: {
+                "Authorization": `Bearer ${token}`
+            }
+        })
+        .then(res => res.json())
+        .then(response => {
+            if (!response || response.length === 0) {
+                reject(new Error('No se encontraron categorías'));
+                return;
+            }
+            resolve(response);
+        })
+        .catch(err => {
+            console.error("Error al obtener categorías:", err);
+            reject(err);
+        });
+    });
+};
+
+const createCategory = (esName, enName, isActive) => {
+    return new Promise((resolve, reject) => {
+        fetch(`${API}/create_category.php`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`
+            },
+            body: JSON.stringify({
+                name_category_es: esName,
+                name_category_en: enName,
+                is_active: parseInt(isActive)
+            })
+        })
+        .then(res => res.json())
+        .then(response => {
+            if (response.code !== 200) {
+                reject(new Error(response.message || 'Error al crear la categoría'));
+                return;
+            }
+            resolve(response);
+        })
+        .catch(err => {
+            console.error("Error al crear categoría:", err);
+            reject(err);
+        });
+    });
+};
+
+const updateCategory = (categoryId, esName, enName, isActive) => {
+    return new Promise((resolve, reject) => {
+        fetch(`${API}/update_category.php`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`
+            },
+            body: JSON.stringify({
+                id: parseInt(categoryId),
+                name_category_es: esName,
+                name_category_en: enName,
+                is_active: parseInt(isActive)
+            })
+        })
+        .then(res => res.json())
+        .then(response => {
+            if (response.code !== 200) {
+                reject(new Error(response.message || 'Error al actualizar la categoría'));
+                return;
+            }
+            resolve(response);
+        })
+        .catch(err => {
+            console.error("Error al actualizar categoría:", err);
+            reject(err);
+        });
+    });
+};
+
+const deleteCategory = (categoryId) => {
+    return new Promise((resolve, reject) => {
+        fetch(`${API}/delete_category.php`, {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`
+            },
+            body: JSON.stringify({ id: parseInt(categoryId) })
+        })
+        .then(res => {
+            if (!res.ok) {
+                throw new Error(`Error HTTP: ${res.status} ${res.statusText}`);
+            }
+            return res.json();
+        })
+        .then(response => {
+            if (response.ok === true) {
+                resolve({ code: 200, message: response.message || 'Categoría eliminada' });
+            } else {
+                reject(new Error(response.error || 'Error al eliminar la categoría'));
+            }
+        })
+        .catch(err => {
+            console.error('Error en la solicitud:', err);
             reject(err);
         });
     });
