@@ -75,6 +75,19 @@ const getLocations = () => {
     });
 };
 
+// Obtener productos de kl partys
+const getProductsPartys = () => {
+    return new Promise((resolve, reject) => {
+        fetch(`${API}/get_product_party2.php`)
+            .then(res => res.json())
+            .then(response => resolve(response))
+            .catch(err => {
+                console.error('Error al obtener personajes:', err);
+                resolve([]); // Devolver un array vacío en caso de error
+            });
+    });
+};
+
 // Obtener personajes
 const getCharacters = () => {
     return new Promise((resolve, reject) => {
@@ -186,11 +199,11 @@ const buildScheduleModal = pathname => {
     })
 };
 
+// Exponer getProductsPartys para que pueda ser usado por productsDisplay.js
+window.getProductsPartys = getProductsPartys;
 
-// Metodo autoinvocado para todas las paginas
 (async () => {
 
-    // $("#mobileMenuBtn").attr("disabled", false);
 
     const pathname = window.location.pathname.split("/")[1];
     const offcanvasOutlet = "offcanvas-outlet";
@@ -199,6 +212,7 @@ const buildScheduleModal = pathname => {
     $.get(offcanvasMenuComponent, ocmcHTML => {$(offcanvasOutlet).empty().append(ocmcHTML)})
    
     try {
+
         const buildScheduleModalRes = await buildScheduleModal(pathname);
         if(buildScheduleModalRes){
             setTimeout(() => {
@@ -210,29 +224,4 @@ const buildScheduleModal = pathname => {
         console.log(error);
     };
     
-    //Revisar pag actual
-
-    // const pathname = window.location.pathname;
-    // console.log(pathname);
-    
-
-    // $.each($(".nav-link-kl"), function(){
-    //     const activeElem = $(this).attr("data-active");
-    //     console.log(activeElem);
-        
-    //     if(pathname.includes(activeElem)){
-    //         console.log($(this));
-    //         return
-            
-    //     }
-        
-    // })
-
-    //Renderizacion del menu para mobiles
-
-    // if(window.innerWidth >= 992){
-    //     return;
-    // };
-
-
 })();
