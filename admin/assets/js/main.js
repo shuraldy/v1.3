@@ -172,14 +172,13 @@ const Controller = () => {
                         }
                     };
 
-                    // Ejecutar la llamada inicial con el valor del selector
                     fetchReport(yearSelect.value);
 
                     // Escuchar cambios en el selector
                     yearSelect.addEventListener('change', function() {
-                        const selectedYear = this.value ? parseInt(this.value) : 0; // Convertir a entero o usar 0
-                        console.log(selectedYear); // Imprimir el año seleccionado
-                        fetchReport(this.value); // Llamar a la API con el nuevo valor
+                        const selectedYear = this.value ? parseInt(this.value) : 0; 
+                        console.log(selectedYear); 
+                        fetchReport(this.value); 
                     });
                 } else {
                     console.error('Elemento con ID "yearSelect" no encontrado');
@@ -205,15 +204,16 @@ const Controller = () => {
             themeConfig(e.target.checked);
           });
 
-          // Cargar ambos modales createPackageModal.component.html
-          const [locationModalHTML, characterModalHTML, productModalHTML , packageModalHTML, categoryModalHTML] = await Promise.all([
-            fetch("components/utils/createLocationModal.component.html").then(r => r.text()),
-            fetch("components/utils/charactersModal.component.html").then(r => r.text()),
-            fetch("components/utils/createProductModal.component.html").then(r => r.text()),
-            fetch("components/utils/createPackageModal.component.html").then(r => r.text()),
-            fetch("components/utils/createCategoryModal.component.html").then(r => r.text())
-          ]);
-          document.getElementById("modal-outlet").innerHTML = locationModalHTML + characterModalHTML + productModalHTML +packageModalHTML + categoryModalHTML;
+            // Cargar ambos modales createPackageModal.component.html
+            const [locationModalHTML, characterModalHTML, productModalHTML, packageModalHTML, categoryModalHTML, productPartyModalHTML] = await Promise.all([
+                fetch("components/utils/createLocationModal.component.html").then(r => r.text()),
+                fetch("components/utils/charactersModal.component.html").then(r => r.text()),
+                fetch("components/utils/createProductModal.component.html").then(r => r.text()),
+                fetch("components/utils/createPackageModal.component.html").then(r => r.text()),
+                fetch("components/utils/createCategoryModal.component.html").then(r => r.text()),
+                fetch("components/utils/createProductPartyModal.component.html").then(r => r.text())
+            ]);
+            document.getElementById("modal-outlet").innerHTML = locationModalHTML + characterModalHTML + productModalHTML + packageModalHTML + categoryModalHTML + productPartyModalHTML;   
 
           // Funciones reutilizables
           const getTableConfig = (tableId) => ({
@@ -933,6 +933,199 @@ $(document).on('click', '.delete-category-btn', function () {
     console.error("Error al cargar categorías:", err);
     $('#categories-table tbody').empty().append(
         `<tr><td colspan="5" class="text-center">Error al cargar las categorías</td></tr>`
+    );
+}
+
+// CRUD Productos Party
+try {
+    await DOM_CONSTRUCTOR("#product-party-table-outlet", "components/utils/productPartyTable.component.html", [{ theadTheme: isDarkMode ? "table-dark" : "table-light" }]);
+    const products = await getProductPartyData();
+    const tbody = $('#product-party-table tbody');
+    tbody.empty();
+
+    if (!products.length) {
+        tbody.append(`<tr><td colspan="7" class="text-center">No hay productos disponibles</td></tr>`);
+    } else {
+        products.forEach((el, index) => {
+            tbody.append(`
+                <tr>
+                    <td>${index + 1}</td>
+                    <td>${el.product_name}</td>
+                    <td>${el.name_category_es}</td>
+                    <td>${el.price}</td>
+                    <td><img src="data:image/jpeg;base64,${el.image}" style="max-width: 50px;" alt="Imagen"></td>
+                    <td>${el.is_active == "1" ? "Sí" : "No"}</td>
+                    <td>
+                        <button class="btn btn-warning btn-sm me-2 edit-product-party-btn" 
+                            data-id="${el.id}" 
+                            data-id-category="${el.id_category}" 
+                            data-product-name="${el.product_name}" 
+                            data-price="${el.price}" 
+                            data-image="${el.image}" 
+                            data-is-active="${el.is_active}">
+                            <i class="fa-solid fa-edit"></i>
+                        </button>
+                        <button class="btn btn-danger btn-sm delete-product-party-btn" data-id="${el.id}">
+                            <i class="fa-solid fa-trash"></i>
+                        </button>
+                    </td>
+                </tr>`);
+        });
+    }
+
+    new DataTable('#product-party-table', getTableConfig('product-party-table'));
+
+    // Cargar categorías para el selector
+    const categories = await getCategoriesData();
+    const categorySelect = document.getElementById('productPartyCategory');
+    if (categorySelect) {
+        categorySelect.innerHTML = '<option value="">Selecciona una categoría</option>';
+        categories.forEach(cat => {
+            const option = document.createElement('option');
+            option.value = cat.id;
+            option.textContent = cat.name_category_es;
+            categorySelect.appendChild(option);
+        });
+    }
+
+    // Crear producto
+    document.getElementById('createProductPartyBtn')?.addEventListener('click', () => {
+        const modal = document.getElementById('createProductPartyModal');
+        if (!modal) return console.error('Modal de productos no encontrado');
+        document.getElementById('productPartyId').value = '';
+        document.getElementById('productPartyCategory').value = '';
+        document.getElementById('productPartyName').value = '';
+        document.getElementById('productPartyPrice').value = '';
+        document.getElementById('productPartyImage').value = '';
+        document.getElementById('productPartyImagePreview').src = '';
+        document.getElementById('productPartyActive').value = '1';
+        document.getElementById('createProductPartyModalLabel').textContent = 'Nuevo Producto';
+        document.getElementById('saveProductPartyButton').textContent = 'Crear';
+        new bootstrap.Modal(modal).show();
+    });
+
+    // Editar producto
+    $(document).on('change', '#productPartyImage', function () {
+        const file = this.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                document.getElementById('productPartyImagePreview').src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+
+    $(document).on('click', '.edit-product-party-btn', function () {
+        const modal = document.getElementById('createProductPartyModal');
+        if (!modal) return console.error('Modal de productos no encontrado');
+        document.getElementById('productPartyId').value = $(this).data('id');
+        document.getElementById('productPartyCategory').value = $(this).data('id-category');
+        document.getElementById('productPartyName').value = $(this).data('product-name');
+        document.getElementById('productPartyPrice').value = $(this).data('price');
+        document.getElementById('productPartyImagePreview').src = `data:image/jpeg;base64,${$(this).data('image')}`;
+        document.getElementById('productPartyActive').value = $(this).data('is-active');
+        document.getElementById('createProductPartyModalLabel').textContent = 'Editar Producto';
+        document.getElementById('saveProductPartyButton').textContent = 'Guardar';
+        new bootstrap.Modal(modal).show();
+    });
+
+    // Eliminar producto
+    $(document).on('click', '.delete-product-party-btn', function () {
+        const id = $(this).data('id');
+        if (confirm('¿Eliminar producto?')) {
+            deleteProductParty(id)
+                .then(response => {
+                    alert(response.message || 'Producto eliminado exitosamente.');
+                    window.location.reload();
+                })
+                .catch(err => {
+                    console.error('Error al procesar eliminación:', err);
+                    alert('Error al eliminar producto: ' + (err.message || 'Intenta de nuevo'));
+                    window.location.reload();
+                });
+        }
+    });
+
+    // Guardar producto
+    document.getElementById('saveProductPartyButton')?.addEventListener('click', async (e) => {
+        e.preventDefault();
+        const id = document.getElementById('productPartyId').value;
+        const idCategory = document.getElementById('productPartyCategory').value;
+        const productName = document.getElementById('productPartyName').value.trim();
+        const price = document.getElementById('productPartyPrice').value.trim();
+        const imageInput = document.getElementById('productPartyImage');
+        let image = document.getElementById('productPartyImagePreview').src.split(',')[1] || '';
+        const isActive = parseInt(document.getElementById('productPartyActive').value);
+
+        if (!idCategory || !productName || !price) {
+            return alert('Completa los campos requeridos.');
+        }
+
+        if (imageInput.files[0]) {
+            const reader = new FileReader();
+            reader.onload = async function (e) {
+                image = e.target.result.split(',')[1];
+                try {
+                    let response;
+                    if (id) {
+                        response = await updateProductParty(id, idCategory, productName, price, image, isActive);
+                    } else {
+                        response = await createProductParty(idCategory, productName, price, image, isActive);
+                    }
+                    if (response.ok === true) {
+                        alert(response.message || 'Producto guardado exitosamente.');
+                        window.location.reload();
+                    } else {
+                        throw new Error(response.error || 'Error al guardar el producto.');
+                    }
+                } catch (err) {
+                    console.error(err);
+                    alert(err.message || 'Error al guardar producto.');
+                    window.location.reload();
+                }
+            };
+            reader.readAsDataURL(imageInput.files[0]);
+        } else {
+            try {
+                let response;
+                if (id) {
+                    response = await updateProductParty(id, idCategory, productName, price, image, isActive);
+                } else {
+                    response = await createProductParty(idCategory, productName, price, image, isActive);
+                }
+                if (response.ok === true) {
+                    alert(response.message || 'Producto guardado exitosamente.');
+                    window.location.reload();
+                } else {
+                    throw new Error(response.error || 'Error al guardar el producto.');
+                }
+            } catch (err) {
+                console.error(err);
+                alert(err.message || 'Error al guardar producto.');
+                window.location.reload();
+            }
+        }
+    });
+
+    // Manejar el cierre del modal
+    const productPartyModal = document.getElementById('createProductPartyModal');
+    productPartyModal.addEventListener('hidden.bs.modal', () => {
+        try {
+            const form = document.getElementById('createProductPartyForm');
+            if (form) form.reset();
+            document.getElementById('productPartyId').value = '';
+            document.getElementById('productPartyImagePreview').src = '';
+            const backdrop = document.querySelector('.modal-backdrop');
+            if (backdrop) backdrop.remove();
+        } catch (err) {
+            console.error('Error al limpiar modal de producto:', err);
+        }
+    });
+} catch (err) {
+    console.error("Error al cargar productos:", err);
+    $('#product-party-table tbody').empty().append(
+        `<tr><td colspan="7" class="text-center">Error al cargar los productos</td></tr>`
     );
 }
 
@@ -1744,6 +1937,124 @@ const deleteCategory = (categoryId) => {
         })
         .catch(err => {
             console.error('Error en la solicitud:', err);
+            reject(err);
+        });
+    });
+};
+
+// Funciones para manejar productos de fiesta
+const getProductPartyData = () => {
+    return new Promise((resolve, reject) => {
+        fetch(`${API}/get_product_party.php`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`
+            }
+        })
+        .then(res => {
+            if (!res.ok) {
+                throw new Error(`Error HTTP: ${res.status} ${res.statusText}`);
+            }
+            return res.json();
+        })
+        .then(response => {
+            if (!response.length) {
+                reject(new Error('No se encontraron productos'));
+                return;
+            }
+            resolve(response);
+        })
+        .catch(err => {
+            console.error("Error al obtener productos:", err);
+            reject(err);
+        });
+    });
+};
+
+const createProductParty = (idCategory, productName, price, image, isActive) => {
+    return new Promise((resolve, reject) => {
+        fetch(`${API}/create_product_party.php`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`
+            },
+            body: JSON.stringify({
+                id_category: parseInt(idCategory),
+                product_name: productName,
+                price: parseFloat(price),
+                image: image,
+                is_active: parseInt(isActive)
+            })
+        })
+        .then(res => res.json())
+        .then(response => {
+            if (response.ok !== true) {
+                reject(new Error(response.error || 'Error al crear el producto'));
+                return;
+            }
+            resolve(response);
+        })
+        .catch(err => {
+            console.error("Error al crear producto:", err);
+            reject(err);
+        });
+    });
+};
+
+const updateProductParty = (id, idCategory, productName, price, image, isActive) => {
+    return new Promise((resolve, reject) => {
+        fetch(`${API}/update_product_party.php`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`
+            },
+            body: JSON.stringify({
+                id: parseInt(id),
+                id_category: parseInt(idCategory),
+                product_name: productName,
+                price: parseFloat(price),
+                image: image,
+                is_active: parseInt(isActive)
+            })
+        })
+        .then(res => res.json())
+        .then(response => {
+            if (response.ok !== true) {
+                reject(new Error(response.error || 'Error al actualizar el producto'));
+                return;
+            }
+            resolve(response);
+        })
+        .catch(err => {
+            console.error("Error al actualizar producto:", err);
+            reject(err);
+        });
+    });
+};
+
+const deleteProductParty = (id) => {
+    return new Promise((resolve, reject) => {
+        fetch(`${API}/delete_product_party.php`, {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`
+            },
+            body: JSON.stringify({ id: parseInt(id) })
+        })
+        .then(res => res.json())
+        .then(response => {
+            if (response.ok !== true) {
+                reject(new Error(response.error || 'Error al eliminar el producto'));
+                return;
+            }
+            resolve(response);
+        })
+        .catch(err => {
+            console.error("Error al eliminar producto:", err);
             reject(err);
         });
     });
