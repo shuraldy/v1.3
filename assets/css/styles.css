@@ -838,6 +838,32 @@ h1.love-ya{
       }
     }
 
+.products-content .row {
+    margin-bottom: 1rem; /* Reduce el espacio entre categorías si es necesario */
+}
+
+.category-block {
+    width: 100%;
+}
+
+.card {
+    margin-bottom: 0.5rem; /* Reduce el espacio entre tarjetas */
+}
+
+.card-img-top {
+    object-fit: cover;
+    height: 300px; /* Consistente con el JS */
+}
+
+.row.row-cols-1.row-cols-md-3 {
+    margin-left: 0;
+    margin-right: 0;
+}
+
+/* Opcional: Reducir padding del contenedor si sigue habiendo mucho espacio */
+.bg-white {
+    padding: 2rem 1rem; /* Ajusta según necesites */
+}
 
 /* media queryes */
 @media only screen and (max-width: 1440px) {

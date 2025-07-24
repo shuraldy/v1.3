@@ -1,0 +1,11 @@
+{
+    "id": "4",
+    "id_category": "2",
+    "product_name": "REF 001",
+    "price": "110.00",
+    "image": "/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAgGBgcGBQgHBwcJCQgKDBQNDAsLDBkSEw8UHRofHh0aHBwgJC4nICIsIxwcKDcpLDAxNDQ0Hyc5PTgyPC4zNDL/2wBDAQkJCQwLDBg",
+    "is_active": "1",
+    "name_category_es": "Desayunos sorpresa para hombre",
+    "name_category_en": "Surprice breakfast men",
+    "category_active": "1"
+}
