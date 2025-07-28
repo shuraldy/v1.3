@@ -29,9 +29,14 @@
             return;
         }
 
-        // Obtener el idioma actual
-        const language = window.getLanguage ? window.getLanguage() : 'en';
+        // Obtener el idioma actual desde localStorage
+        const language = localStorage.getItem("language") || 'en'; // Default a 'en' si no está definido
         const categoryKey = language === 'es' ? 'name_category_es' : 'name_category_en';
+        const priceLabel = language === 'es' ? 'Precio:' : 'Price:';
+        const buttonLabel = language === 'es' ? 'Agendar ahora' : 'Schedule now';
+        const title = language === 'es' ? 'Detalles del Producto:' : 'Product Details:';
+        const categoryText = language === 'es' ? 'Categoría:' : 'Category:';
+        const nameText = language === 'es' ? 'Nombre:' : 'Name:';
 
         // Agrupar productos por categoría
         const groupedProducts = {};
@@ -63,13 +68,24 @@
                     imageSrc = ''; // Omite la imagen si no está disponible
                 }
 
+                // Construir el mensaje para WhatsApp
+                const message = encodeURIComponent(
+                    `*${title}*\n` +
+                    `${categoryText} ${category}\n` +
+                    `${nameText} ${product.product_name}\n` +
+                    `${priceLabel} $${product.price}`
+                );
+                const whatsappUrl = `https://web.whatsapp.com/send?phone=+18645172916&text=${message}`;
+                console.log('WhatsApp URL:', whatsappUrl); // Depuración
+
                 const card = `
                     <div class="col">
                         <div class="card h-100">
                             ${imageSrc ? `<img src="${imageSrc}" class="card-img-top img-fluid" style="object-fit: cover; height: 300px;" alt="${product.product_name}">` : ''}
                             <div class="card-body text-center">
                                 <h5 class="card-title">${product.product_name}</h5>
-                                <p class="card-text"><strong>Price:</strong> $${product.price}</p>
+                                <p class="card-text"><strong>${priceLabel}</strong> $${product.price}</p>
+                                <a href="${whatsappUrl}" class="btn btn-primary mt-2" target="_blank">${buttonLabel}</a>
                             </div>
                         </div>
                     </div>
