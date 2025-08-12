@@ -13,9 +13,37 @@ body{
     background-image: linear-gradient(180deg, #00abba, transparent);
 }
 
-/* .what-we-do{
+.terms-content{
+    background-image: linear-gradient(180deg, #00abba, transparent);
+}
+
+.page-container-terms{
+    background-color: #00abba;
+}
+.page-container-about{
+    background-color: #00abba;
+}
+
+.page-container-kl{
+    background-color: #00abba;
+}
+.page-container-shows{
+    background-color: #00abba;
+}
+.products-services{
+    background-color: #00abba;
+}
+.products-services-2{
+    background-image: linear-gradient(180deg, #00abba, transparent) !important;
+
+    
+}
+/* .page-container-home{
     background-color: #00abba;
 } */
+.about-section-1{
+  background-image: linear-gradient(180deg, #00abba, transparent);
+}
 
 .kl-header-container{
     transition: .3s;
@@ -121,13 +149,22 @@ input, select{
     color: black;
 }
 
+.about-section-2{
+    min-height: 70dvh;
+}
+
+.contact-details {
+    min-height: 70dvh;
+}
+
+
 section{
     height: 100%;
     min-height: 100dvh;
 }
 
 .page-hero{
-    height: 450px;
+    height: 300px;
 }
 
 .bg-kl-footer {
@@ -245,7 +282,7 @@ h1.love-ya{
 }
 
 .icon-background .item2 {
-    left: 140px;
+    left: 40px;
     top: 72px;
     animation: rotate360 1.5s infinite linear;
 }
@@ -805,6 +842,11 @@ h1.love-ya{
       align-items: center; /* Centra verticalmente */
     }
 
+    .products-services-2 .row {
+      justify-content: center;
+      align-items: center; /* Centra verticalmente */
+    }
+
     .service-description {
       text-align: center; /* Centrar el texto */
     }
@@ -819,7 +861,7 @@ h1.love-ya{
     .products-services {
       min-height: auto !important; /* Anula el min-height: 100dvh */
       height: auto !important; /* Ajusta la altura al contenido */
-      margin-bottom: 30px; /* Espacio entre secciones */
+      margin-bottom: 23px; /* Espacio entre secciones */
     }
 
     @media (max-width: 767px) {
