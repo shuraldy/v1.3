@@ -3,9 +3,13 @@
  */
 (async () => {
     try {
+        // Mostrar el loader
+        setLoader(true);
+
         // Verificar que getProductsPartys esté disponible
         if (!window.getProductsPartys) {
             console.warn('Función getProductsPartys no encontrada. Asegúrate de que main.js esté cargado primero.');
+            setLoader(false);
             return;
         }
 
@@ -76,7 +80,7 @@
                     `${priceLabel} $${product.price}`
                 );
                 const whatsappUrl = `https://web.whatsapp.com/send?phone=+18645172916&text=${message}`;
-                console.log('WhatsApp URL:', whatsappUrl); // Depuración
+                //console.log('WhatsApp URL:', whatsappUrl); // Depuración
 
                 const card = `
                     <div class="col">
@@ -97,7 +101,11 @@
             productsContainer.innerHTML += `</div></div>`;
         }
 
+        // Ocultar el loader después de que todo se haya cargado
+        setTimeout(() => setLoader(false), 500);
+
     } catch (error) {
         console.error('Error al obtener o renderizar productos de KL Partys:', error);
+        setLoader(false);
     }
 })();

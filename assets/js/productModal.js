@@ -81,8 +81,12 @@ const categoryMapping = {
 // Función para obtener y mostrar productos por categoría
 async function showProducts(category) {
     try {
+        // Mostrar loader
+        setLoader(true);
+
         if (!window.getProductsPartys) {
             console.warn('Función getProductsPartys no encontrada');
+            setLoader(false);
             return;
         }
 
@@ -176,8 +180,12 @@ async function showProducts(category) {
         const modal = new bootstrap.Modal(modalElement);
         modal.show();
 
+        // Ocultar loader después de que se muestra el modal
+        setTimeout(() => setLoader(false), 500);
+
     } catch (error) {
         console.error('Error al cargar los productos:', error);
+        setLoader(false);
     }
 }
 

@@ -35,6 +35,7 @@
 
     <!-- kl styles -->
     <link rel="stylesheet" href="../assets/css/styles.css">
+    <link rel="stylesheet" href="../assets/css/loader.css">
     <!-- ----- -->
 
 
@@ -42,7 +43,13 @@
 </head>
 <body onresize="rezise()">
 
-  <section class="bg-light h-100 opacity-25 position-fixed w-100" id="loader" style="z-index: 9999;"></section>
+  <div class="loader-container d-none" id="loader">
+    <div class="loader">
+      <p class="text">
+        loading...
+      </p>
+    </div>
+  </div>
 
   <div class="separator"></div>
 
