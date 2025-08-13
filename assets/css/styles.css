@@ -87,6 +87,27 @@ input, select{
     transition: all 0.3s ease;
 }
 
+.btn-kl-2{
+    width: 170px;
+    height: 44px;
+    background-color: #ff1493;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    border: none;
+    color: #161616;
+    box-shadow: #161616 0px 8px 15px 0px;
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: 800;
+    text-transform: capitalize;
+    -webkit-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+    -ms-transition: all 0.3s ease;
+    -o-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+}
+
 .btn-kl-mob{
     width: 130px;
     height: 40px;
