@@ -1,11 +1,125 @@
-{
-    "id": "4",
-    "id_category": "2",
+
+[
+    {
+        "id": "1",
+        "id_category": "1",
+        "product_name": "REF 001",
+        "price": "180.00",
+        "image": "/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAgGBgcGBQgHBwcJCQgKDBQNDAsLDBkSEw8UHRofHh0aHBwgJC4nICIsIxwcKDcpLDAxNDQ0Hyc5PTgyPC4zNDL/2wBDAQkJCQwLDBgNDRgyIRwhMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjL/wgAk=",
+        "is_active": "1",
+        "name_category_es": "Decoración",
+        "name_category_en": "Decoration",
+        "category_active": "1"
+    },
+    {
+        "id": "4",
+        "id_category": "2",
+        "product_name": "REF 001",
+        "price": "110.00",
+        "image": "/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAgGBgcGBQgHBwcJCQgKDBQNDAsLDBkSEw8UHRofHh0aHBwgJC4nICIsIxwcKDcpLDAxNDQ0Hyc5PTgyPC4zNDL/2wBDAQkJCQwLDBgNDRgyIRwhMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjL/wgARCAMUA6wDASIAAhEBAxEB/8QAGgABAAMBAQEAAAAAAAAAAAAAAAECBQQGA//EABYBAQEBAAAAAAAAAAAAAAAAAAABAv/aAAwDAQACEAMQAAAC3wAAAARMm5jzS/khEKo1B/b31f8A4Q4mjJktL9mBSqDlRj7j7fRdQDF6KesNxPWbFfmAGhX8k4o2Kq1L16f/AM5P/9k=",
+        "is_active": "1",
+        "name_category_es": "Desayunos sorpresa para hombre",
+        "name_category_en": "Surprice breakfast men",
+        "category_active": "1"
+    },
+    {
+        "id": "6",
+        "id_category": "3",
+        "product_name": "REF 001",
+        "price": "110.00",
+        "image": "/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAgGBgcGBQgHBwcJCQgKDBQNDAsLDBkSEw8UHRofHh0aHBwgJC4nICIsIxwcKDcpLDAxNDQ0Hyc5PTgyPC4zNDL/2wBDAQkJCQwLDBgNDRgyIRwhMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjL/wgARCAMUA6wDASIAAhEBAxEB/8QAGgABAAMBAQEAAAAAAAAAAAAAAAECBQQGA//EABYBAQEBAAAAAAAAAAAAAAAAAAABAv/aAAwDAQACEAMQAAAC3wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACsWVFlbUAiIiUFmai6l0CiIiyosiaAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFfmAGhX8k4o2Kq1L16f/AM5P/9k=",
+        "is_active": "1",
+        "name_category_es": "Detalles personalizados para hombre",
+        "name_category_en": "Personal gift for men",
+        "category_active": "1"
+    },
+    {
+        "id": "11",
+        "id_category": "2",
+        "product_name": "REF 001",
+        "price": "500.00",
+        "image": "/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAgGBgcGBQgHBwcJCQgKDBQNDAsLDBkSEw8UHRofHh0aHBwgJC4nICIsIxwcKDcpLDAxNDQ0Hyc5PTgyPC4zNDL/2wBDAQkJCQwLDBgNDRgyIRwhMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjL/wgARCAMUA6wDASIAAhEBAxEB/8QAGgABAAMBAQEAAAAAAAAAAAAAAAECBQQGA//EABYBAQEBAAAAAAAAAAAAAAAAAAABAv/aAAwDAQACEAMQAAAC3wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACsWVFlbUAiIiUFmai6l0CiIiyosiaAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAVRASgAfmAGhX8k4o2Kq1L16f/AM5P/9k=",
+        "is_active": "1",
+        "name_category_es": "Desayunos sorpresa para hombre",
+        "name_category_en": "Surprice breakfast men",
+        "category_active": "1"
+    },
+    {
+        "id": "12",
+        "id_category": "3",
+        "product_name": "REF 001",
+        "price": "110.00",
+        "image": "/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAgGBgcGBQgHBwcJCQgKDBQNDAsLDBkSEw8UHRofHh0aHBwgJC4nICIsIxwcKDcpLDAxNDQ0Hyc5PTgyPC4zNDL/2wBDAQkJCQwLDBgNDRgyIRwhMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjL/wgARCAMUA6wDASIAAhEBAxEB/8QAGgABAAMBAQEAAAAAAAAAAAAAAAECBQQGA//EABYBAQEBAAAAAP/9k=",
+        "is_active": "1",
+        "name_category_es": "Detalles personalizados para hombre",
+        "name_category_en": "Personal gift for men",
+        "category_active": "1"
+    },
+    {
+        "id": "14",
+        "id_category": "4",
+        "product_name": "REF 001",
+        "price": "200.00",
+        "image": "/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAgGBgcGBQgHBwcJCQgKDBQNDAsLDBkSEw8UHRofHh0aHBwgJC4nICIsIxwcKDcpLDAxNDQ0Hyc5PTgyPC4zNDL/2wBDAQkJCQwLDBgNDRgyIRwhMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjL/wgARCAMUA6wDASIAAhEBAxEB/8QAGgABAAMBAQEAAAAAAAAAAAAAAAECBQQGA//EABYBAQEBAAAAAAAAAAAAAAAAAAABAv/aAAwDAQACEAMQAAAC3wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACsWVFlbUAiIiUFmai6l0CiIiyosiaAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAVRASgAWiFBAAAFqlBAAF1L2BQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABFYmBUwi00UEAAAAEiEiEiEwAAAALVir1ACbUg+iJsAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAERUSgAACSFpqsySEgKARERdWwFIkQlFYuKLQsCIlBKJAIvVVxYAAAAAAAM5P/9k=",
+        "is_active": "1",
+        "name_category_es": "Desayunos sorpresa para hombre",
+        "name_category_en": "Surprice breakfast men",
+        "category_active": "1"
+    },
+    {
+        "id": "3",
+        "id_category": "1",
+        "product_name": "REF 003",
+        "price": "350.00",
+        "image": "/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAgGBgcGBQgHBwcJCQgKDBQNDAsLDBkSEw8UHRofHh0aHBwgJC4nICIsIxwcKDcpLDAxNDQ0Hyc5PTgyPC4zNDL/2wBDAQkJCQwLDBgNDRgyIRwhMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjL/wgARCAMUA6wDASIAAhEBAxEB/8QAGgABAAMBAQEAAAAAAAAAAAAAAAECBQQGA//EABYBAQEBAAAAAAAAAAAAAAAAAAABAv/aAAwDAQACEAMQAAAC3wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACsWVFlbUAiIiAM5P/9k=",
+        "is_active": "1",
+        "name_category_es": "Desayunos sorpresa para hombre",
+        "name_category_en": "Surprice breakfast men",
+        "category_active": "1"
+    },
+    {
+        "id": "13",
+        "id_category": "1",
+        "product_name": "REF 004",
+        "price": "560.00",
+        "image": "/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAgGBgcGBQgHBwcJCQgKDBQNDAsLDBkSEw8UHRofHh0aHBwgJC4nICIsIxwcKDcpLDAxNDQ0Hyc5PTgyPC4zNDL/2wBDAQkJCQ=",
+        "is_active": "1",
+        "name_category_es": "Decoración",
+        "name_category_en": "Decoration",
+        "category_active": "1"
+    },
+    {
+    "id": "17",
+    "id_category": "8",
     "product_name": "REF 001",
-    "price": "110.00",
-    "image": "/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAgGBgcGBQgHBwcJCQgKDBQNDAsLDBkSEw8UHRofHh0aHBwgJC4nICIsIxwcKDcpLDAxNDQ0Hyc5PTgyPC4zNDL/2wBDAQkJCQwLDBg",
+    "price": "600.00",
+    "image": "/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAgGBgcGBQgHBwcJCQgKDBQNDAsLDBkSEw8UHRofHh0aHBwgJC4nICIsIxwcKDcpLDAxNDQ0Hyc5PTgyPC4zNDL/2wBDAQkJCQwLDBgNDRgyIRw/9k=",
     "is_active": "1",
-    "name_category_es": "Desayunos sorpresa para hombre",
-    "name_category_en": "Surprice breakfast men",
+    "name_category_es": "Mesas de picnic",
+    "name_category_en": "Tables picnic",
+    "category_active": "1"
+},
+{
+    "id": "19",
+    "id_category": "5",
+    "product_name": "REF 002",
+    "price": "400.00",
+    "image": "/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAgGBgcGBQgHBwcJCQgKDBQNDAsLDBkSEw8UHRofHh0aHBwgJC4nICIsIxwcKDcpLDAxNDQ0Hyc5PTgyPC4zNDL/2wBDAQkJCQwLDBgNDRgyIRwumxWBdF3iCIljGMvYI3iQ9KhVMHVt+UWsqitWqrGGYp3fSx+YRMm5jzS/khEKo1B/b31f8A4Q4mjJktL9mBSqDlRj7j7fRdQDF6KesNxPWbFfmAGhX8k4o2Kq1L16f/AM5P/9k=",
+    "is_active": "1",
+    "name_category_es": "Detalles personalizados para mujer",
+    "name_category_en": "Personal gift for woman",
+    "category_active": "1"
+},
+{
+    "id": "14",
+    "id_category": "4",
+    "product_name": "REF 001",
+    "price": "200.00",
+    "image": "/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAgGBgcGBQgHBwcJCQgKDBQNDAsLDBkSEw8UHRofHh0aHBwgJC4nICIsIxwcKDcpLDAxNDQ0Hyc5PTgyPC4zNDL/2wBDAQkJCQwLDBgNDRgyIRwhMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjL/wgARCAMUA6wDASIAAhEBAxEB/8QAGgABAAMBAQEAAAAAAAAAAAAAAAECBQQGA//EABYBAQEBAAAAAAAAAAAAAAAAAAABAv/aAAwDAQACEAMQAAAC3wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACsWVFlbUAiIiUFmai6l0CiIiyosiaAAAAAAAJktL9mBSqDlRj7j7fRdQDF6KesNxPWbFfmAGhX8k4o2Kq1L16f/AM5P/9k=",
+    "is_active": "1",
+    "name_category_es": "Desayunos sorpresa para mujer",
+    "name_category_en": "Surprice breakfast woman",
     "category_active": "1"
 }
+
+]
