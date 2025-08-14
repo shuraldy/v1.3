@@ -199,7 +199,20 @@ const buildScheduleModal = pathname => {
     })
 };
 
+const getEventFeedback = () => {
+    return new Promise((resolve, reject) => {
+        fetch(`${API}/get_event_feedback.php`)
+            .then(res => res.json())
+            .then(response => resolve(response))
+            .catch(err => {
+                console.error('Error al obtener personajes:', err);
+                resolve([]); // Devolver un array vacío en caso de error
+            });
+    });
+};
+
 // Exponer getProductsPartys para que pueda ser usado por productsDisplay.js
+window.getEventFeedback = getEventFeedback;
 window.getProductsPartys = getProductsPartys;
 
 (async () => {

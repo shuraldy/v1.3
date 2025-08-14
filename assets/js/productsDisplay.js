@@ -15,7 +15,7 @@
 
         // Obtener los productos
         const products = await window.getProductsPartys();
-        console.log('Productos de KL Partys:', products);
+        //console.log('Productos de KL Partys:', products);
 
         // Seleccionar el contenedor donde se renderizarán los productos
         const productsContainer = document.querySelector('.row.row-cols-1.row-cols-md-3');
