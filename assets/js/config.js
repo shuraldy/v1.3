@@ -1,4 +1,4 @@
-const API = "https://facturaldy.site";
+const API = "https://facturaldy.site/backend";
 let endpoints;
 let locations;
 let characters;

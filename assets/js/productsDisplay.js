@@ -79,8 +79,8 @@
                     `${nameText} ${product.product_name}\n` +
                     `${priceLabel} $${product.price}`
                 );
-                const whatsappUrl = `https://web.whatsapp.com/send?phone=+18645172916&text=${message}`;
-                //console.log('WhatsApp URL:', whatsappUrl); // Depuración
+                const phoneNumber = '18645172916';
+                const whatsappUrl = `https://wa.me/${phoneNumber}?text=${message}`;
 
                 const card = `
                     <div class="col">
@@ -89,7 +89,7 @@
                             <div class="card-body text-center">
                                 <h5 class="card-title">${product.product_name}</h5>
                                 <p class="card-text"><strong>${priceLabel}</strong> $${product.price}</p>
-                                <a href="${whatsappUrl}" class="btn btn-primary mt-2" target="_blank">${buttonLabel}</a>
+                                <a href="${whatsappUrl}" class="btn btn-kl-2 mt-2" target="_blank">${buttonLabel}</a>.
                             </div>
                         </div>
                     </div>

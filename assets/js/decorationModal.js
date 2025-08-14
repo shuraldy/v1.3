@@ -48,7 +48,8 @@ async function showDecorationProducts() {
                                         `${language === 'es' ? 'Nombre:' : 'Name:'} ${product.product_name}\n` +
                                         `${priceLabel} $${product.price}`
                                     );
-                                    const whatsappUrl = `https://web.whatsapp.com/send?phone=+18645172916&text=${message}`;
+                                        const phoneNumber = '18645172916';
+                                        const whatsappUrl = `https://wa.me/${phoneNumber}?text=${message}`;
 
                                     return `
                                         <div class="col">
